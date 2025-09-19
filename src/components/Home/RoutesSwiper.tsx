@@ -1,116 +1,107 @@
+import { FC, Suspense, useState } from "react";
+import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
-import { Modal, useNavigate } from "zmp-ui";
-import { useState } from "react";
-import dayjs from "dayjs";
-import { buildURL } from "@/utils/buildURL";
-
+import { Box, Text, Modal } from "zmp-ui";
+import { Section } from "../common/Section";
+import { popRouteState } from "@/state";
+import { PopRouteSlideSkeleton } from "../common/Skeleton";
+import { popRoute } from "@/types/poproutes";
 import "swiper/css";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const routes = [
-    {
-        id: 1,
-        title: "SÀI GÒN - ĐÀ LẠT",
-        from: "saigon",
-        fromLabel: "Sài Gòn",
-        to: "dalat",
-        toLabel: "Đà Lạt",
-        image: "https://serverapi-pi.vercel.app/destination/dalat.webp",
-        description: "Tuyến đường du lịch nổi tiếng giữa miền Nam và cao nguyên Đà Lạt.",
-    },
-    {
-        id: 2,
-        title: "SÀI GÒN - VŨNG TÀU",
-        from: "saigon",
-        fromLabel: "Sài Gòn",
-        to: "vungtau",
-        toLabel: "Vũng Tàu",
-        image: "https://serverapi-pi.vercel.app/destination/vungtau.webp",
-        description: "Tuyến đường biển nhanh chóng, thuận tiện cho du lịch cuối tuần.",
-    },
-    {
-        id: 3,
-        title: "HÀ NỘI - SAPA",
-        from: "hanoi",
-        fromLabel: "Hà Nội",
-        to: "sapa",
-        toLabel: "Sa Pa",
-        image: "https://serverapi-pi.vercel.app/destination/sapa.webp",
-        description: "Khám phá vùng núi Tây Bắc, nhiều cảnh đẹp hùng vĩ.",
-    },
-    {
-        id: 4,
-        title: "SÀI GÒN - HÀ NỘI",
-        from: "saigon",
-        fromLabel: "Sài Gòn",
-        to: "hanoi",
-        toLabel: "Hà Nội",
-        image: "https://serverapi-pi.vercel.app/destination/hanoi.webp",
-        description: "Tuyến đường dài Bắc Nam với nhiều lựa chọn xe giường nằm chất lượng.",
-    },
-];
-
-const RouteSwiper = () => {
-    const navigate = useNavigate();
-    const [selected, setSelected] = useState<typeof routes[0] | null>(null);
-    const today = dayjs().format("DD-MM-YYYY");
-
-    const goBooking = (r: typeof routes[0]) => {
-        navigate(
-            buildURL("/availableTrip", {
-                from: r.from,
-                to: r.to,
-                date: today,
-                fromLabel: r.fromLabel,
-                toLabel: r.toLabel,
-            })
-        );
-    };
+export const RouteSwiperContent: FC = () => {
+    const popRoutes = useRecoilValue(popRouteState);
+    const [selectedRoute, setSelectedRoute] = useState<popRoute | null>(null);
 
     return (
-        <div className="py-4 px-3">
-            <h2 className="text-center text-lg font-bold mb-3">Gợi ý cho bạn</h2>
-            <Swiper
-                modules={[Pagination, Autoplay]}
-                pagination={{ clickable: true }}
-                autoplay={{ delay: 4000 }}
-                loop
-                spaceBetween={12}
-                slidesPerView={1.2}
-                breakpoints={{ 480: { slidesPerView: 2 }, 640: { slidesPerView: 2.5 } }}
-                className="!pb-8"
-            >
-                {routes.map((r) => (
-                    <SwiperSlide key={r.id}>
-                        <div
-                            onClick={() => setSelected(r)}
-                            className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer hover:scale-4 transition"
-                        >
-                            <img src={r.image} alt={r.title} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60" />
-                            <h3 className="absolute bottom-2 left-2 text-white font-semibold text-xs">
-                                {r.title}
-                            </h3>
-                        </div>
+        <>
+            <Section title="Tuyến nổi bật" padding="title-only">
+                <Swiper slidesPerView={1.25} spaceBetween={16} className="px-4">
+                    {popRoutes.map((route: popRoute) => (
+                        <SwiperSlide key={route.fromTo}>
+                            <Box
+                                className="space-y-2 cursor-pointer p-2"
+                                onClick={() => setSelectedRoute(route)}
+                            >
+                                <Box
+                                    className="relative aspect-video rounded-lg bg-cover bg-center bg-skeleton"
+                                    style={{ backgroundImage: `url(${route.image})` }}
+                                >
+                                    <Text
+                                        size="normal"
+                                        className="absolute left-2 bottom-2 bg-black bg-opacity-50 text-white px-2 rounded-full"
+                                    >
+                                        {route.fromLabel} - {route.toLabel}
+                                    </Text>
+                                </Box>
+                                <Box className="space-y-2">
+                                    {route.note && (
+                                        <Text className=" font-medium text-xl">
+                                            ✨{route.note}
+                                        </Text>
+                                    )}
+                                    <Text className="text-xl font-semibold text-indigo-600 ">
+                                        {route.price.toLocaleString("vi-VN", {
+                                            style: "currency",
+                                            currency: "VND",
+                                        })}
+                                    </Text>
+                                </Box>
+                            </Box>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </Section>
+
+            {selectedRoute && (
+                <Modal
+                    visible
+                    title={selectedRoute.title}
+                    description={selectedRoute.description}
+                    coverSrc={selectedRoute.image}
+                    actions={[
+                        {
+                            text: "Đóng",
+                            close: true,
+                        },
+                        {
+                            text: "Đặt Ngay",
+                            highLight: true,
+                            onClick: () => {
+                                console.log("do sth")
+
+                            },
+                        },
+
+                    ]}
+                    onClose={() => setSelectedRoute(null)}
+                />
+            )}
+        </>
+    );
+};
+
+export const RouteSwiperFallback: FC = () => {
+    const dummy = [...new Array(3)];
+    return (
+        <Section title="Tuyến nổi bật" padding="title-only">
+            <Swiper slidesPerView={1.25} spaceBetween={16} className="px-4">
+                {dummy.map((_, i) => (
+                    <SwiperSlide key={i}>
+                        <PopRouteSlideSkeleton />
                     </SwiperSlide>
                 ))}
             </Swiper>
+        </Section>
+    );
+};
 
-            {selected && (
-                <Modal
-                    visible
-                    title={selected.title}
-                    coverSrc={selected.image}
-                    description={selected.description}
-                    actions={[
-                        { text: "Đóng", close: true },
-                        { text: "Đặt vé", highLight: true, onClick: () => goBooking(selected) },
-                    ]}
-                    onClose={() => setSelected(null)}
-                />
-            )}
-        </div>
+export const RouteSwiper: FC = () => {
+    return (
+        <Suspense fallback={<RouteSwiperFallback />}>
+            <RouteSwiperContent />
+        </Suspense>
     );
 };
 

@@ -1,24 +1,19 @@
+import dayjs from "dayjs"
 
 //User INFO
-export interface zaloUser {
+export interface coreData {
     id: string
     name: string
     avatar: string
-}
-
-// Dữ liệu mở rộng trong Firestore
-export interface firestoreUser {
     phone?: string
     role?: string
     totalSpending?: number
+    createAt?: Date
 }
-
-export type storedData = zaloUser & firestoreUser | null
-
 
 
 // Dữ liệu cá nhân chỉ lưu ở local
-export type userCached = zaloUser & firestoreUser & {
+export type userCached = coreData & {
     gender?: string
     dob?: string
     address?: string

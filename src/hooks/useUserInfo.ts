@@ -1,13 +1,16 @@
-import { storedData, userCached } from "@/types/userInfo";
+import { coreData, userCached } from "@/types/userInfo";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { userState } from "@/state";
 import { getUserInfo, getSetting, nativeStorage } from "zmp-sdk/apis";
 import { useSnackbar } from "zmp-ui";
-import callAddUser from "@/callAPI/callUserApi";
+import { addUser } from "@/firebase/firestore/userCrud"
+import dayjs from "dayjs";
 
 export default function useUserInfo() {
     const [userData, setUser] = useRecoilState<userCached | null>(userState)
+
+    const [preUserData, setPreData] = useState<coreData | null>(null)
 
     const [isRegistered, setRegistered] = useState<boolean>(false)
     const { openSnackbar } = useSnackbar()
@@ -39,7 +42,6 @@ export default function useUserInfo() {
                 if (!authSetting["scope.userInfo"]) {
                     setRegistered(false)
                     setUser(null)
-                    nativeStorage.removeItem("user")
                 }
             } catch (error) {
                 console.log("Đã có lỗi với localStr", error)
@@ -50,23 +52,22 @@ export default function useUserInfo() {
         checkSetting()
     }, [])
 
-
-
     const handleRegister = async () => {
-
         try {
             const { userInfo } = await getUserInfo({ autoRequestPermission: true })
             const { newUser, coreData } = createUserObject(userInfo)
-            setUser(newUser)
-            setRegistered(true)
-            await callAddUser(coreData)
-            nativeStorage.setItem("user", JSON.stringify(newUser))
+            const locaData = JSON.parse(nativeStorage.getItem("user"))
+            if (locaData) {
+                setRegistered(true)
+                setUser(locaData)
+            } else {
+                setUser(newUser)
+                nativeStorage.setItem("user", JSON.stringify(newUser))
+                setRegistered(true)
+                await addUser(coreData.id, coreData);
+            }
 
-            openSnackbar({
-                text: "Đăng ký thành công! ",
-                type: "success",
-            });
-
+            openSnackbar({ text: "Đăng ký thành công!", type: "success" });
         } catch (error) {
             console.error("[useUserInfo] Lỗi khi lấy userInfo từ Zalo SDK:", error);
             setUser(null)
@@ -74,25 +75,27 @@ export default function useUserInfo() {
     }
 
     function createUserObject(zaloUserInfo: userCached) {
-        const coreData: storedData = {
+
+        const coreSave: coreData = {
             id: zaloUserInfo.id,
             name: zaloUserInfo.name,
             avatar: zaloUserInfo.avatar,
             phone: "",
             role: "Thành viên",
             totalSpending: 0,
+            createAt: dayjs().toDate()
         };
 
         return {
             newUser: {
-                ...coreData, // lấy hết field đã có trong storedData
+                ...coreSave, // lấy hết field đã có trong storedData
                 dob: "",
                 address: "",
                 gender: "",
                 favorite: "",
                 isRegistered: true,
             },
-            coreData: coreData
+            coreData: coreSave
 
         };
     }

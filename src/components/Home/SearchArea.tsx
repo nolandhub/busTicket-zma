@@ -1,135 +1,71 @@
-import { useEffect, useState } from "react";
 import DateInput from "@/components/common/inputs/DatePicker";
 import SwapButton from "@/components/common/buttons/SwapButton";
-import ActionButton from "../common/buttons/ActionButton";
 import { MapPin, Locate } from "lucide-react";
-import { useLocation, useNavigate } from "zmp-ui";
-import { toast } from "react-toastify";
-import { formatDate } from "@/util/formatDate"
-import { buildURL } from "@/util/buildURL";
-import { getLabelFromValue } from "@/util/getLabelFromValue";
-import InputPicker from "../common/inputs/InputPicker"
+import { Box, Button } from "zmp-ui";
+import InputPicker from "../common/inputs/InputPicker";
+import useSearch from "@/hooks/useSearch";
+
 const SearchArea = () => {
-    const [departure, setDeparture] = useState<string>("");
-    const [destination, setDestination] = useState<string>("");
-    const [date, setDate] = useState<Date | undefined>(new Date());
-
-    const fromLabel = getLabelFromValue(departure)
-    const toLabel = getLabelFromValue(destination)
-
-    //back data no retype/////////////
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    const urlDeparture = params.get("from") || "";
-    const urlDestination = params.get("to") || "";
-    const urlDate = params.get("date") || "";
-    ///////////////////////////////////////
-
-    const navigate = useNavigate()
-
-    const handleSwap = () => {
-        setDeparture(destination);
-        setDestination(departure);
-    };
-
-
-    const handleSearch = async () => {
-        if (!departure || !destination || !date) {
-            toast.info("Vui lòng nhập đầy đủ thông tin!", { autoClose: 800 });
-            return;
-        }
-
-        const url = buildURL("/availableTrip", {
-            from: departure,
-            to: destination,
-            date: formatDate(date),
-            fromLabel: fromLabel,
-            toLabel: toLabel
-        })
-        navigate(url)
-
-    };
-
-    const parseDateFromParam = (dateStr: string): Date | null => {
-        if (!dateStr) return null;
-        const [day, month, year] = dateStr.split("-");
-        const d = new Date(Number(year), Number(month) - 1, Number(day));
-        return d;
-    };
-
-    //Check url backHome to set Departure,Destination,Date 
-
-    useEffect(() => {
-        const checkURL = () => {
-            if (urlDeparture === "" && urlDestination === "" && urlDate === "") return;
-            else {
-                setDeparture(urlDeparture);
-                setDestination(urlDestination);
-
-                if (urlDate) {
-                    const parsedDate = parseDateFromParam(urlDate);
-                    if (parsedDate) {
-                        setDate(parsedDate); // DatePicker Zalo nhận Date object luôn
-                    }
-                }
-            }
-
-        }
-        checkURL()
-    }, [])
-
+    const {
+        handleSearch,
+        handleSwap,
+        departure,
+        destination,
+        date,
+        setDeparture,
+        setDestination,
+        setDate,
+    } = useSearch();
 
     return (
-        <div className="p-4 flex justify-center shadow-lg">
-            <div className="border border-gray-400 rounded-2xl  flex flex-col md:flex-row items-stretch px-4 py-6 gap-4 w-full max-w-5xl relative">
+        <Box className="p-4 flex justify-center">
+            <Box className="w-full max-w-5xl border border-gray-200 rounded-2xl shadow-lg bg-white p-4 md:p-6 flex flex-col md:flex-row gap-4">
 
-
-                <div className="flex-1 relative flex items-center gap-2">
-                    {/* Ô chọn nơi đi */}
-                    <div className="flex-1">
+                {/* Departure + Swap + Destination */}
+                <Box className="flex-1 flex flex-col sm:flex-row items-stretch gap-3">
+                    <Box className="flex-1">
                         <InputPicker
-                            icon={<MapPin size={30} color="blue" strokeWidth={2} />}
+                            icon={<MapPin size={24} color="red" strokeWidth={2} />}
                             tittle="Chọn nơi đi"
                             value={departure}
                             placeholder="Nơi đi"
                             onChange={(val) => setDeparture(val.suggestions.value as string)}
                         />
-                    </div>
+                    </Box>
 
-                    {/* Nút swap nằm giữa */}
-                    <div className="flex-shrink-0 flex items-center justify-center">
+                    <Box className="flex items-center justify-center sm:w-auto">
                         <SwapButton onClick={handleSwap} />
-                    </div>
+                    </Box>
 
-                    {/* Ô chọn nơi đến */}
-                    <div className="flex-1">
+                    <Box className="flex-1">
                         <InputPicker
-                            icon={<Locate size={30} color="red" strokeWidth={2} />}
+                            icon={<Locate size={24} color="green" strokeWidth={2} />}
                             tittle="Chọn nơi đến"
                             value={destination}
                             placeholder="Nơi đến"
                             onChange={(val) => setDestination(val.suggestions.value as string)}
                         />
-                    </div>
-                </div>
-
+                    </Box>
+                </Box>
 
                 {/* Date input */}
-                <div className="flex-1">
-                    <DateInput value={date} onChange={setDate} />
-                </div>
+                <Box className="flex-1">
+                    <DateInput value={date} onChange={setDate} placeholder="Chọn ngày đi" />
+                </Box>
 
-                {/* Search Area */}
-                <div className="flex justify-center items-center">
-                    <ActionButton
-                        shade="600"
-                        color="red"
-                        label="Tìm Chuyến"
+                {/* Search button */}
+                <Box className="flex justify-center items-center">
+                    <Button
                         onClick={handleSearch}
-                    />
-                </div>
-            </div>
-        </div>
+                        type="danger"
+                        size="medium"
+                        className="w-full sm:w-auto"
+                    >
+                        Tìm Chuyến
+                    </Button>
+                </Box>
+            </Box>
+        </Box>
     );
 };
 

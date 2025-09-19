@@ -1,28 +1,26 @@
-import { DatePicker } from "zmp-ui";
-
+import { DatePicker, Box, Icon } from "zmp-ui";
 interface Props {
-    value?: Date | undefined;
+    value?: Date;
     onChange?: (date: Date) => void;
     placeholder?: string;
-
 }
 
 const DateInput = ({ value, placeholder, onChange }: Props) => {
     return (
-        <div className="w-full sm:flex-[1.2] sm:px-3">
-            <div
-                className="w-full min-w-[175px] px-4 py-3 outline outline-1 outline-gray-300 
-        focus-within:outline-blue-400 rounded-3xl bg-white flex items-center "
-            >
-                <DatePicker
-                    value={value}
-                    onChange={onChange}
-                    placeholder={placeholder}
-                />
-
-            </div>
-        </div>
+        <Box className="flex w-full h-full space-x-1 items-center justify-center">
+            <Icon
+                icon="zi-calendar"
+                size={24}
+                className="text-indigo-700 font-semibold"
+            />
+            <DatePicker
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+            />
+        </Box>
     );
 };
 
 export default DateInput;
+

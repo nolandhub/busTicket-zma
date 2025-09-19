@@ -1,23 +1,34 @@
 import { Box } from "zmp-ui";
 import UserCard from "../common/UserCard";
-import useUserInfo from "../hooks/useUserInfo";
-import bgHero from "@/static/bg-hero.webp"
+import useUserInfo from "../../hooks/useUserInfo";
+
 
 
 export default function UserHero() {
     const { handleRegister, userData, isRegistered } = useUserInfo()
 
     return (
-        <Box className="relative pb-28">
-            <img
-                loading="eager"
-                src={bgHero}
-                alt="Banner"
-                className="w-full h-40 object-center"
-            />
-            <Box className="absolute left-1/2 pt-12 -translate-x-1/2 -translate-y-1/2 w-[90%] sm:w-[80%] md:w-[60%]">
-                <UserCard user={userData} onClick={handleRegister} isRegistered={isRegistered} />
+        <Box
+            className="relative p-2 bg-no-repeat bg-cover bg-center h-[160px] flex items-end justify-center mb-24"
+            style={{
+                backgroundImage: `url(https://serverapi-pi.vercel.app/Probus/bg-hero.webp)`,
+            }}
+        >
+            {/* overlay */}
+            <Box className="absolute inset-0 bg-black/5" />
+
+            {/* UserCard */}
+            <Box
+                className="relative w-[80%] sm:w-[80%] md:w-[60%] max-w-md mb-[-80px] top-4"
+            >
+                <UserCard
+                    user={userData}
+                    onClick={handleRegister}
+                    isRegistered={isRegistered}
+                />
             </Box>
         </Box>
+
+
     );
 }

@@ -3,14 +3,14 @@ import { Box } from "zmp-ui";
 import { BoxProps } from "zmp-ui/box";
 
 export const Divider: FC<{ size?: number; className?: string } & BoxProps> = ({
-    size = 8,
+    size = 6,
     ...props
 }) => {
     return (
         <Box
             style={{
                 minHeight: size,
-                backgroundColor: "var(--zmp-background-color)",
+                backgroundColor: "var(--colors-gray-20)",
             }}
             {...props}
         />

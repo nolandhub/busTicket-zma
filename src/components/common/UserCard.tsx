@@ -1,11 +1,11 @@
 import { Wallet } from "lucide-react";
 import { FC, Suspense } from "react";
 import { Avatar, Box, Spinner, Text } from "zmp-ui";
-import { zaloUser, firestoreUser } from "@/types/userInfo";
+import { coreData } from "@/types/userInfo";
 import RegisterSection from "../Home/RegisterSection";
 
 interface userBannerProps {
-    user: zaloUser & firestoreUser | null
+    user: coreData | null
     isRegistered: boolean
     onClick: () => void
 }

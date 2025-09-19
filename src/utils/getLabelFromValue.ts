@@ -20,12 +20,12 @@ export const suggestions = [
     { label: "Cần Thơ", value: "cantho" },
     { label: "Mũi Né", value: "muine" },
     { label: "Phan Thiết", value: "phanthiet" },
-    { label: "Phan Rang", value: "phanrang" },
-    { label: "Ninh Sơn", value: "ninhson" },
+    { label: "Ninh Thuận", value: "ninhthuan" },
+    { label: "Mộc Châu", value: "mocchau" },
 ]
 
 
-export const getLabelFromValue = (value: string): string | undefined => {
+export const getLabelFromValue = (value: string) => {
     const found = suggestions.find((item) => item.value === value);
     return found?.label;
 };

@@ -1,0 +1,42 @@
+[
+    {
+        "title": "SÀI GÒN - ĐÀ LẠT",
+        "fromLabel": "Sài Gòn",
+        "toLabel": "Đà Lạt",
+        "fromTo": "saigon-dalat",
+        "image": "https://serverapi-pi.vercel.app/PopRoute/sai-gon-da-lat.webp",
+        "description": "Hành trình từ phố thị sôi động đến cao nguyên mát lạnh, ngập tràn hương hoa.",
+        "price": 399000,
+        "note": "Limousine 24 Phòng Đôi VIP"
+    },
+    {
+        "title": "SÀI GÒN - NHA TRANG",
+        "fromLabel": "Sài Gòn",
+        "toLabel": "Nha Trang",
+        "fromTo": "saigon-nhatrang",
+        "image": "https://serverapi-pi.vercel.app/PopRoute/sai-gon-nha-trang.webp",
+        "description": "Đường đến thành phố biển rực nắng, nơi sóng xanh và ẩm thực hải sản chờ đón.",
+        "price": 399000,
+        "note": "Limousine 24 Phòng Đôi VIP"
+    },
+    {
+        "title": "HÀ NỘI - MỘC CHÂU",
+        "fromLabel": "Hà Nội",
+        "toLabel": "Mộc Châu",
+        "fromTo": "hanoi-mocchau",
+        "image": "https://serverapi-pi.vercel.app/PopRoute/ha-noi-moc-chau.webp",
+        "description": "Lối về miền sơn cước với đồi chè xanh ngút mắt và khí trời se lạnh.",
+        "price": 250000,
+        "note": "Limousine Royal 10 Ghế VIP"
+    },
+    {
+        "title": "SÀI GÒN - NINH THUẬN",
+        "fromLabel": "Sài Gòn",
+        "toLabel": "Ninh Thuận",
+        "fromTo": "saigon-ninhthuan",
+        "image": "https://serverapi-pi.vercel.app/PopRoute/sai-gon-ninh-thuan.webp",
+        "description": "Chuyến đi đến vùng nắng gió, thưởng thức vang nho và biển hoang sơ.",
+        "price": 380000,
+        "note": "Limousine 24 Phòng Đôi VIP"
+    }
+]
