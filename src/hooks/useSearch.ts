@@ -5,10 +5,8 @@ import { getLabelFromValue } from "@/utils/getLabelFromValue";
 import { useRecoilState } from "recoil";
 import { useNavigate, useSnackbar } from "zmp-ui";
 
-
 export default function useSearch() {
     const { openSnackbar } = useSnackbar()
-
     const [departure, setDeparture] = useRecoilState(departureState)
     const [destination, setDestination] = useRecoilState(destinationState)
     const [date, setDate] = useRecoilState(dateState)
@@ -28,8 +26,6 @@ export default function useSearch() {
             });
             return
         }
-
-
         const url = buildURL("/availableTrip", {
             from: departure,
             to: destination,
@@ -38,11 +34,9 @@ export default function useSearch() {
             toLabel: getLabelFromValue(destination),
         })
 
-
         navigate(url)
 
     }
-
     return {
         departure,
         destination,
@@ -53,8 +47,4 @@ export default function useSearch() {
         handleSearch,
         handleSwap
     }
-
-
-
-
 }
