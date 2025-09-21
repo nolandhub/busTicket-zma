@@ -28,8 +28,8 @@ import { FC } from "react";
 import { Box, Text } from "zmp-ui";
 
 interface RouteIndicatorProps {
-    defStart: string;
-    defEnd: string;
+    defStart: string
+    defEnd: string
 }
 
 const RouteIndicator: FC<RouteIndicatorProps> = ({ defStart, defEnd }) => {
@@ -45,7 +45,7 @@ const RouteIndicator: FC<RouteIndicatorProps> = ({ defStart, defEnd }) => {
             {/* Cột text */}
             <Box className="flex flex-col justify-between ml-2">
                 <Text bold size="small">{defStart}</Text>
-                <Text bold size="small">{defEnd}</Text>
+                <Text className="text-gray-400" bold size="small">{defEnd}</Text>
             </Box>
         </Box>
     );

@@ -1,26 +1,29 @@
-import { DatePicker, Box, Icon } from "zmp-ui";
+import { parseString } from "@/utils/date";
+import { DatePicker, Box, Switch } from "zmp-ui";
+
 interface Props {
-    value?: Date;
-    onChange?: (date: Date) => void;
-    placeholder?: string;
+    value: Date;
+    onChange: (date: Date) => void;
+    onSwitch: () => void
+    isReturn: boolean
 }
 
-const DateInput = ({ value, placeholder, onChange }: Props) => {
+const DateInput = ({ value, onChange, onSwitch, isReturn }: Props) => {
     return (
-        <Box className="flex w-full h-full space-x-1 items-center justify-center">
-            <Icon
-                icon="zi-calendar"
-                size={24}
-                className="text-indigo-700 font-semibold"
-            />
-            <DatePicker
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-            />
+        <Box className="flex flex-col items-start">
+            <Box className="flex justify-between items-center w-full">
+                <Box className="w-[200px] pl-7">
+                    <DatePicker startDate={new Date()} value={value} placeholder={parseString(value)} onChange={onChange} />
+                </Box>
+
+                <Switch
+                    checked={isReturn}
+                    onChange={onSwitch}
+                    label="Khứ hồi"
+                />
+            </Box>
         </Box>
     );
 };
 
 export default DateInput;
-

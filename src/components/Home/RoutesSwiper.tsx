@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text, Modal, useNavigate } from "zmp-ui";
 import { Section } from "../common/Section";
-import { dateState, popRouteState } from "@/state";
+import { departureDateState, popRouteState } from "@/state";
 import { PopRouteSlideSkeleton } from "../common/Skeleton";
 import { PopRoute } from "@/types/routeType";
 import { buildURL } from "@/utils/buildURL";
@@ -16,7 +16,7 @@ import { parseString } from "@/utils/date";
 export const RouteSwiperContent: FC = () => {
     const popRoutes = useRecoilValue(popRouteState);
     const [selectedRoute, setSelectedRoute] = useState<PopRoute | null>(null);
-    const date = useRecoilValue(dateState)
+    const date = useRecoilValue(departureDateState)
     const navigate = useNavigate()
 
     return (

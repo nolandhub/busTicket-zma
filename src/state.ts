@@ -4,33 +4,39 @@ import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 
 export const userState = atom<userCached | null>({
-    key: 'userState',
+    key: 'user',
     default: null
 });
 
 export const departureState = atom<string>({
-    key: 'departureState',
+    key: 'departure',
     default: '',
 });
 
 export const destinationState = atom<string>({
-    key: 'destinationState',
+    key: 'destination',
     default: '',
 });
 
-export const dateState = atom<Date>({
-    key: 'dateState',
+export const departureDateState = atom<Date>({
+    key: 'departureDate',
     default: new Date(),
 });
 
+export const returnDateState = atom<Date>({
+    key: 'returnDate',
+    default: undefined
+});
 
-// export const productsState = selector<PopRoute[]>();
-
+export const isReturnState = atom<boolean>({
+    key: 'isReturn',
+    default: false,
+});
 
 export const popRouteState = selector<PopRoute[]>({
     key: "popRoutes",
     get: async () => {
         const res = await getPopRoutes();
-        return res; // chắc chắn đúng type PopRoute[]
+        return res;
     },
 });

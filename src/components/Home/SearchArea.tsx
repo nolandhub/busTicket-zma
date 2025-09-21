@@ -1,19 +1,22 @@
 import DateInput from "@/components/common/inputs/DatePicker";
-import { MapPin, Locate, ArrowUpDown } from "lucide-react";
-import { Box, Button } from "zmp-ui";
+import { MapPin, Locate } from "lucide-react";
+import { Box, Button, Icon } from "zmp-ui";
 import InputPicker from "../common/inputs/InputPicker";
 import useSearch from "@/hooks/useSearch";
 
 const SearchArea = () => {
+
     const {
-        handleSearch,
-        handleSwap,
         departure,
         destination,
-        date,
+        departDate,
+        isReturn,
+        handleSearch,
+        handleSwap,
+        handleSwitch,
         setDeparture,
         setDestination,
-        setDate,
+        setDepartDate,
     } = useSearch();
 
     return (
@@ -21,7 +24,7 @@ const SearchArea = () => {
             <Box className="w-full max-w-5xl border border-gray-200 rounded-2xl shadow-lg bg-white p-4 md:p-6 flex flex-col md:flex-row gap-4">
 
                 {/* Departure + Swap + Destination */}
-                <Box className="flex-1 flex flex-col sm:flex-row items-stretch gap-3">
+                <Box className="flex-1 flex flex-col sm:flex-row items-stretch gap-2">
                     <Box className="flex-1">
                         <InputPicker
                             icon={<MapPin size={24} color="red" strokeWidth={2} />}
@@ -33,15 +36,17 @@ const SearchArea = () => {
                     </Box>
 
                     <Box className="flex items-center justify-center sm:w-auto">
-                        <Box
+                        <Button
                             onClick={handleSwap}
-                            className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center "
-                        >
-                            <ArrowUpDown
-                                size={18}
-                                className="text-gray-800 transform transition-transform duration-200 md:rotate-90"
-                            />
-                        </Box>
+                            type="neutral"
+                            variant="secondary"
+                            icon={
+                                <Icon
+                                    icon="zi-reorder-solid"
+                                    className="transform transition-transform duration-200 md:rotate-90"
+                                />
+                            }
+                        />
                     </Box>
 
                     <Box className="flex-1">
@@ -57,7 +62,7 @@ const SearchArea = () => {
 
                 {/* Date input */}
                 <Box className="flex-1">
-                    <DateInput value={date} onChange={setDate} placeholder="Chọn ngày đi" />
+                    <DateInput isReturn={isReturn} onSwitch={handleSwitch} value={departDate} onChange={setDepartDate} />
                 </Box>
 
                 {/* Search button */}
@@ -67,9 +72,11 @@ const SearchArea = () => {
                         type="danger"
                         size="medium"
                         className="w-full sm:w-auto"
+                        suffixIcon={<Icon icon="zi-search" />}
                     >
                         Tìm Chuyến
                     </Button>
+
                 </Box>
             </Box>
         </Box>

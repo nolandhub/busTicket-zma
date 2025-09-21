@@ -17,14 +17,14 @@ export const formatDateVN = (date: Date | string) => {
  * VD: "2025-09-18"
  */
 export const parseString = (date: Date) => {
-    return dayjs(date).format("DD-MM-YYYY");
+    return dayjs(date).format("DD/MM/YYYY");
 };
 
 /**
  * Parse date từ Firestore hoặc URL (string)
  */
 export const parseDate = (dateStr: string) => {
-    return dayjs(dateStr, "YYYY-MM-DD").toDate();
+    return dayjs(dateStr, "YYYY/MM/DD").toDate();
 };
 
 /**
