@@ -1,13 +1,24 @@
 import { BottomNavigation, Box, useLocation, useNavigate } from "zmp-ui";
 import { Icon } from "zmp-ui"
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useVirtualKeyboardVisible } from "@/hooks/hookHelper";
 
+export const NO_BOTTOM_NAVIGATION_PAGES = ["/availableTrip"];
+// "/formBooking", "/ticket", "/pickDrop"
 
 const BottomNav = () => {
     const location = useLocation();
+    const [activeKey, setActiveKey] = useState(location.pathname);
+    const keyboardVisible = useVirtualKeyboardVisible();
     const navigate = useNavigate();
 
-    const [activeKey, setActiveKey] = useState(location.pathname);
+    const noBottomNav = useMemo(() => {
+        return NO_BOTTOM_NAVIGATION_PAGES.includes(location.pathname);
+    }, [location]);
+
+    if (noBottomNav || keyboardVisible) {
+        return <></>;
+    }
 
     function handleChange(key: string) {
         setActiveKey(key)
@@ -18,9 +29,8 @@ const BottomNav = () => {
         <BottomNavigation
             fixed
             className="z-50"
-            defaultActiveKey="/"
             activeKey={activeKey}
-            onChange={handleChange}
+            onChange={(key) => handleChange(key)}
         >
             <BottomNavigation.Item
                 key={"/"}

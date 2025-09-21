@@ -1,5 +1,5 @@
 import { db } from "@/firebase/fireConfig";
-import { popRoute } from "@/types/poproutes";
+import { PopRoute } from "@/types/routeType";
 import {
     setDoc,
     getDoc,
@@ -16,7 +16,7 @@ export async function getPopRoutes() {
         const snap = await getDocs(colRef);
         const data = snap.docs.map(doc => ({
             id: doc.id,
-            ...(doc.data() as Omit<popRoute, "id">), // ép kiểu cho TS
+            ...(doc.data() as Omit<PopRoute, "id">), // ép kiểu cho TS
         }));
         return data;
     } catch (error) {

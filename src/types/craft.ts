@@ -27,7 +27,6 @@ export type trip = {
         dropOffAddress: string
         description: string
     }[];
-
 }
 
 

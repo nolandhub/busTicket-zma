@@ -1,7 +1,6 @@
 import { atom, selector } from "recoil";
-import { userCached } from "./types/userInfo";
-import { popRoute } from "./types/poproutes";
-
+import { userCached } from "./types/userType";
+import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 
 export const userState = atom<userCached | null>({
@@ -28,7 +27,7 @@ export const dateState = atom<Date>({
 // export const productsState = selector<PopRoute[]>();
 
 
-export const popRouteState = selector<popRoute[]>({
+export const popRouteState = selector<PopRoute[]>({
     key: "popRoutes",
     get: async () => {
         const res = await getPopRoutes();

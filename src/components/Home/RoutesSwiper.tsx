@@ -1,25 +1,30 @@
 import { FC, Suspense, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box, Text, Modal } from "zmp-ui";
+import { Box, Text, Modal, useNavigate } from "zmp-ui";
 import { Section } from "../common/Section";
-import { popRouteState } from "@/state";
+import { dateState, popRouteState } from "@/state";
 import { PopRouteSlideSkeleton } from "../common/Skeleton";
-import { popRoute } from "@/types/poproutes";
+import { PopRoute } from "@/types/routeType";
+import { buildURL } from "@/utils/buildURL";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { parseString } from "@/utils/date";
+
 
 export const RouteSwiperContent: FC = () => {
     const popRoutes = useRecoilValue(popRouteState);
-    const [selectedRoute, setSelectedRoute] = useState<popRoute | null>(null);
+    const [selectedRoute, setSelectedRoute] = useState<PopRoute | null>(null);
+    const date = useRecoilValue(dateState)
+    const navigate = useNavigate()
 
     return (
         <>
             <Section title="Tuyến nổi bật" padding="title-only">
                 <Swiper slidesPerView={1.25} spaceBetween={16} className="px-4">
-                    {popRoutes.map((route: popRoute) => (
-                        <SwiperSlide key={route.fromTo}>
+                    {popRoutes.map((route: PopRoute) => (
+                        <SwiperSlide key={route.routeId}>
                             <Box
                                 className="space-y-2 cursor-pointer p-2"
                                 onClick={() => setSelectedRoute(route)}
@@ -29,7 +34,7 @@ export const RouteSwiperContent: FC = () => {
                                     style={{ backgroundImage: `url(${route.image})` }}
                                 >
                                     <Text
-                                        size="normal"
+                                        size="small"
                                         className="absolute left-2 bottom-2 bg-black bg-opacity-50 text-white px-2 rounded-full"
                                     >
                                         {route.fromLabel} - {route.toLabel}
@@ -69,8 +74,13 @@ export const RouteSwiperContent: FC = () => {
                             text: "Đặt Ngay",
                             highLight: true,
                             onClick: () => {
-                                console.log("do sth")
-
+                                const url = buildURL("/availableTrip", {
+                                    fromLabel: selectedRoute.fromLabel,
+                                    toLabel: selectedRoute.toLabel,
+                                    routeId: selectedRoute.routeId,
+                                    date: parseString(date),
+                                })
+                                navigate(url)
                             },
                         },
 

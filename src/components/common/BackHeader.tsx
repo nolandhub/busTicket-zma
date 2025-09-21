@@ -25,6 +25,7 @@ const BackHeader: FC<BackHeaderProps> = ({ title, backTo, backSearchParams }) =>
             title={title}
             showBackIcon
             onBackClick={handleBack}
+            backgroundColor="#FFE065"
         />
     );
 };

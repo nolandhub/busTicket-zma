@@ -1,4 +1,4 @@
-import { coreData, userCached } from "@/types/userInfo";
+import { coreData, userCached } from "@/types/userType";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { userState } from "@/state";
@@ -9,8 +9,6 @@ import dayjs from "dayjs";
 
 export default function useUserInfo() {
     const [userData, setUser] = useRecoilState<userCached | null>(userState)
-
-    const [preUserData, setPreData] = useState<coreData | null>(null)
 
     const [isRegistered, setRegistered] = useState<boolean>(false)
     const { openSnackbar } = useSnackbar()
@@ -70,6 +68,7 @@ export default function useUserInfo() {
             openSnackbar({ text: "Đăng ký thành công!", type: "success" });
         } catch (error) {
             console.error("[useUserInfo] Lỗi khi lấy userInfo từ Zalo SDK:", error);
+            openSnackbar({ text: "Đã có lỗi xảy ra, hãy thử lại sau!", type: "error" });
             setUser(null)
         }
     }

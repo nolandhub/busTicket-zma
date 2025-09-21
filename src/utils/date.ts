@@ -17,7 +17,7 @@ export const formatDateVN = (date: Date | string) => {
  * VD: "2025-09-18"
  */
 export const parseString = (date: Date) => {
-    return dayjs(date).format("YYYY-MM-DD");
+    return dayjs(date).format("DD-MM-YYYY");
 };
 
 /**

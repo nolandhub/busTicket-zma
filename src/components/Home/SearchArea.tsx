@@ -1,6 +1,5 @@
 import DateInput from "@/components/common/inputs/DatePicker";
-import SwapButton from "@/components/common/buttons/SwapButton";
-import { MapPin, Locate } from "lucide-react";
+import { MapPin, Locate, ArrowUpDown } from "lucide-react";
 import { Box, Button } from "zmp-ui";
 import InputPicker from "../common/inputs/InputPicker";
 import useSearch from "@/hooks/useSearch";
@@ -34,7 +33,15 @@ const SearchArea = () => {
                     </Box>
 
                     <Box className="flex items-center justify-center sm:w-auto">
-                        <SwapButton onClick={handleSwap} />
+                        <Box
+                            onClick={handleSwap}
+                            className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center "
+                        >
+                            <ArrowUpDown
+                                size={18}
+                                className="text-gray-800 transform transition-transform duration-200 md:rotate-90"
+                            />
+                        </Box>
                     </Box>
 
                     <Box className="flex-1">

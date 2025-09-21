@@ -1,5 +1,3 @@
-import dayjs from "dayjs"
-
 //User INFO
 export interface coreData {
     id: string

@@ -19,10 +19,18 @@ export default function useSearch() {
     }
 
     const handleSearch = () => {
+        if (departure === destination) {
+            openSnackbar({
+                icon: true,
+                text: "Nơi đến và đi trùng nhau, vui lòng nhập lại!"
+            });
+            return
+        }
+
         if (!departure || !destination || !date) {
             openSnackbar({
                 icon: true,
-                text: "Vui lòng kiểm tra lại thông tin của bạn."
+                text: "Vui lòng nhập đủ thông tin!"
             });
             return
         }

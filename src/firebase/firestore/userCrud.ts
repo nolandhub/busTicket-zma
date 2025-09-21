@@ -1,5 +1,5 @@
 import { db } from "@/firebase/fireConfig";
-import { coreData } from "@/types/userInfo";
+import { coreData } from "@/types/userType";
 import {
     doc,
     setDoc,
