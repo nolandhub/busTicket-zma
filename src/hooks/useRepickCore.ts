@@ -2,7 +2,7 @@ import { useNavigate } from "zmp-ui"
 import useCoreInit from "./useCoreInit";
 import { useState } from "react";
 
-export default function useSetReturn() {
+export default function useRepickCore() {
 
     const { departDate,
         isReturn,

@@ -1,7 +1,7 @@
 import { AnimationRoutes, Route } from "zmp-ui";
 import HomePage from "@/pages/Home";
 import AvailableTrip from "./pages/AvailabeTrip";
-import SetDate from "./pages/SetReturnDate";
+import RepickCore from "./pages/RepickCore/RepickCore";
 
 
 // HomePage
@@ -11,7 +11,7 @@ export default function AppRoutes() {
             <Route>
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="/availableTrip" element={<AvailableTrip />}></Route>
-                <Route path="/setReturnDate" element={<SetDate />}></Route>
+                <Route path="/repickCore" element={<RepickCore />}></Route>
             </Route>
         </AnimationRoutes >
     );

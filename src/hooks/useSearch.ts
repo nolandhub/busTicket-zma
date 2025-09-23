@@ -13,7 +13,7 @@ export default function useSearch() {
 
     const handleSwitch = () => {
         setIsReturn(true)
-        navigate("/setReturnDate")
+        navigate("/repickCore")
     }
 
     const handleSwap = () => {

@@ -1,10 +1,9 @@
 import { MapPin, Locate } from "lucide-react";
 import { Box, Button, DatePicker, Icon, Switch } from "zmp-ui";
-import InputPicker from "../common/inputs/InputPicker";
+import InputPicker from "../common/InputPicker";
 import useCoreInit from "@/hooks/useCoreInit";
 import useSearch from "@/hooks/useSearch";
 import { parseString } from "@/utils/date";
-
 
 
 const SearchArea = () => {
@@ -26,7 +25,6 @@ const SearchArea = () => {
         <Box className="p-2 flex justify-center">
             <Box className="w-full max-w-5xl border rounded-xl border-gray-200 shadow-lg bg-white p-4 md:p-2 flex flex-col md:flex-row gap-4">
 
-                {/* Departure + Swap + Destination */}
                 <Box className="flex-1 flex flex-col sm:flex-row items-stretch gap-2">
                     <Box className="flex-1 flex items-center">
                         <InputPicker
@@ -63,7 +61,6 @@ const SearchArea = () => {
                     </Box>
                 </Box>
 
-                {/* md:flex-row md:justify-end md:items-center md:gap-6 */}
                 {/* Date input */}
                 <Box className="flex flex-col gap-4 ">
                     <Box className="pl-7 w-full flex flex-col gap-2">

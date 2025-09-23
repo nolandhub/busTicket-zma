@@ -7,14 +7,7 @@ import {
 } from "@/state";
 import { useRecoilState, useResetRecoilState } from "recoil";
 
-
-
-
-
-
 export default function useCoreInit() {
-
-
     const [departure, setDeparture] = useRecoilState(departureState)
     const [destination, setDestination] = useRecoilState(destinationState)
     const [departDate, setDepartDate] = useRecoilState(departureDateState)
