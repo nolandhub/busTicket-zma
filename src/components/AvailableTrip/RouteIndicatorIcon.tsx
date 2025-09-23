@@ -37,13 +37,13 @@ const RouteIndicator: FC<RouteIndicatorProps> = ({ defStart, defEnd }) => {
         <Box className="w-fit flex">
             {/* Cột icon + line */}
             <Box className="flex flex-col items-center">
-                <Locate size={22} strokeWidth={3} className="text-red-500" />
+                <Locate size={22} strokeWidth={3} className="text-red-600" />
                 <div className="w-px h-8 bg-gray-400 " />
-                <MapPinCheckIcon size={22} strokeWidth={3} className="text-blue-300" />
+                <MapPinCheckIcon size={22} strokeWidth={3} className="text-blue-400" />
             </Box>
 
             {/* Cột text */}
-            <Box className="flex flex-col justify-between ml-2">
+            <Box className="flex flex-col justify-between ml-1">
                 <Text bold size="small">{defStart}</Text>
                 <Text className="text-gray-400" bold size="small">{defEnd}</Text>
             </Box>

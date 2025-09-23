@@ -272,5 +272,98 @@
             "09:30",
             "12:00"
         ]
+    },
+    {
+        "routeId": "saigon-hanoi",
+        "compId": "cuctung",
+        "compName": "Cuc Tung Limousine",
+        "busName": "Limousine 20 Phòng Đôi VIP",
+        "avatar": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400",
+        "imageInterior": [
+            "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600",
+            "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600",
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600",
+            "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600"
+        ],
+        "defStartPoint": "Bến xe Miền Đông, TP.HCM",
+        "defEndPoint": "Bến xe Giáp Bát, Hà Nội",
+        "price": {
+            "type": "fixed",
+            "label": "Giá cố định",
+            "price": 450000,
+            "note": "Bao gồm nước uống và khăn lạnh"
+        },
+        "sale": {
+            "type": "percent",
+            "percent": 15
+        },
+        "pickUp": [
+            {
+                "title": "Bến xe Miền Đông",
+                "subTitle": "292 Đinh Bộ Lĩnh, Bình Thạnh, TP.HCM",
+                "time": "19:30"
+            },
+            {
+                "title": "Công viên 23/9",
+                "subTitle": "Đường Phạm Ngũ Lão, Quận 1, TP.HCM",
+                "time": "20:00"
+            },
+            {
+                "title": "Sân bay Tân Sơn Nhất",
+                "subTitle": "Cổng số 2, Terminal 1",
+                "time": "20:30"
+            }
+        ],
+        "dropOff": [
+            {
+                "title": "Bến xe Giáp Bát",
+                "subTitle": "Km8, Quốc lộ 1A, Hoàng Mai, Hà Nội",
+                "time": "06:00"
+            },
+            {
+                "title": "Bến xe Mỹ Đình",
+                "subTitle": "Phạm Hùng, Nam Từ Liêm, Hà Nội",
+                "time": "06:30"
+            },
+            {
+                "title": "Hồ Hoàn Kiếm",
+                "subTitle": "Lê Thánh Tông, Hoàn Kiếm, Hà Nội",
+                "time": "07:00"
+            }
+        ],
+        "policies": [
+            {
+                "type": "cancel",
+                "description": [
+                    "Hủy vé trước 24h: hoàn 100% giá vé",
+                    "Hủy vé từ 12-24h: hoàn 70% giá vé",
+                    "Hủy vé dưới 12h: hoàn 50% giá vé",
+                    "Không hoàn tiền nếu hủy vé trong vòng 2h trước giờ khởi hành"
+                ]
+            },
+            {
+                "type": "child",
+                "description": [
+                    "Trẻ em dưới 6 tuổi: miễn phí vé (không có chỗ ngồi riêng)",
+                    "Trẻ em từ 6-12 tuổi: giảm 50% giá vé người lớn",
+                    "Trẻ em trên 12 tuổi: tính như người lớn",
+                    "Mỗi người lớn chỉ được đi kèm tối đa 1 trẻ em miễn phí"
+                ]
+            },
+            {
+                "type": "pet",
+                "description": [
+                    "Không cho phép mang thú cưng lên xe",
+                    "Trừ trường hợp chó dẫn đường cho người khuyết tật",
+                    "Cần thông báo trước và có giấy tờ chứng minh hợp lệ"
+                ]
+            }
+        ],
+        "schedule": [
+            "19:30",
+            "20:30",
+            "21:30",
+            "22:30"
+        ]
     }
 ]

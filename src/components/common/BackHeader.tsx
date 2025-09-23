@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Header, useNavigate } from "zmp-ui";
 
 interface BackHeaderProps {
-    title: string;
+    title: string | React.ReactNode;
     backTo?: string;
     backSearchParams?: Record<string, string>;
 }
@@ -25,7 +25,8 @@ const BackHeader: FC<BackHeaderProps> = ({ title, backTo, backSearchParams }) =>
             title={title}
             showBackIcon
             onBackClick={handleBack}
-            backgroundColor="#FFE065"
+            backgroundColor="#ECFCCB"
+            className=""
         />
     );
 };

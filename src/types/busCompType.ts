@@ -1,4 +1,3 @@
-
 export interface Policies {
     type: "cancel" | "child" | "pet"
     description: string[]

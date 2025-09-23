@@ -23,9 +23,9 @@ export const departureDateState = atom<Date>({
     default: new Date(),
 });
 
-export const returnDateState = atom<Date>({
+export const returnDateState = atom<Date | null>({
     key: 'returnDate',
-    default: undefined
+    default: null
 });
 
 export const isReturnState = atom<boolean>({

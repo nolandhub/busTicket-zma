@@ -40,3 +40,18 @@ export const isExpired = (date: Date | string) => {
 export const today = () => {
     return dayjs().startOf("day").toDate();
 };
+
+/**
+ * Trả về khoảng cách giữa 2 ngày tính cả ngày bắt đầu
+ */
+export function getRangeDays(start: Date, end: Date, inclusive = true) {
+    const startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+
+    let diff = Math.round(
+        (endDay.getTime() - startDay.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    return inclusive ? diff + 1 : diff;
+}
+

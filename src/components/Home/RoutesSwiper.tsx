@@ -6,7 +6,7 @@ import { Section } from "../common/Section";
 import { departureDateState, popRouteState } from "@/state";
 import { PopRouteSlideSkeleton } from "../common/Skeleton";
 import { PopRoute } from "@/types/routeType";
-import { buildURL } from "@/utils/buildURL";
+import { buildURL } from "@/helper/buildURL";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

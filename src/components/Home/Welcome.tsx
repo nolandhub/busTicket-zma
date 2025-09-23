@@ -9,7 +9,7 @@ export const Welcome: FC = () => {
     <Header
       className="app-header no-border pl-4 flex-none pb-[6px]"
       showBackIcon={false}
-      backgroundColor="#FFE065"
+      backgroundColor="#ECFCCB"
       title={
         (
           <Box flex alignItems="center" className="space-x-2">

@@ -1,31 +1,34 @@
-import DateInput from "@/components/common/inputs/DatePicker";
 import { MapPin, Locate } from "lucide-react";
-import { Box, Button, Icon } from "zmp-ui";
+import { Box, Button, DatePicker, Icon, Switch } from "zmp-ui";
 import InputPicker from "../common/inputs/InputPicker";
+import useCoreInit from "@/hooks/useCoreInit";
 import useSearch from "@/hooks/useSearch";
+import { parseString } from "@/utils/date";
+
+
 
 const SearchArea = () => {
-
     const {
         departure,
         destination,
         departDate,
         isReturn,
-        handleSearch,
-        handleSwap,
-        handleSwitch,
+        returnDate,
+        setReturnDate,
         setDeparture,
         setDestination,
         setDepartDate,
-    } = useSearch();
+    } = useCoreInit();
+
+    const { handleSearch, handleSwap, handleSwitch } = useSearch()
 
     return (
-        <Box className="p-4 flex justify-center">
-            <Box className="w-full max-w-5xl border border-gray-200 rounded-2xl shadow-lg bg-white p-4 md:p-6 flex flex-col md:flex-row gap-4">
+        <Box className="p-2 flex justify-center">
+            <Box className="w-full max-w-5xl border rounded-xl border-gray-200 shadow-lg bg-white p-4 md:p-2 flex flex-col md:flex-row gap-4">
 
                 {/* Departure + Swap + Destination */}
                 <Box className="flex-1 flex flex-col sm:flex-row items-stretch gap-2">
-                    <Box className="flex-1">
+                    <Box className="flex-1 flex items-center">
                         <InputPicker
                             icon={<MapPin size={24} color="red" strokeWidth={2} />}
                             tittle="Chọn nơi đi"
@@ -49,9 +52,9 @@ const SearchArea = () => {
                         />
                     </Box>
 
-                    <Box className="flex-1">
+                    <Box className="flex-1 flex items-center">
                         <InputPicker
-                            icon={<Locate size={24} color="green" strokeWidth={2} />}
+                            icon={<Locate size={24} color="blue" strokeWidth={3} />}
                             tittle="Chọn nơi đến"
                             value={destination}
                             placeholder="Nơi đến"
@@ -60,10 +63,36 @@ const SearchArea = () => {
                     </Box>
                 </Box>
 
+                {/* md:flex-row md:justify-end md:items-center md:gap-6 */}
                 {/* Date input */}
-                <Box className="flex-1">
-                    <DateInput isReturn={isReturn} onSwitch={handleSwitch} value={departDate} onChange={setDepartDate} />
+                <Box className="flex flex-col gap-4 ">
+                    <Box className="pl-7 w-full flex flex-col gap-2">
+                        <DatePicker
+                            label="Ngày đi"
+                            startDate={new Date()}
+                            value={departDate}
+                            placeholder={parseString(departDate)}
+                            onChange={setDepartDate}
+                        />
+                        {returnDate && isReturn
+                            && <DatePicker
+                                label="Ngày về"
+                                startDate={new Date()}
+                                value={returnDate}
+                                placeholder={parseString(returnDate)}
+                                onChange={setReturnDate}
+                            />
+                        }
+                    </Box>
+                    <Box className="flex justify-end">
+                        <Switch
+                            checked={isReturn}
+                            onChange={handleSwitch}
+                            label="Khứ hồi"
+                        />
+                    </Box>
                 </Box>
+
 
                 {/* Search button */}
                 <Box className="flex justify-center items-center">
@@ -76,7 +105,6 @@ const SearchArea = () => {
                     >
                         Tìm Chuyến
                     </Button>
-
                 </Box>
             </Box>
         </Box>

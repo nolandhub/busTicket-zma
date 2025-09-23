@@ -1,7 +1,5 @@
 
-import { BusCompany, Policies } from "./busCompType";
-import { Route } from "./routeType";
-
+import { Policies } from "./busCompType";
 
 export interface PercentSale {
     type: "percent";
@@ -47,8 +45,8 @@ export interface basePickDrop {
     time: string
 }
 
-export interface Trip {
 
+export interface Trip {
     routeId: string           //saigon-hanoi
     compId: string           //cuctung
     compName: string        // Cuc Tung Limousine
