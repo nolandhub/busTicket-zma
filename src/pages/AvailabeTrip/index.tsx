@@ -57,9 +57,6 @@ export default function AvailableTrip() {
             <Box className="flex-1 overflow-auto space-y-4 p-4  border-t-2 border-t-slate-300">
                 <TripItem />
                 <TripItem />
-                <TripItem />
-                <TripItem />
-
 
             </Box>
         </Page >

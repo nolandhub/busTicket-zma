@@ -4,6 +4,7 @@ import { Policies } from "./busCompType";
 export interface PercentSale {
     type: "percent";
     percent: number;
+    maxAmount: number;
 }
 
 export interface FixedSale {
@@ -14,29 +15,11 @@ export interface FixedSale {
 export type Sale = PercentSale | FixedSale;
 
 
-//TRIP PRICE TYPE  
-export interface FixedPrice {
-    type: "fixed"
+export type PriceDetail = {
     label: string
     price: number
     note?: string
 }
-
-export interface ByRoom {
-    type: "byRoom"
-    label: string
-    price: number
-    note?: string
-}
-
-export interface ByRow {
-    type: "byRow"
-    label: string
-    price: number
-    note?: string
-}
-
-export type PricingPolicy = FixedPrice | ByRoom[] | ByRow[]
 
 
 export interface basePickDrop {
@@ -45,23 +28,36 @@ export interface basePickDrop {
     time: string
 }
 
+export interface FlashSale {
+    sale: Sale
+    isActive: boolean
+    expires_in: number
+}
+
 
 export interface Trip {
     routeId: string           //saigon-hanoi
     compId: string           //cuctung
     compName: string        // Cuc Tung Limousine
-    busName: string         //Limousine 20 Phòng Đôi VIP 
-    avatar: string            //"https://google.com"
-    imageInterior: string[]    //["https://google.com","https://google.com","https://google.com","https://google.com"]
-    defStartPoint: string
-    defEndPoint: string
-    price: PricingPolicy
-    sale?: Sale
+    busName: string         //Limousine 20 Phòng Đôi VIP
+    type: "fixed" | "byRoom" | "byRow"  //đồng giá || phòng || hàng
+    priceDetail: PriceDetail | PriceDetail[]
+    flashSale?: FlashSale
+
+    //Time + Location
+    startLocation: string
+    endLocation: string
+    startTime: Date      //schedule -> Date -> handle -> parseEndTime -> Save FireStore
+    duration: number
+    endTime: Date
+
+
     pickUp: basePickDrop[]
     dropOff: basePickDrop[]
     policies: Policies[]
-    schedule: string[]
 
+    //Schedule
+    schedule: string[]
 }
 
 

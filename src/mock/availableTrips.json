@@ -4,366 +4,290 @@
         "compId": "cuctung",
         "compName": "Cuc Tung Limousine",
         "busName": "Limousine 20 Phòng Đôi VIP",
-        "avatar": "https://picsum.photos/seed/cuctung/100/100",
-        "imageInterior": [
-            "https://picsum.photos/seed/cuctung1/400/300",
-            "https://picsum.photos/seed/cuctung2/400/300",
-            "https://picsum.photos/seed/cuctung3/400/300"
-        ],
-        "defStartPoint": "Bến xe Miền Đông, TP HCM",
-        "defEndPoint": "Bến xe Giáp Bát, Hà Nội",
+        "startLocation": "TP. Hồ Chí Minh",
+        "endLocation": "Hà Nội",
+        "startTime": "2024-03-15T08:00:00.000Z",
+        "duration": 1440,
+        "endTime": "2024-03-16T08:00:00.000Z",
         "price": {
             "type": "fixed",
-            "label": "Đồng Giá",
-            "price": 599000
+            "label": "Giá cố định",
+            "price": 850000,
+            "note": "Bao gồm nước uống và chăn gối"
+        },
+        "sale": {
+            "type": "percent",
+            "percent": 10
         },
         "pickUp": [
             {
                 "title": "Bến xe Miền Đông",
-                "subTitle": "TP HCM",
-                "time": "05:00"
+                "subTitle": "292 Đinh Bộ Lĩnh, Bình Thạnh",
+                "time": "07:30"
             },
             {
-                "title": "SB Tân Sơn Nhất",
-                "subTitle": "TP HCM",
-                "time": "05:30"
-            }
-        ],
-        "dropOff": [
-            {
-                "title": "BX Giáp Bát",
-                "subTitle": "Hà Nội",
-                "time": "12:00"
-            }
-        ],
-        "policies": [
-            {
-                "type": "cancel",
-                "description": [
-                    "Hoàn hủy trước 24h"
-                ]
-            },
-            {
-                "type": "child",
-                "description": [
-                    "Trẻ em dưới 5 tuổi miễn phí"
-                ]
-            }
-        ],
-        "schedule": [
-            "05:00",
-            "08:00",
-            "12:00",
-            "15:00",
-            "18:00"
-        ]
-    },
-    {
-        "routeId": "saigon-hanoi",
-        "compId": "ananh",
-        "compName": "An Anh Limousine",
-        "busName": "Limousine 34 Giường",
-        "avatar": "https://picsum.photos/seed/ananh/100/100",
-        "imageInterior": [
-            "https://picsum.photos/seed/ananh1/400/300",
-            "https://picsum.photos/seed/ananh2/400/300",
-            "https://picsum.photos/seed/ananh3/400/300",
-            "https://picsum.photos/seed/ananh4/400/300"
-        ],
-        "defStartPoint": "Bến xe Miền Tây, TP HCM",
-        "defEndPoint": "Bến xe Giáp Bát, Hà Nội",
-        "price": {
-            "type": "byRow",
-            "label": "Ghế thường",
-            "price": 300000
-        },
-        "pickUp": [
-            {
-                "title": "Bến xe Miền Tây",
-                "subTitle": "TP HCM",
+                "title": "Ga Sài Gòn",
+                "subTitle": "1 Nguyễn Thông, Quận 3",
                 "time": "08:00"
             }
         ],
         "dropOff": [
             {
-                "title": "Bến xe Giáp Bát",
-                "subTitle": "Hà Nội",
-                "time": "15:00"
+                "title": "Bến xe Mỹ Đình",
+                "subTitle": "Phạm Hùng, Nam Từ Liêm",
+                "time": "07:30"
+            },
+            {
+                "title": "Ga Hà Nội",
+                "subTitle": "120 Lê Duẩn, Hoàn Kiếm",
+                "time": "08:00"
             }
         ],
         "policies": [
-            {
-                "type": "cancel",
-                "description": [
-                    "Hoàn hủy trước 12h"
-                ]
-            },
-            {
-                "type": "pet",
-                "description": [
-                    "Không mang thú cưng"
-                ]
-            }
+            "REFUND_POLICY",
+            "LUGGAGE_POLICY"
         ],
         "schedule": [
             "08:00",
-            "10:00",
             "14:00",
-            "22:45",
-            "23:30"
+            "20:00"
         ]
     },
     {
-        "routeId": "saigon-danang",
-        "compId": "quangloc",
-        "compName": "Quang Lộc Limousine",
-        "busName": "Limousine 20 Ghế VIP",
-        "avatar": "https://picsum.photos/seed/quangloc/100/100",
-        "imageInterior": [
-            "https://picsum.photos/seed/quangloc1/400/300",
-            "https://picsum.photos/seed/quangloc2/400/300",
-            "https://picsum.photos/seed/quangloc3/400/300"
+        "routeId": "saigon-dalat",
+        "compId": "phuongnam",
+        "compName": "Phương Nam Express",
+        "busName": "Limousine 24 Ghế VIP",
+        "startLocation": "TP. Hồ Chí Minh",
+        "endLocation": "Đà Lạt",
+        "startTime": "2024-03-15T09:00:00.000Z",
+        "duration": 420,
+        "endTime": "2024-03-15T16:00:00.000Z",
+        "price": [
+            {
+                "type": "byRoom",
+                "label": "Phòng đơn",
+                "price": 320000,
+                "note": "1 người/phòng"
+            },
+            {
+                "type": "byRoom",
+                "label": "Phòng đôi",
+                "price": 280000,
+                "note": "2 người/phòng"
+            }
         ],
-        "defStartPoint": "Bến xe Miền Đông, TP HCM",
-        "defEndPoint": "Bến xe Đà Nẵng",
-        "price": {
+        "sale": {
             "type": "fixed",
-            "label": "VIP",
-            "price": 450000
+            "amount": 50000
         },
         "pickUp": [
             {
-                "title": "Bến xe Miền Đông",
-                "subTitle": "TP HCM",
-                "time": "06:00"
+                "title": "Bến xe Miền Tây",
+                "subTitle": "395 Kinh Dương Vương, Bình Tân",
+                "time": "08:30"
             }
         ],
         "dropOff": [
             {
-                "title": "Bến xe Đà Nẵng",
-                "subTitle": "Đà Nẵng",
-                "time": "12:00"
+                "title": "Bến xe Đà Lạt",
+                "subTitle": "1 Tô Hiến Thành, Phường 3",
+                "time": "15:30"
+            },
+            {
+                "title": "Chợ Đà Lạt",
+                "subTitle": "Nguyễn Thị Minh Khai, Phường 1",
+                "time": "16:00"
             }
         ],
         "policies": [
-            {
-                "type": "cancel",
-                "description": [
-                    "Hoàn hủy trước 24h"
-                ]
-            },
-            {
-                "type": "child",
-                "description": [
-                    "Trẻ em dưới 6 tuổi miễn phí"
-                ]
-            }
+            "BOOKING_POLICY",
+            "REFUND_POLICY"
         ],
         "schedule": [
-            "06:00",
             "09:00",
-            "12:00",
-            "16:00"
+            "15:00",
+            "21:00"
         ]
     },
     {
-        "routeId": "hanoi-haiphong",
-        "compId": "phatloc",
-        "compName": "Phát Lộc Limousine",
-        "busName": "Limousine 16 Ghế VIP",
-        "avatar": "https://picsum.photos/seed/phatloc/100/100",
-        "imageInterior": [
-            "https://picsum.photos/seed/phatloc1/400/300",
-            "https://picsum.photos/seed/phatloc2/400/300",
-            "https://picsum.photos/seed/phatloc3/400/300"
+        "routeId": "hanoi-halong",
+        "compId": "halongexpress",
+        "compName": "Hạ Long Express",
+        "busName": "Limousine 16 Ghế Massage",
+        "startLocation": "Hà Nội",
+        "endLocation": "Hạ Long",
+        "startTime": "2024-03-15T07:00:00.000Z",
+        "duration": 180,
+        "endTime": "2024-03-15T10:00:00.000Z",
+        "price": [
+            {
+                "type": "byRow",
+                "label": "Hàng đầu",
+                "price": 180000,
+                "note": "Ghế massage cao cấp"
+            },
+            {
+                "type": "byRow",
+                "label": "Hàng giữa",
+                "price": 150000,
+                "note": "Ghế tiêu chuẩn"
+            },
+            {
+                "type": "byRow",
+                "label": "Hàng cuối",
+                "price": 120000,
+                "note": "Ghế thường"
+            }
         ],
-        "defStartPoint": "Bến xe Giáp Bát, Hà Nội",
-        "defEndPoint": "Bến xe Hải Phòng",
-        "price": {
-            "type": "byRoom",
-            "label": "Phòng đôi",
-            "price": 350000
-        },
         "pickUp": [
             {
+                "title": "Ga Hà Nội",
+                "subTitle": "120 Lê Duẩn, Hoàn Kiếm",
+                "time": "06:30"
+            },
+            {
                 "title": "Bến xe Giáp Bát",
-                "subTitle": "Hà Nội",
+                "subTitle": "Giải Phóng, Hoàng Mai",
                 "time": "07:00"
             }
         ],
         "dropOff": [
             {
-                "title": "Bến xe Hải Phòng",
-                "subTitle": "Hải Phòng",
-                "time": "11:00"
+                "title": "Bến Tàu Du Lịch Hạ Long",
+                "subTitle": "Đường Hạ Long, Bãi Cháy",
+                "time": "09:45"
+            },
+            {
+                "title": "Chợ Hạ Long",
+                "subTitle": "Lê Thánh Tông, Hồng Hải",
+                "time": "10:00"
             }
         ],
         "policies": [
-            {
-                "type": "cancel",
-                "description": [
-                    "Hoàn hủy trước 12h"
-                ]
-            },
-            {
-                "type": "pet",
-                "description": [
-                    "Cho phép mang thú cưng nhỏ"
-                ]
-            }
+            "LUGGAGE_POLICY",
+            "SAFETY_POLICY"
         ],
         "schedule": [
             "07:00",
-            "09:30",
-            "11:00",
-            "14:00"
+            "10:00",
+            "13:00",
+            "16:00"
         ]
     },
     {
         "routeId": "danang-hue",
-        "compId": "hongnhung",
-        "compName": "Hồng Nhung Limousine",
-        "busName": "Limousine 18 Ghế VIP",
-        "avatar": "https://picsum.photos/seed/hongnhung/100/100",
-        "imageInterior": [
-            "https://picsum.photos/seed/hongnhung1/400/300",
-            "https://picsum.photos/seed/hongnhung2/400/300",
-            "https://picsum.photos/seed/hongnhung3/400/300",
-            "https://picsum.photos/seed/hongnhung4/400/300"
-        ],
-        "defStartPoint": "Bến xe Đà Nẵng",
-        "defEndPoint": "Bến xe Huế",
+        "compId": "hoanglong",
+        "compName": "Hoàng Long Tourist",
+        "busName": "Xe Khách 45 Chỗ",
+        "startLocation": "Đà Nẵng",
+        "endLocation": "Huế",
+        "startTime": "2024-03-15T14:30:00.000Z",
+        "duration": 150,
+        "endTime": "2024-03-15T17:00:00.000Z",
         "price": {
             "type": "fixed",
-            "label": "Đồng Giá",
-            "price": 400000
+            "label": "Giá thống nhất",
+            "price": 85000,
+            "note": "Xe máy lạnh, wifi miễn phí"
         },
         "pickUp": [
             {
                 "title": "Bến xe Đà Nẵng",
-                "subTitle": "Đà Nẵng",
-                "time": "05:30"
+                "subTitle": "201 Tôn Đức Thắng, Liên Chiểu",
+                "time": "14:00"
+            },
+            {
+                "title": "Ga Đà Nẵng",
+                "subTitle": "202 Hải Phòng, Hải Châu",
+                "time": "14:30"
             }
         ],
         "dropOff": [
             {
-                "title": "Bến xe Huế",
-                "subTitle": "Huế",
-                "time": "09:30"
+                "title": "Bến xe Phía Nam Huế",
+                "subTitle": "An Cựu, TP. Huế",
+                "time": "16:30"
+            },
+            {
+                "title": "Chùa Thiên Mụ",
+                "subTitle": "Hương Long, TP. Huế",
+                "time": "17:00"
             }
         ],
         "policies": [
-            {
-                "type": "cancel",
-                "description": [
-                    "Hoàn hủy trước 24h"
-                ]
-            },
-            {
-                "type": "child",
-                "description": [
-                    "Trẻ em dưới 5 tuổi miễn phí"
-                ]
-            }
+            "BOOKING_POLICY",
+            "REFUND_POLICY",
+            "LUGGAGE_POLICY"
         ],
         "schedule": [
-            "05:30",
-            "07:30",
-            "09:30",
-            "12:00"
+            "06:00",
+            "08:30",
+            "14:30",
+            "17:00",
+            "19:30"
         ]
     },
     {
-        "routeId": "saigon-hanoi",
-        "compId": "cuctung",
-        "compName": "Cuc Tung Limousine",
-        "busName": "Limousine 20 Phòng Đôi VIP",
-        "avatar": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400",
-        "imageInterior": [
-            "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600",
-            "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600",
-            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600",
-            "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600"
+        "routeId": "cantho-camau",
+        "compId": "mekongdelta",
+        "compName": "Mekong Delta Transport",
+        "busName": "Limousine 22 Phòng Nằm",
+        "startLocation": "Cần Thơ",
+        "endLocation": "Cà Mau",
+        "startTime": "2024-03-15T22:00:00.000Z",
+        "duration": 300,
+        "endTime": "2024-03-16T03:00:00.000Z",
+        "price": [
+            {
+                "type": "byRoom",
+                "label": "Phòng VIP",
+                "price": 450000,
+                "note": "Phòng riêng, tiện nghi cao cấp"
+            },
+            {
+                "type": "byRoom",
+                "label": "Phòng thường",
+                "price": 350000,
+                "note": "Phòng tiêu chuẩn"
+            }
         ],
-        "defStartPoint": "Bến xe Miền Đông, TP.HCM",
-        "defEndPoint": "Bến xe Giáp Bát, Hà Nội",
-        "price": {
-            "type": "fixed",
-            "label": "Giá cố định",
-            "price": 450000,
-            "note": "Bao gồm nước uống và khăn lạnh"
-        },
         "sale": {
             "type": "percent",
             "percent": 15
         },
         "pickUp": [
             {
-                "title": "Bến xe Miền Đông",
-                "subTitle": "292 Đinh Bộ Lĩnh, Bình Thạnh, TP.HCM",
-                "time": "19:30"
+                "title": "Bến xe Cần Thơ",
+                "subTitle": "91B Nguyễn Trãi, Cái Răng",
+                "time": "21:30"
             },
             {
-                "title": "Công viên 23/9",
-                "subTitle": "Đường Phạm Ngũ Lão, Quận 1, TP.HCM",
-                "time": "20:00"
-            },
-            {
-                "title": "Sân bay Tân Sơn Nhất",
-                "subTitle": "Cổng số 2, Terminal 1",
-                "time": "20:30"
+                "title": "Chợ Cần Thơ",
+                "subTitle": "Hải Bà Trưng, Ninh Kiều",
+                "time": "22:00"
             }
         ],
         "dropOff": [
             {
-                "title": "Bến xe Giáp Bát",
-                "subTitle": "Km8, Quốc lộ 1A, Hoàng Mai, Hà Nội",
-                "time": "06:00"
+                "title": "Bến xe Cà Mau",
+                "subTitle": "Nguyễn Tất Thành, Phường 5",
+                "time": "02:45"
             },
             {
-                "title": "Bến xe Mỹ Đình",
-                "subTitle": "Phạm Hùng, Nam Từ Liêm, Hà Nội",
-                "time": "06:30"
-            },
-            {
-                "title": "Hồ Hoàn Kiếm",
-                "subTitle": "Lê Thánh Tông, Hoàn Kiếm, Hà Nội",
-                "time": "07:00"
+                "title": "Cột Mốc Cà Mau",
+                "subTitle": "Đất Mũi, Ngọc Hiển",
+                "time": "03:00"
             }
         ],
         "policies": [
-            {
-                "type": "cancel",
-                "description": [
-                    "Hủy vé trước 24h: hoàn 100% giá vé",
-                    "Hủy vé từ 12-24h: hoàn 70% giá vé",
-                    "Hủy vé dưới 12h: hoàn 50% giá vé",
-                    "Không hoàn tiền nếu hủy vé trong vòng 2h trước giờ khởi hành"
-                ]
-            },
-            {
-                "type": "child",
-                "description": [
-                    "Trẻ em dưới 6 tuổi: miễn phí vé (không có chỗ ngồi riêng)",
-                    "Trẻ em từ 6-12 tuổi: giảm 50% giá vé người lớn",
-                    "Trẻ em trên 12 tuổi: tính như người lớn",
-                    "Mỗi người lớn chỉ được đi kèm tối đa 1 trẻ em miễn phí"
-                ]
-            },
-            {
-                "type": "pet",
-                "description": [
-                    "Không cho phép mang thú cưng lên xe",
-                    "Trừ trường hợp chó dẫn đường cho người khuyết tật",
-                    "Cần thông báo trước và có giấy tờ chứng minh hợp lệ"
-                ]
-            }
+            "REFUND_POLICY",
+            "SAFETY_POLICY",
+            "LUGGAGE_POLICY"
         ],
         "schedule": [
-            "19:30",
-            "20:30",
-            "21:30",
-            "22:30"
+            "22:00",
+            "23:30"
         ]
     }
 ]

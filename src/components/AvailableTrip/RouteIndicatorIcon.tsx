@@ -1,53 +1,47 @@
-// import { MapPinCheckIcon, Locate } from "lucide-react";
-// import { FC } from "react";
-// import { Box, Text } from "zmp-ui";
-
-
-
-// const RouteIndicator: FC<{ defStart: string, defEnd: string }> = ({ defStart, defEnd }) => {
-//     return (
-//         <Box className="w-fit">
-//             <Box className="grid grid-flow-col grid-rows-3 items-center justify-center">
-//                 <div className="row-span-3">
-//                     <Locate size={22} strokeWidth={3} className="text-red-500" />
-//                     <div className="w-px h-10 bg-gray-400 mx-auto"></div>
-//                     <MapPinCheckIcon size={22} strokeWidth={3} className="text-blue-300" />
-//                 </div>
-//                 <div className="col-span-2 pl-1 max-w-md text-"><Text bold size="small">{defStart}b</Text></div>
-//                 <><br /></>
-//                 <div className="col-span-2 pl-1 text-start"><Text bold size="small">{defEnd}a</Text> </div>
-//             </Box >
-//         </Box >
-
-//     );
-// };
-// export default RouteIndicator;
-
 import { MapPinCheckIcon, Locate } from "lucide-react";
 import { FC } from "react";
 import { Box, Text } from "zmp-ui";
 
 interface RouteIndicatorProps {
-    defStart: string
-    defEnd: string
+    startLocation: string
+    endLocation: string
+    startTime: string
+    duration: string
+    endTime: string
 }
 
-const RouteIndicator: FC<RouteIndicatorProps> = ({ defStart, defEnd }) => {
+const RouteIndicator: FC<RouteIndicatorProps> = ({ startLocation, endLocation, startTime, duration, endTime }) => {
     return (
-        <Box className="w-fit flex">
+        <Box className="flex w-fit">
+            {/* Cột giờ */}
+            <Box className="flex flex-col justify-between ">
+                <Text className="text-black font-bold text-md" >
+                    {startTime}
+                </Text>
+                <Text className="text-end text-gray-400 text-[10px] font-extralight">
+                    {duration}
+                </Text>
+                <Text className="text-center text-gray-500 text-md font-bold" >
+                    {endTime}
+                </Text>
+            </Box>
+
             {/* Cột icon + line */}
-            <Box className="flex flex-col items-center">
-                <Locate size={22} strokeWidth={3} className="text-red-600" />
-                <div className="w-px h-8 bg-gray-400 " />
-                <MapPinCheckIcon size={22} strokeWidth={3} className="text-blue-400" />
+            <Box className="flex flex-col justify-end items-center mx-2">
+                <Locate size={12} strokeWidth={4} className="text-red-600" />
+                <div className="h-8 w-px bg-gray-400" />
+                <MapPinCheckIcon size={12} strokeWidth={4} className="text-blue-400" />
             </Box>
 
             {/* Cột text */}
-            <Box className="flex flex-col justify-between ml-1">
-                <Text bold size="small">{defStart}</Text>
-                <Text className="text-gray-400" bold size="small">{defEnd}</Text>
+            <Box className="flex flex-col justify-between">
+                <Text className="text-xs font-semibold">{startLocation}</Text>
+                <Text className="text-xs font-semibold text-gray-400" >
+                    {endLocation}
+                </Text>
             </Box>
         </Box>
+
     );
 };
 

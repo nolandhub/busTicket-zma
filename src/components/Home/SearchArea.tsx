@@ -23,8 +23,7 @@ const SearchArea = () => {
 
     return (
         <Box className="p-2 flex justify-center">
-            <Box className="w-full max-w-5xl border rounded-xl border-gray-200 shadow-lg bg-white p-4 md:p-2 flex flex-col md:flex-row gap-4">
-
+            <Box className="w-full max-w-2xl border rounded-xl border-gray-200 shadow-lg bg-white p-4 md:p-2 flex flex-col gap-4">
                 <Box className="flex-1 flex flex-col sm:flex-row items-stretch gap-2">
                     <Box className="flex-1 flex items-center">
                         <InputPicker

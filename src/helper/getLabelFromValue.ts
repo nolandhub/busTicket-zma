@@ -24,7 +24,6 @@ export const suggestions = [
     { label: "Mộc Châu", value: "mocchau" },
 ]
 
-
 export const getLabelFromValue = (value: string) => {
     const found = suggestions.find((item) => item.value === value);
     return found?.label;

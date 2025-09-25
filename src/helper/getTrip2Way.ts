@@ -31,7 +31,6 @@ export default async function findTripByFromTo(from: string, to: string): Promis
 
 }
 
-
 export function buildRouteKey(a: string, b: string): string {
     return `${a.trim().toLowerCase()}-${b.trim().toLowerCase()}`;
 }

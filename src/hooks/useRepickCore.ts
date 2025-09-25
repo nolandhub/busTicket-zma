@@ -3,7 +3,6 @@ import useCoreInit from "./useCoreInit";
 import { useState } from "react";
 
 export default function useRepickCore() {
-
     const { departDate,
         isReturn,
         returnDate,
@@ -17,12 +16,10 @@ export default function useRepickCore() {
 
     const [open, setOpen] = useState<boolean>(true) //active confirm button
 
-
     function handleChange() {
         resetReturnDate()
         setIsReturn(!isReturn)
         setOpen(false)
-
     }
 
     const handleBack = () => {
@@ -57,7 +54,7 @@ export default function useRepickCore() {
                 setReturnDate(date)
                 setOpen(false)
             }
-        }// reset start new depart
+        }// reset start new departDate
         else if (departDate && returnDate) {
             setDepartDate(date)
             resetReturnDate()
@@ -73,6 +70,4 @@ export default function useRepickCore() {
         handleClick,
         handleChange,
     }
-
-
 }
