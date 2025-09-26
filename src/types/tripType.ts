@@ -1,63 +1,51 @@
 
-import { Policies } from "./busCompType";
-
-export interface PercentSale {
-    type: "percent";
-    percent: number;
-    maxAmount: number;
+export interface SinglePrice {
+    singlePrice: number
 }
 
-export interface FixedSale {
-    type: "fixed";
-    amount: number;
+export interface RangePrice {
+    rangePrice: number[]
 }
 
-export type Sale = PercentSale | FixedSale;
+export type Price = SinglePrice & RangePrice
 
-
-export type PriceDetail = {
+export interface PriceDetail {
     label: string
-    price: number
-    note?: string
+    value: number
 }
 
 
-export interface basePickDrop {
-    title: string,
-    subTitle: string,
-    time: string
+export interface SaleDetail {
+    type: "fixed" | "percent"
+    originPrice: Price      //singlePrice || rangePrice
+    value: number         //200000đ || 50%    
+    finalPrice: Price    //singlePrice || rangePrice
 }
 
 export interface FlashSale {
-    sale: Sale
-    isActive: boolean
-    expires_in: number
+    saleDetail: SaleDetail
+    startTime: Date;
+    endTime: Date;
+    isActive: boolean;
 }
-
 
 export interface Trip {
     routeId: string           //saigon-hanoi
     compId: string           //cuctung
     compName: string        // Cuc Tung Limousine
     busName: string         //Limousine 20 Phòng Đôi VIP
-    type: "fixed" | "byRoom" | "byRow"  //đồng giá || phòng || hàng
-    priceDetail: PriceDetail | PriceDetail[]
+    typePrice: "fixed" | "byRoom" | "byRow"  // đồng giá || phòng || hàng
+    price: Price     //giá gốc single || range
+    priceDetail: PriceDetail | PriceDetail[]  //chi tiết giá vé
     flashSale?: FlashSale
 
     //Time + Location
     startLocation: string
     endLocation: string
-    startTime: Date      //schedule -> Date -> handle -> parseEndTime -> Save FireStore
-    duration: number
-    endTime: Date
+    startTime: string
+    duration: number     //minutes
 
-
-    pickUp: basePickDrop[]
-    dropOff: basePickDrop[]
-    policies: Policies[]
-
-    //Schedule
-    schedule: string[]
+    isDelete: boolean
 }
 
 

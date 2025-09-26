@@ -7,10 +7,12 @@ import { departureDateState, popRouteState } from "@/state";
 import { PopRouteSlideSkeleton } from "../common/Skeleton";
 import { PopRoute } from "@/types/routeType";
 import { buildURL } from "@/helper/buildURL";
+import { parseString } from "@/utils/date";
+import { formatPrice } from "@/helper/formatPrice";
+import { StarsIcon } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { parseString } from "@/utils/date";
 
 
 export const RouteSwiperContent: FC = () => {
@@ -40,17 +42,17 @@ export const RouteSwiperContent: FC = () => {
                                         {route.fromLabel} - {route.toLabel}
                                     </Text>
                                 </Box>
-                                <Box className="space-y-2">
+                                <Box className="gap-1 px-1">
                                     {route.note && (
-                                        <Text className=" font-medium text-xl">
-                                            ✨{route.note}
-                                        </Text>
+                                        <div className="flex items-center space-x-1 mb-1">
+                                            <StarsIcon className="text-yellow-200" size={20} strokeWidth={2} fill="yellow" />
+                                            <Text className="font-medium text-xl">
+                                                {route.note}
+                                            </Text>
+                                        </div>
                                     )}
-                                    <Text className="text-xl font-semibold text-indigo-600 ">
-                                        {route.price.toLocaleString("vi-VN", {
-                                            style: "currency",
-                                            currency: "VND",
-                                        })}
+                                    <Text className="ml-6 text-xl font-semibold text-indigo-600 ">
+                                        <span className="text-gray-400 text-[16px] font-medium">Từ</span> {formatPrice(route.price)}đ
                                     </Text>
                                 </Box>
                             </Box>

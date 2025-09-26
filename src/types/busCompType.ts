@@ -1,7 +1,6 @@
 export interface Policies {
-    type: "cancel" | "child" | "pet"
+    title: string,
     description: string[]
-
 }
 
 export interface BusCompany {
