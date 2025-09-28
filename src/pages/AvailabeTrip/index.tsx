@@ -1,8 +1,39 @@
-import { TripItem } from "@/components/AvailableTrip/TripItem";
+import TripItem from "@/components/AvailableTrip/TripItem"
 import BackHeader from "@/components/common/BackHeader";
 import SearchArea from "@/components/Home/SearchArea";
+import { Trip } from "@/types/tripType";
 import { useState } from "react";
 import { Box, Text, Page, useLocation, Modal } from "zmp-ui";
+
+
+
+const tripMock: Trip = {
+    routeId: "saigon-hanoi",
+    compId: "cuctung",
+    compName: "Cúc Tùng Limousine",
+    busName: "Limousine 20 Phòng Đôi VIP",
+    typePrice: "byRoom",
+    price: [600000, 800000],   // 2 mức giá theo loại phòng
+    priceDetail: [
+        { label: "Phòng đơn", value: 600000 },
+        { label: "Phòng đôi", value: 800000 },
+    ],
+    flashSale: {
+        saleDetail: {
+            type: "fixed",
+            value: 20000,  // giảm 20%
+            finalPrice: [480000, 640000],  // giá sau giảm
+        },
+        endTime: new Date("2025-09-28T20:00:00"),
+        isActive: true,
+    },
+    startLocation: "Bến xe Miền Đông, TP.HCM",
+    endLocation: "Bến xe Giáp Bát, Hà Nội",
+    startTime: "08:00",
+    duration: "22h 30p",
+    endTime: "06:30",
+    isDelete: false,
+}
 
 export default function AvailableTrip() {
     const location = useLocation();
@@ -29,7 +60,7 @@ export default function AvailableTrip() {
                             <Text bold size="xLarge" className=" text-gray-600">{date}</Text>
                         </div>
 
-                        <Text onClick={handleClick} className="mt-8 underline underline-offset-2">
+                        <Text onClick={handleClick} className="cursor-pointer mt-8 underline underline-offset-2">
                             Thay đổi
                         </Text>
                     </Box>
@@ -55,8 +86,7 @@ export default function AvailableTrip() {
             }
 
             <Box className="flex-1 overflow-auto space-y-4 p-4  border-t-2 border-t-slate-300">
-                <TripItem />
-                <TripItem />
+                <TripItem trip={tripMock} />
 
             </Box>
         </Page >

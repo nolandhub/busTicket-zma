@@ -59,5 +59,3 @@ export const popRouteState = selector<PopRoute[]>({
 //         return res
 //     }
 // })
-
-export const finalPrice = selector<Trip>
