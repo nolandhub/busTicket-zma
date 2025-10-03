@@ -4,9 +4,7 @@ import {
   SnackbarProvider,
   ZMPRouter,
 } from "zmp-ui";
-
 import BottomNav from "./components/common/Navbar";
-
 import { AppProps } from "zmp-ui/app";
 import AppRoutes from "./routesApp";
 import { ConfigProvider } from "./components/common/config-provider";
@@ -15,7 +13,6 @@ import { getConfig } from "./utils/getConfig";
 
 const FixedSnackbarProvider =
   SnackbarProvider as unknown as React.ComponentType<{ children?: React.ReactNode }>;
-
 const Layout = () => {
   return (
     <RecoilRoot>
@@ -35,9 +32,6 @@ const Layout = () => {
         </App>
       </ConfigProvider>
     </RecoilRoot>
-
-
-
   );
 };
 export default Layout;

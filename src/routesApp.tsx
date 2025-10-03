@@ -3,7 +3,6 @@ import HomePage from "@/pages/Home";
 import AvailableTrip from "./pages/AvailabeTrip";
 import RepickCore from "./pages/RepickCore/RepickCore";
 
-
 // HomePage
 export default function AppRoutes() {
     return (
@@ -13,8 +12,6 @@ export default function AppRoutes() {
                 <Route path="/availableTrip" element={<AvailableTrip />}></Route>
                 <Route path="/repickCore" element={<RepickCore />}></Route>
             </Route>
-        </AnimationRoutes >
+        </AnimationRoutes>
     );
-
-
 }

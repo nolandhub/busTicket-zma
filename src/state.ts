@@ -1,8 +1,10 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import { userCached } from "./types/userType";
 import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 import { Trip } from "./types/tripType";
+import { getAvaiLableTrip } from "@/firebase/firestore/tripCrud";
+
 
 export const userState = atom<userCached | null>({
     key: 'user',
@@ -42,20 +44,25 @@ export const popRouteState = selector<PopRoute[]>({
     },
 });
 
+export const routeIdState = selector<string | null>({
+    key: "routeId",
+    get: ({ get }) => {
+        const departure = get(departureState);
+        const destination = get(destinationState);
+        if (!departure || !destination) return null;
+        return `${departure}-${destination}`; // ví dụ: "saigon-hanoi"
+    },
+});
 
-// export const rootIdState = atom<string | null>({
-//     key: "rootId",
-//     default: null
-// })
+
+export const tripAvailable = selector<Trip[]>({
+    key: "availableTrip",
+    get: async ({ get }) => {
+        const routeId = get(routeIdState)
+        if (!routeId) return [];
+
+        return await getAvaiLableTrip(routeId);
+    },
+});
 
 
-// export const tripState = selector<Trip[]>({
-//     key: "trips",
-//     get: async ({ get }) => {
-//         const rootId = get(rootIdState)
-//         if (!rootId) return []
-
-//         const res = await getTripsById(rootId)
-//         return res
-//     }
-// })

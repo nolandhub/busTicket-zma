@@ -3,6 +3,9 @@ import { parseString } from "@/utils/date";
 import { getLabelFromValue } from "@/helper/getLabelFromValue";
 import { useNavigate, useSnackbar } from "zmp-ui";
 import useCoreInit from "./useCoreInit";
+import { useRecoilValue } from "recoil";
+import { routeIdState } from "@/state";
+
 
 
 export default function useSearch() {
@@ -37,6 +40,7 @@ export default function useSearch() {
             });
             return
         }
+
         const url = buildURL("/availableTrip", {
             from: departure,
             to: destination,
@@ -44,6 +48,8 @@ export default function useSearch() {
             fromLabel: getLabelFromValue(departure),
             toLabel: getLabelFromValue(destination),
         })
+
+
 
         if (location.pathname === "/availableTrip") {
             // Nếu đã ở trang này rồi, chỉ cập nhật URL

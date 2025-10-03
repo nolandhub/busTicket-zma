@@ -8,11 +8,12 @@ interface RouteIndicatorProps {
     startTime: string
     duration: string
     endTime: string
+    onClick?: () => void
 }
 
-const RouteIndicator: FC<RouteIndicatorProps> = ({ startLocation, endLocation, startTime, duration, endTime }) => {
+const RouteIndicator: FC<RouteIndicatorProps> = ({ startLocation, endLocation, startTime, duration, endTime, onClick }) => {
     return (
-        <Box className="flex gap-1">
+        <Box onClick={onClick} className="flex gap-1 cursor-pointer">
             {/* Cột giờ */}
             <Box className="flex flex-col justify-between">
                 <Text className="text-black font-bold text-md" >

@@ -1,21 +1,9 @@
-export function formatDuration(minutes: number) {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    if (hours === 0) return `${mins}m`;
-    if (mins === 0) return `${hours}h`;
-    return `${hours}h${mins}m`;
-}
+import dayjs from "dayjs";
 
+export const ShowTimeHH_MM_SS = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
 
-export function formatEndTime(endTime: number) {
-    const parseDate = new Date(endTime)
-    const time = parseDate.toLocaleTimeString('vi-VN',
-        {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        }
-    )
-
-    return time
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }

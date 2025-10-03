@@ -4,9 +4,10 @@ import InputPicker from "../common/InputPicker";
 import useCoreInit from "@/hooks/useCoreInit";
 import useSearch from "@/hooks/useSearch";
 import { parseString } from "@/utils/date";
-
+import { useEffect } from "react";
 
 const SearchArea = () => {
+
     const {
         departure,
         destination,
@@ -68,7 +69,7 @@ const SearchArea = () => {
                             startDate={new Date()}
                             value={departDate}
                             placeholder={parseString(departDate)}
-                            onChange={setDepartDate}
+                            onChange={(date) => setDepartDate(date)}
                         />
                         {returnDate && isReturn
                             && <DatePicker
@@ -76,7 +77,7 @@ const SearchArea = () => {
                                 startDate={new Date()}
                                 value={returnDate}
                                 placeholder={parseString(returnDate)}
-                                onChange={setReturnDate}
+                                onChange={(date) => setReturnDate(date)}
                             />
                         }
                     </Box>

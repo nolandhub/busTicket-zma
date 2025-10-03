@@ -5,7 +5,7 @@ import { Heart } from "lucide-react"
 
 
 
-const TripContent: FC<{ onImgClick?: () => void }> = ({ onImgClick }) => {
+const TripContent: FC<{ compName: string, busName: string, onImgClick?: () => void }> = ({ busName, compName, onImgClick }) => {
     const [liked, setLiked] = useState<boolean>(false)
     const { openSnackbar } = useSnackbar()
     return (
@@ -15,8 +15,8 @@ const TripContent: FC<{ onImgClick?: () => void }> = ({ onImgClick }) => {
             </div>
 
             <div className="flex-1 flex-col p-2">
-                <Text className="text-lg font-bold">Cúc Tùng Limousine</Text>
-                <Text className="text-sm font-normal">Limousine 21 Phòng Đơn </Text>
+                <Text className="text-lg font-bold">{compName}</Text>
+                <Text className="text-sm font-normal">{busName} </Text>
             </div>
             <Heart
                 size={20}

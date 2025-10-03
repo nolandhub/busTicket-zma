@@ -1,24 +1,23 @@
 import { formatPrice } from "@/helper/formatPrice";
-import { SaleDetail } from "@/types/tripType";
+import { FlashSale, PriceDetail, SaleDetail } from "@/types/tripType";
 import { Box, Text } from 'zmp-ui';
 
 interface Props {
-    originPrice: number | number[]
-    saleDetail: SaleDetail
-    isActive: boolean
+    originPrice: PriceDetail | PriceDetail[]
+    flashSale: FlashSale | null
     onDetailClick?: () => void
 }
 
-export default function PriceDisplay({ originPrice, saleDetail, isActive, onDetailClick }: Props) {
-    const isArray = Array.isArray(originPrice)
-
-
+export default function PriceDisplay({ originPrice, flashSale, onDetailClick }: Props) {
     const resOri = returnMinMaxArray(originPrice)
-    const resFin = returnMinMaxArray(saleDetail?.finalPrice!)
 
-    if (isActive == true) {
-        if (isArray && saleDetail && resOri && resFin) {   //RangePrice + saleDetail
-            if (saleDetail.type == "percent") {      //percent
+    if (flashSale && flashSale.isActive == true) {
+        const resFin = returnMinMaxArray(flashSale.saleDetail.finalPrice)
+        const isArray = Array.isArray(flashSale.saleDetail.finalPrice)
+
+
+        if (isArray && resOri && resFin) {   //RangePrice + saleDetail
+            if (flashSale.saleDetail.type == "percent") {      //percent
                 return (
                     <Box className="flex flex-col flex-1 gap-1 justify-end items-end">
                         <div className="flex flex-row justify-end space-x-1 items-baseline">
@@ -35,7 +34,7 @@ export default function PriceDisplay({ originPrice, saleDetail, isActive, onDeta
                                 <Text className="text-slate-600 line-through text-xs">  {formatPrice(resOri.maxOut)}đ</Text>
                             </div>
                             <div className="flex flex-row justify-end space-x-1">
-                                <Text className="text-white text-xs bg-red-500 rounded-full px-1 font-bold">-{saleDetail.value}% </Text>
+                                <Text className="text-white text-xs bg-red-500 rounded-full px-1 font-bold">-{flashSale.saleDetail.value}% </Text>
                             </div>
                         </div>
                         <Text onClick={onDetailClick} className="cursor-pointer underline underline-offset-2 font-medium text-end text-indigo-700 text-md">Chi tiết giá</Text>
@@ -56,45 +55,45 @@ export default function PriceDisplay({ originPrice, saleDetail, isActive, onDeta
                         <Text className="text-slate-600 line-through text-xs">  {formatPrice(resOri.maxOut)}đ</Text>
                     </div>
                     <div className="flex flex-row justify-end space-x-1">
-                        <Text className="text-white bg-green-500 rounded-lg px-1 font-bold text-xs">GIẢM {formatPrice(saleDetail.value)}đ </Text>
+                        <Text className="text-white bg-green-500 rounded-lg px-1 font-bold text-xs">GIẢM {formatPrice(flashSale.saleDetail.value)}đ </Text>
                     </div>
                     <Text onClick={onDetailClick} className="cursor-pointer underline underline-offset-2 font-medium text-end text-indigo-700 text-md">Chi tiết giá</Text>
                 </Box>
             )
         }
-
-        if (!isArray && saleDetail) {                         //singlePrice + saleDetail
-            if (saleDetail.type == "percent") {
+        else if (!Array.isArray(flashSale.saleDetail.finalPrice)) {
+            if (flashSale.saleDetail.type == "percent") {
                 return (                                    //percent
                     <Box className="flex flex-col flex-1 gap-1 justify-end items-end">
-                        <Text className="text-md font-bold text-end"> {formatPrice(saleDetail.finalPrice)}đ</Text>
+                        <Text className="text-md font-bold text-end"> {formatPrice(flashSale.saleDetail.finalPrice.value)}đ</Text>
                         <div className="flex flex-col gap-1 items-end justify-end">
-                            <Text className="text-slate-800 line-through text-xs">{formatPrice(originPrice)}đ</Text>  {/*Origin Price    */}
-                            <Text className="text-white text-xs bg-red-500 rounded-full font-bold px-1">-{saleDetail.value}% </Text>
+                            <Text className="text-slate-800 line-through text-xs">{formatPrice(resOri.value)}đ</Text>  {/*Origin Price    */}
+                            <Text className="text-white text-xs bg-red-500 rounded-full font-bold px-1">-{flashSale.saleDetail.value}%</Text>
                         </div>
                         <Text onClick={onDetailClick} className="cursor-pointer underline underline-offset-2 font-medium text-end text-indigo-700 text-md">Chi tiết giá</Text>
-
                     </Box>
                 )
             }
-            return (                                       //fixed amount
+            return (                                    //percent
                 <Box className="flex flex-col flex-1 gap-1 justify-end items-end">
-                    <Text className="text-md font-bold text-end"> {formatPrice(saleDetail.finalPrice)}đ</Text>
+                    <Text className="text-md font-bold text-end"> {formatPrice(flashSale.saleDetail.finalPrice.value)}đ</Text>
                     <div className="flex flex-col gap-1 items-end justify-end">
-                        <Text className="text-slate-800 line-through text-xs text-end">{formatPrice(originPrice)}đ</Text>      {/*Origin Price    */}
-                        <Text className="text-white text-xs bg-green-500 rounded-lg px-1 font-bold">GIẢM {formatPrice(saleDetail.value)}đ </Text>
+                        <Text className="text-slate-800 line-through text-xs">{formatPrice(resOri.value)}đ</Text>  {/*Origin Price    */}
+                        <Text className="text-white text-xs bg-red-500 rounded-full font-bold px-1">-{formatPrice(flashSale.saleDetail.value)}đ </Text>
                     </div>
                     <Text onClick={onDetailClick} className="cursor-pointer underline underline-offset-2 font-medium text-end text-indigo-700 text-md">Chi tiết giá</Text>
 
                 </Box>
-            );
+            )
         }
+
+
     }
 
     return (                            //base case (No sale)
         <Box className="flex flex-col flex-1 gap-1 justify-end h-fit">
             {
-                isArray ?
+                Array.isArray(originPrice) ?
                     <>
                         <div className="flex flex-row justify-end space-x-1 items-baseline">
                             <Text className="text-slate-500 text-[10px]" >Từ</Text>
@@ -106,7 +105,7 @@ export default function PriceDisplay({ originPrice, saleDetail, isActive, onDeta
                     </>
                     :
                     <>
-                        <Text className="text-md font-bold text-end"> {formatPrice(originPrice)}đ</Text>
+                        <Text className="text-md font-bold text-end"> {formatPrice(resOri.value)}đ</Text>
                         <Text onClick={onDetailClick} className="cursor-pointer underline underline-offset-2 font-medium text-end text-indigo-700 text-md">Chi tiết giá</Text>
                     </>
             }
@@ -114,13 +113,15 @@ export default function PriceDisplay({ originPrice, saleDetail, isActive, onDeta
     );
 }
 
-export const returnMinMaxArray = (input: number | number[]) => {
-    if (Array.isArray(input)) {
-        const minOut = Math.min(...input)
-        const maxOut = Math.max(...input)
+export function returnMinMaxArray(price: PriceDetail | PriceDetail[]) {
+    if (Array.isArray(price)) {
+        const values = price.map((p) => p.value)
+        const minOut = Math.min(...values)
+        const maxOut = Math.max(...values)
         return { minOut, maxOut }
+    } else {
+        return { value: price.value }
     }
-    return { input }
 }
 
 

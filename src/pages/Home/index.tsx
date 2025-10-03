@@ -14,7 +14,7 @@ export default function HomePage() {
                 <UserHero />
                 <SearchArea />
                 <Divider />
-                <RouteSwiper />
+                {/* <RouteSwiper /> */}
                 <Divider />
             </Box>
 

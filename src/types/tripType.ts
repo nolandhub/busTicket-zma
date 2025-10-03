@@ -1,20 +1,29 @@
-export interface PriceDetail {
-    label: string
-    value: number
-}
+
 
 export interface SaleDetail {
     type: "fixed" | "percent"
     value: number                    //200000đ || 50%    
-    finalPrice: number | number[]    //singlePrice || rangePrice
+    finalPrice: PriceDetail | PriceDetail[]    //singlePrice || rangePrice
 }
 
 
 export interface FlashSale {
     saleDetail: SaleDetail
-    endTime: Date;
+    endTime: string;
     isActive: boolean;
 }
+
+export interface BasePickDrop {
+    title: string,
+    subTitle: string,
+    time: string
+}
+
+export interface PriceDetail {
+    label: string
+    value: number
+}
+
 
 export interface Trip {
     routeId: string           //saigon-hanoi
@@ -22,8 +31,7 @@ export interface Trip {
     compName: string        // Cuc Tung Limousine
     busName: string         //Limousine 20 Phòng Đôi VIP
     typePrice: "fixed" | "byRoom" | "byRow"  // đồng giá || phòng || hàng
-    price: number | number[]                 //giá gốc single || range
-    priceDetail: PriceDetail | PriceDetail[]  //chi tiết giá vé
+    price: PriceDetail | PriceDetail[]                 //giá gốc single || range
     flashSale: FlashSale | null
 
     //Time + Location
@@ -32,6 +40,10 @@ export interface Trip {
     startTime: string
     duration: string     //minutes
     endTime: string
+
+    //PickDrop
+    pickUp: BasePickDrop[]
+    dropOff: BasePickDrop[]
 
     isDelete: boolean
 }

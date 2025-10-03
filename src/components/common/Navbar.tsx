@@ -2,9 +2,21 @@ import { BottomNavigation, Box, useLocation, useNavigate } from "zmp-ui";
 import { Icon } from "zmp-ui"
 import { useMemo, useState } from "react";
 import { useVirtualKeyboardVisible } from "@/hooks/hookHelper";
+/////////////////Remember Me/////////////////////////////////
+/*  Custom hide navBar for special page */
+export const NO_BOTTOM_NAVIGATION_PAGES =
+    [
+        "/availableTrip",
 
-export const NO_BOTTOM_NAVIGATION_PAGES = ["/availableTrip"];
-// "/formBooking", "/ticket", "/pickDrop"
+
+
+
+        /* Add another page that you dont want to show navBar */
+    ];
+
+
+/*  Custom hide navBar for special page */
+/////////////////Remember Me/////////////////////////////////
 
 const BottomNav = () => {
     const location = useLocation();

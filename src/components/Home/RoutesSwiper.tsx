@@ -1,4 +1,4 @@
-import { FC, Suspense, useState } from "react";
+import { FC, lazy, Suspense, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text, Modal, useNavigate } from "zmp-ui";

@@ -5,6 +5,7 @@ import appConfig from "../../../app-config.json";
 import { getConfig } from "@/utils/getConfig";
 
 export const Welcome: FC = () => {
+
   return (
     <Header
       className="app-header no-border pl-4 flex-none pb-[6px]"
