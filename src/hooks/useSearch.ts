@@ -3,13 +3,16 @@ import { parseString } from "@/utils/date";
 import { getLabelFromValue } from "@/helper/getLabelFromValue";
 import { useNavigate, useSnackbar } from "zmp-ui";
 import useCoreInit from "./useCoreInit";
-import { useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { routeIdState } from "@/state";
+import { startTransition } from 'react';
 
 
 
 export default function useSearch() {
     const { departDate, destination, departure, setIsReturn, setDeparture, setDestination } = useCoreInit()
+
+    const setRouteId = useSetRecoilState(routeIdState)
 
     const { openSnackbar } = useSnackbar()
     const navigate = useNavigate();
@@ -47,18 +50,18 @@ export default function useSearch() {
             date: parseString(departDate),
             fromLabel: getLabelFromValue(departure),
             toLabel: getLabelFromValue(destination),
+
         })
 
+        startTransition(() => { /* hold old data when wait new data api */
+            setRouteId(`${departure}-${destination}`)
 
-
-        if (location.pathname === "/availableTrip") {
-            // Nếu đã ở trang này rồi, chỉ cập nhật URL
-            navigate(url, { replace: true });
-        } else {
-            // Lần đầu: navigate bình thường
-            navigate(url);
-        }
-
+            if (location.pathname === "/availableTrip") {
+                navigate(url, { replace: true });   //No direct new page base on 'replace'
+            } else {
+                navigate(url);
+            }
+        });
     }
 
     return {

@@ -4,10 +4,8 @@ import InputPicker from "../common/InputPicker";
 import useCoreInit from "@/hooks/useCoreInit";
 import useSearch from "@/hooks/useSearch";
 import { parseString } from "@/utils/date";
-import { useEffect } from "react";
 
 const SearchArea = () => {
-
     const {
         departure,
         destination,

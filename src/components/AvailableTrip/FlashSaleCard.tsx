@@ -20,13 +20,12 @@ const FlashSaleCard: FC<{ flashSale: FlashSale | null }> = ({ flashSale }) => {
                 } else {
                     setRemainingTime(0)
                     clearInterval(time)
-
                 }
             }, 1000)
             return () => clearInterval(time)
         }, [])
 
-        if (!flashSale.isActive) {
+        if (!flashSale?.isActive || remainingTime == 0) {
             return (<></>)
         }
         return (

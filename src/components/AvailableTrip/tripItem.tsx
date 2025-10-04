@@ -2,7 +2,7 @@ import { Box, Button, Icon, Text } from "zmp-ui";
 import RouteIndicator from "./RouteIndicatorIcon";
 import { Zap, WalletIcon, HandshakeIcon } from "lucide-react";
 import { Divider } from "../common/Divider";
-import LabelWithIcon from "./SpecialPrivacy_LabelIcon";
+import LabelWithIcon from "./PoliciesWithIcon";
 import { Trip } from "@/types/tripType";
 import FlashSaleCard from "./FlashSaleCard";
 import TripContent from "./TripContent";

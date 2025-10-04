@@ -6,7 +6,7 @@ interface Props {
     busCompany: BusCompany
     imageViewer: {
         activeImgKey: number
-        visibleImgView
+        visibleImgView: boolean
         setVisibleImgView: (p: boolean) => void
     }
 }
@@ -17,9 +17,9 @@ interface ImgProps {
 }
 
 const ImageViewerCustom: FC<Props> = ({ busCompany, imageViewer }) => {
-    const imgsPresent: ImgProps[] = busCompany.imagesInterior.map((src, idx) => ({
+    const imgsPresent: ImgProps[] = busCompany?.imagesInterior.map((src, idx) => ({
         src,
-        idx
+        alt: `image-${idx}`
     }))
     return (
         <>
@@ -32,5 +32,4 @@ const ImageViewerCustom: FC<Props> = ({ busCompany, imageViewer }) => {
         </>
     )
 }
-
 export default ImageViewerCustom

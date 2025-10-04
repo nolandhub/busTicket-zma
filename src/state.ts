@@ -4,6 +4,7 @@ import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 import { Trip } from "./types/tripType";
 import { getAvaiLableTrip } from "@/firebase/firestore/tripCrud";
+import { getSuitableTimesForDate } from "./helper/filterTime";
 
 
 export const userState = atom<userCached | null>({
@@ -44,24 +45,26 @@ export const popRouteState = selector<PopRoute[]>({
     },
 });
 
-export const routeIdState = selector<string | null>({
+export const routeIdState = atom<string>({
     key: "routeId",
-    get: ({ get }) => {
-        const departure = get(departureState);
-        const destination = get(destinationState);
-        if (!departure || !destination) return null;
-        return `${departure}-${destination}`; // ví dụ: "saigon-hanoi"
-    },
+    default: "",
 });
+
 
 
 export const tripAvailable = selector<Trip[]>({
     key: "availableTrip",
     get: async ({ get }) => {
         const routeId = get(routeIdState)
+        const departureDate = get(departureDateState)
         if (!routeId) return [];
 
-        return await getAvaiLableTrip(routeId);
+        const trip = await getAvaiLableTrip(routeId);
+
+        const tripFilter = getSuitableTimesForDate(trip, departureDate)
+
+        return tripFilter
+
     },
 });
 
