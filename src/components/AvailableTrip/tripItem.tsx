@@ -3,7 +3,7 @@ import RouteIndicator from "./RouteIndicatorIcon";
 import { Zap, WalletIcon, HandshakeIcon } from "lucide-react";
 import { Divider } from "../common/Divider";
 import LabelWithIcon from "./PoliciesWithIcon";
-import { Trip } from "@/types/tripType";
+import { TripFiltered } from "@/types/tripType";
 import FlashSaleCard from "./FlashSaleCard";
 import TripContent from "./TripContent";
 import { FC } from "react";
@@ -15,7 +15,7 @@ import ImageViewerCustom from "./ImageViewer";
 
 
 
-const TripItem: FC<{ trip: Trip }> = ({ trip }) => {
+const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
     const {
         visibleSheet,
         activeTabKey,
@@ -26,18 +26,18 @@ const TripItem: FC<{ trip: Trip }> = ({ trip }) => {
         handleSelectImg,
         setVisibleSheet,
         setActiveTabKey } = useTrip()
-        
+
     return (
         <Box className="bg-white rounded-xl border border-slate-300 md:max-w-lg mx-auto shadow-lg">
             <FlashSaleCard flashSale={trip.flashSale} />
             <Box className="bg-white p-2 rounded-t-xl">
                 <Box className="flex-1 flex flex-row">
                     <RouteIndicator
-                        startLocation={trip.startLocation}
-                        endLocation={trip.endLocation}
-                        startTime={trip.startTime}
-                        duration={trip.duration}
-                        endTime={trip.endTime}
+                        startLocation={trip.activePickDrop.startLocation}
+                        endLocation={trip.activePickDrop.endLocation}
+                        startTime={trip.activePickDrop.startTime}
+                        duration={trip.activePickDrop.duration}
+                        endTime={trip.activePickDrop.endTime}
                         onClick={() => directTab("2")}
                     />
                     <PriceDisplay

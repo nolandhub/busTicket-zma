@@ -50,7 +50,6 @@ export default function useSearch() {
             date: parseString(departDate),
             fromLabel: getLabelFromValue(departure),
             toLabel: getLabelFromValue(destination),
-
         })
 
         startTransition(() => { /* hold old data when wait new data api */

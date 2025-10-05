@@ -1,0 +1,331 @@
+[
+    {
+        "routeId": "hanoi-saigon",
+        "compId": "cuctung",
+        "compName": "Cúc Tùng Limousine",
+        "busName": "Limousine 20 Phòng Đôi VIP",
+        "typePrice": "byRoom",
+        "price": [
+            {
+                "label": "Phòng đơn",
+                "value": 800000
+            },
+            {
+                "label": "Phòng đôi",
+                "value": 1400000
+            },
+            {
+                "label": "Phòng VIP",
+                "value": 2000000
+            }
+        ],
+        "flashSale": {
+            "saleDetail": {
+                "type": "percent",
+                "value": 20,
+                "finalPrice": [
+                    {
+                        "label": "Phòng đơn",
+                        "value": 640000
+                    },
+                    {
+                        "label": "Phòng đôi",
+                        "value": 1120000
+                    },
+                    {
+                        "label": "Phòng VIP",
+                        "value": 1600000
+                    }
+                ]
+            },
+            "endTime": "2025-10-08T13:00:00",
+            "isActive": true
+        },
+        "routeConfig": {
+            "forward": {
+                "key": "hanoi",
+                "startLocation": "Bến xe Giáp Bát, Hà Nội",
+                "endLocation": "Bến xe Miền Đông, TP.HCM",
+                "startTime": "06:30",
+                "duration": "30h 00p",
+                "endTime": "12:30",
+                "pickUp": [
+                    {
+                        "title": "Bến xe Giáp Bát",
+                        "subTitle": "Số 6 Giải Phóng, Hoàng Mai",
+                        "time": "06:30"
+                    },
+                    {
+                        "title": "Sân bay Nội Bài",
+                        "subTitle": "Cổng T1, Sóc Sơn",
+                        "time": "07:00"
+                    },
+                    {
+                        "title": "Big C Thăng Long",
+                        "subTitle": "222 Trần Duy Hưng, Cầu Giấy",
+                        "time": "06:45"
+                    }
+                ],
+                "dropOff": [
+                    {
+                        "title": "Bến xe Miền Đông",
+                        "subTitle": "292 Đinh Bộ Lĩnh, Bình Thạnh",
+                        "time": "12:00"
+                    },
+                    {
+                        "title": "Sân bay Tân Sơn Nhất",
+                        "subTitle": "Cổng Domestic, Tân Bình",
+                        "time": "12:30"
+                    },
+                    {
+                        "title": "Bến Thành Market",
+                        "subTitle": "Lê Lợi, Quận 1",
+                        "time": "12:15"
+                    }
+                ]
+            },
+            "backward": {
+                "key": "saigon",
+                "startLocation": "Bến xe Miền Đông, TP.HCM",
+                "endLocation": "Bến xe Giáp Bát, Hà Nội",
+                "startTime": "16:00",
+                "duration": "30h 00p",
+                "endTime": "22:00",
+                "pickUp": [
+                    {
+                        "title": "Bến xe Miền Đông",
+                        "subTitle": "292 Đinh Bộ Lĩnh, Bình Thạnh",
+                        "time": "16:00"
+                    },
+                    {
+                        "title": "Sân bay Tân Sơn Nhất",
+                        "subTitle": "Cổng Domestic, Tân Bình",
+                        "time": "16:30"
+                    },
+                    {
+                        "title": "Bến Thành Market",
+                        "subTitle": "Lê Lợi, Quận 1",
+                        "time": "16:15"
+                    }
+                ],
+                "dropOff": [
+                    {
+                        "title": "Bến xe Giáp Bát",
+                        "subTitle": "Số 6 Giải Phóng, Hoàng Mai",
+                        "time": "21:30"
+                    },
+                    {
+                        "title": "Sân bay Nội Bài",
+                        "subTitle": "Cổng T1, Sóc Sơn",
+                        "time": "22:00"
+                    },
+                    {
+                        "title": "Big C Thăng Long",
+                        "subTitle": "222 Trần Duy Hưng, Cầu Giấy",
+                        "time": "21:45"
+                    }
+                ]
+            }
+        },
+        "isDelete": false
+    },
+    {
+        "routeId": "hanoi-saigon",
+        "compId": "hoanglong",
+        "compName": "Hoàng Long Limousine",
+        "busName": "Giường nằm 40 chỗ",
+        "typePrice": "fixed",
+        "price": {
+            "label": "Giá cố định",
+            "value": 550000
+        },
+        "flashSale": null,
+        "routeConfig": {
+            "forward": {
+                "key": "hanoi",
+                "startLocation": "Bến xe Mỹ Đình, Hà Nội",
+                "endLocation": "Bến xe Miền Tây, TP.HCM",
+                "startTime": "18:00",
+                "duration": "28h 30p",
+                "endTime": "22:30",
+                "pickUp": [
+                    {
+                        "title": "Bến xe Mỹ Đình",
+                        "subTitle": "Phạm Hùng, Nam Từ Liêm",
+                        "time": "18:00"
+                    },
+                    {
+                        "title": "Keangnam Landmark",
+                        "subTitle": "Phạm Hùng, Cầu Giấy",
+                        "time": "18:15"
+                    }
+                ],
+                "dropOff": [
+                    {
+                        "title": "Bến xe Miền Tây",
+                        "subTitle": "Kinh Dương Vương, Bình Tân",
+                        "time": "22:00"
+                    },
+                    {
+                        "title": "Công viên Gia Định",
+                        "subTitle": "Hoàng Minh Giám, Phú Nhuận",
+                        "time": "22:30"
+                    }
+                ]
+            },
+            "backward": {
+                "key": "saigon",
+                "startLocation": "Bến xe Miền Tây, TP.HCM",
+                "endLocation": "Bến xe Mỹ Đình, Hà Nội",
+                "startTime": "17:30",
+                "duration": "28h 30p",
+                "endTime": "22:00",
+                "pickUp": [
+                    {
+                        "title": "Bến xe Miền Tây",
+                        "subTitle": "Kinh Dương Vương, Bình Tân",
+                        "time": "17:30"
+                    },
+                    {
+                        "title": "Công viên Gia Định",
+                        "subTitle": "Hoàng Minh Giám, Phú Nhuận",
+                        "time": "18:00"
+                    }
+                ],
+                "dropOff": [
+                    {
+                        "title": "Bến xe Mỹ Đình",
+                        "subTitle": "Phạm Hùng, Nam Từ Liêm",
+                        "time": "21:30"
+                    },
+                    {
+                        "title": "Keangnam Landmark",
+                        "subTitle": "Phạm Hùng, Cầu Giấy",
+                        "time": "22:00"
+                    }
+                ]
+            }
+        },
+        "isDelete": false
+    },
+    {
+        "routeId": "danang-hanoi",
+        "compId": "phuongtrang",
+        "compName": "Phương Trang FUTA",
+        "busName": "Limousine 24 Giường",
+        "typePrice": "byRow",
+        "price": [
+            {
+                "label": "Hàng 1",
+                "value": 450000
+            },
+            {
+                "label": "Hàng 2",
+                "value": 400000
+            },
+            {
+                "label": "Hàng 3",
+                "value": 350000
+            }
+        ],
+        "flashSale": {
+            "saleDetail": {
+                "type": "fixed",
+                "value": 50000,
+                "finalPrice": [
+                    {
+                        "label": "Hàng 1",
+                        "value": 400000
+                    },
+                    {
+                        "label": "Hàng 2",
+                        "value": 350000
+                    },
+                    {
+                        "label": "Hàng 3",
+                        "value": 300000
+                    }
+                ]
+            },
+            "endTime": "2025-10-09T13:00:00",
+            "isActive": true
+        },
+        "routeConfig": {
+            "forward": {
+                "key": "danang",
+                "startLocation": "Bến xe Đà Nẵng",
+                "endLocation": "Bến xe Giáp Bát, Hà Nội",
+                "startTime": "20:00",
+                "duration": "15h 30p",
+                "endTime": "11:30",
+                "pickUp": [
+                    {
+                        "title": "Bến xe Đà Nẵng",
+                        "subTitle": "Điện Biên Phủ, Thanh Khê",
+                        "time": "20:00"
+                    },
+                    {
+                        "title": "Sân bay Đà Nẵng",
+                        "subTitle": "Đường 2/9, Hải Châu",
+                        "time": "20:20"
+                    },
+                    {
+                        "title": "Big C Đà Nẵng",
+                        "subTitle": "Hùng Vương, Hải Châu",
+                        "time": "20:10"
+                    }
+                ],
+                "dropOff": [
+                    {
+                        "title": "Bến xe Giáp Bát",
+                        "subTitle": "Số 6 Giải Phóng, Hoàng Mai",
+                        "time": "11:00"
+                    },
+                    {
+                        "title": "Vincom Bà Triệu",
+                        "subTitle": "Bà Triệu, Hai Bà Trưng",
+                        "time": "11:30"
+                    }
+                ]
+            },
+            "backward": {
+                "key": "hanoi",
+                "startLocation": "Bến xe Giáp Bát, Hà Nội",
+                "endLocation": "Bến xe Đà Nẵng",
+                "startTime": "19:00",
+                "duration": "15h 30p",
+                "endTime": "10:30",
+                "pickUp": [
+                    {
+                        "title": "Bến xe Giáp Bát",
+                        "subTitle": "Số 6 Giải Phóng, Hoàng Mai",
+                        "time": "19:00"
+                    },
+                    {
+                        "title": "Vincom Bà Triệu",
+                        "subTitle": "Bà Triệu, Hai Bà Trưng",
+                        "time": "19:20"
+                    }
+                ],
+                "dropOff": [
+                    {
+                        "title": "Bến xe Đà Nẵng",
+                        "subTitle": "Điện Biên Phủ, Thanh Khê",
+                        "time": "10:00"
+                    },
+                    {
+                        "title": "Sân bay Đà Nẵng",
+                        "subTitle": "Đường 2/9, Hải Châu",
+                        "time": "10:30"
+                    },
+                    {
+                        "title": "Big C Đà Nẵng",
+                        "subTitle": "Hùng Vương, Hải Châu",
+                        "time": "10:15"
+                    }
+                ]
+            }
+        },
+        "isDelete": false
+    }
+]

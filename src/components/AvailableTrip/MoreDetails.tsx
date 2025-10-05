@@ -2,7 +2,7 @@ import { Box, Button, Sheet, Tabs, Text } from "zmp-ui"
 import { FC } from "react"
 import { BusCompany } from "@/types/busCompanyType"
 import { parseString } from "@/utils/date"
-import { Trip } from "@/types/tripType"
+import { TripFiltered } from "@/types/tripType"
 import { useRecoilValue } from "recoil"
 import { departureDateState } from "@/state"
 import DetailPriceTab from "./TabDisplay/DetailPriceTab"
@@ -10,7 +10,7 @@ import PoliciesTab from "./TabDisplay/PoliciesTab"
 import PickDropTab from "./TabDisplay/PickDropTab"
 
 interface MoreDetailsProps {
-    trip: Trip;
+    trip: TripFiltered;
     busCompany: BusCompany;
     sheet: {
         visibleSheet: boolean;
@@ -64,7 +64,7 @@ const MoreDetail: FC<MoreDetailsProps> = ({ busCompany, trip, sheet, tab, handle
                         </Tabs.Tab>
                         <Tabs.Tab key="2" label="Đón/Trả">
                             <Box p={4}>
-                                <PickDropTab pickUp={trip.pickUp} dropOff={trip.dropOff} />
+                                <PickDropTab pickUp={trip.activePickDrop.pickUp} dropOff={trip.activePickDrop.dropOff} />
                             </Box>
                         </Tabs.Tab>
                         <Tabs.Tab key="3" label="Hình ảnh">

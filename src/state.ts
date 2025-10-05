@@ -1,11 +1,10 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { atom, selector } from "recoil";
 import { userCached } from "./types/userType";
 import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
-import { Trip } from "./types/tripType";
-import { getAvaiLableTrip } from "@/firebase/firestore/tripCrud";
+import { TripFiltered } from "./types/tripType";
 import { getSuitableTimesForDate } from "./helper/filterTime";
-
+import { getTrip2WayAvailable } from "./firebase/firestore/tripCrud";
 
 export const userState = atom<userCached | null>({
     key: 'user',
@@ -52,19 +51,26 @@ export const routeIdState = atom<string>({
 
 
 
-export const tripAvailable = selector<Trip[]>({
+export const tripAvailable = selector<TripFiltered[]>({
     key: "availableTrip",
     get: async ({ get }) => {
         const routeId = get(routeIdState)
         const departureDate = get(departureDateState)
+        const departureKey = get(departureState)
+
         if (!routeId) return [];
 
-        const trip = await getAvaiLableTrip(routeId);
+        const trips = await getTrip2WayAvailable(routeId);
 
-        const tripFilter = getSuitableTimesForDate(trip, departureDate)
-
+        const tripsFiltered: TripFiltered[] = trips.map(trips => {
+            const isForward = trips.routeConfig.forward.key == departureKey
+            return {
+                ...trips,
+                activePickDrop: isForward ? trips.routeConfig.forward : trips.routeConfig.backward
+            }
+        });
+        const tripFilter = getSuitableTimesForDate(tripsFiltered, departureDate)
         return tripFilter
-
     },
 });
 

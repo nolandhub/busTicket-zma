@@ -1,11 +1,8 @@
-
-
 export interface SaleDetail {
     type: "fixed" | "percent"
     value: number                    //200000đ || 50%    
     finalPrice: PriceDetail | PriceDetail[]    //singlePrice || rangePrice
 }
-
 
 export interface FlashSale {
     saleDetail: SaleDetail
@@ -24,7 +21,6 @@ export interface PriceDetail {
     value: number
 }
 
-
 export interface Trip {
     routeId: string           //saigon-hanoi
     compId: string           //cuctung
@@ -33,18 +29,29 @@ export interface Trip {
     typePrice: "fixed" | "byRoom" | "byRow"  // đồng giá || phòng || hàng
     price: PriceDetail | PriceDetail[]                 //giá gốc single || range
     flashSale: FlashSale | null
+    routeConfig: {
+        forward: RouteDetails
+        backward: RouteDetails
+    }
+    updateTime?: Date
+    isDelete: boolean
+}
 
+export interface RouteDetails {
     //Time + Location
+    key: string             // saigon
     startLocation: string
     endLocation: string
-    startTime: string
-    duration: string     //minutes
-    endTime: string
+    startTime: string     //  04:00
+    duration: string     // 10h 20p
+    endTime: string      //  08:00
 
     //PickDrop
     pickUp: BasePickDrop[]
     dropOff: BasePickDrop[]
+}
 
-    isDelete: boolean
+export interface TripFiltered extends Trip {
+    activePickDrop: RouteDetails
 }
 

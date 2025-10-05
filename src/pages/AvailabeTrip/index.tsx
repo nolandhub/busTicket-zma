@@ -4,7 +4,7 @@ import SearchArea from "@/components/Home/SearchArea";
 import { departureDateState } from "@/state";
 import { BusCompany } from "@/types/busCompanyType";
 import { parseString } from "@/utils/date";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Box, Text, Page, useLocation, Modal } from "zmp-ui";
 
@@ -46,7 +46,6 @@ export const busCompanyMock: BusCompany = {
 }
 
 
-
 export default function AvailableTrip() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
@@ -59,7 +58,6 @@ export default function AvailableTrip() {
     const handleClick = () => {
         setOpen(true)
     }
-
 
     return (
         <Page className="flex-1 flex flex-col bg-slate-100">
@@ -101,7 +99,6 @@ export default function AvailableTrip() {
             }
         </Page >
     );
-
 }
 
 

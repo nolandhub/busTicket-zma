@@ -30,6 +30,8 @@ export const parseDate = (dateStr: string) => {
 /**
  * Kiểm tra vé đã hết hạn chưa
  */
+
+
 export const isExpired = (date: Date | string) => {
     return dayjs(date).isBefore(dayjs(), "day");
 };
