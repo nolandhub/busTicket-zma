@@ -25,7 +25,5 @@ export default function useTrip() {
         handleSelectImg,
         setVisibleSheet,
         setActiveTabKey,
-        
-
     }
 }

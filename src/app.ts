@@ -15,6 +15,11 @@ import Layout from "@/layout";
 // Expose app configuration
 import appConfig from "../app-config.json";
 
+import { dbPromise } from "@/indexDB";
+(async () => {
+  await dbPromise;
+})();
+
 if (!window.APP_CONFIG) {
   window.APP_CONFIG = appConfig as any;
 }

@@ -18,7 +18,8 @@ const SearchArea = () => {
         setDepartDate,
     } = useCoreInit();
 
-    const { handleSearch, handleSwap, handleSwitch } = useSearch()
+    const { handleSearch, handleSwap, handleSwitch, loading } = useSearch()
+
 
     return (
         <Box className="p-2 flex justify-center">
@@ -92,6 +93,7 @@ const SearchArea = () => {
                 {/* Search button */}
                 <Box className="flex justify-center items-center">
                     <Button
+                        loading={loading}
                         onClick={handleSearch}
                         type="danger"
                         size="medium"

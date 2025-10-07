@@ -2,14 +2,21 @@ import { atom, selector } from "recoil";
 import { userCached } from "./types/userType";
 import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
-import { TripFiltered } from "./types/tripType";
+import { Trip, TripFiltered } from "./types/tripType";
 import { getSuitableTimesForDate } from "./helper/filterTime";
-import { getTrip2WayAvailable } from "./firebase/firestore/tripCrud";
+import { BusCompany } from "./types/busCompanyType";
 
 export const userState = atom<userCached | null>({
     key: 'user',
     default: null
 });
+
+export const busCompanyState = atom<BusCompany[] | []>(
+    {
+        key: 'busCompany',
+        default: []
+    }
+)
 
 export const departureState = atom<string>({
     key: 'departure',
@@ -44,32 +51,31 @@ export const popRouteState = selector<PopRoute[]>({
     },
 });
 
-export const routeIdState = atom<string>({
-    key: "routeId",
-    default: "",
-});
 
 
+export const tripState = atom<Trip[]>({
+    key: "trip",
+    default: []
+})
 
-export const tripAvailable = selector<TripFiltered[]>({
+
+export const availableTrip = selector<TripFiltered[]>({
     key: "availableTrip",
-    get: async ({ get }) => {
-        const routeId = get(routeIdState)
-        const departureDate = get(departureDateState)
+    get: ({ get }) => {
         const departureKey = get(departureState)
+        const departDate = get(departureDateState)
+        const trips = get(tripState)
 
-        if (!routeId) return [];
-
-        const trips = await getTrip2WayAvailable(routeId);
+        if (!trips) return [];
 
         const tripsFiltered: TripFiltered[] = trips.map(trips => {
-            const isForward = trips.routeConfig.forward.key == departureKey
+            const isForward = trips.routeConfig.forward.key == departureKey //check forward/backward
             return {
                 ...trips,
                 activePickDrop: isForward ? trips.routeConfig.forward : trips.routeConfig.backward
             }
         });
-        const tripFilter = getSuitableTimesForDate(tripsFiltered, departureDate)
+        const tripFilter = getSuitableTimesForDate(tripsFiltered, departDate)
         return tripFilter
     },
 });

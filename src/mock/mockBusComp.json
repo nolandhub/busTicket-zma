@@ -1,0 +1,33 @@
+{
+    "compId": "cuctung",
+    "compName": "Cúc Tùng Limousine",
+    "avatar": "https://example.com/images/avatar.jpg",
+    "imagesInterior": [
+        "https://example.com/images/interior1.jpg",
+        "https://example.com/images/interior2.jpg",
+        "https://example.com/images/interior3.jpg"
+    ],
+    "policies": [
+        {
+            "title": "Chính sách vé",
+            "description": [
+                "Vé đã mua không được hoàn lại.",
+                "Thay đổi giờ khởi hành phải thông báo trước 24 giờ."
+            ]
+        },
+        {
+            "title": "Chính sách hành lý",
+            "description": [
+                "Miễn phí 20kg hành lý ký gửi.",
+                "Hành lý quá cước sẽ tính phí theo quy định."
+            ]
+        },
+        {
+            "title": "Chính sách hủy chuyến",
+            "description": [
+                "Hủy chuyến trước 48 giờ được hoàn 80% giá vé.",
+                "Hủy chuyến sau 48 giờ không được hoàn lại."
+            ]
+        }
+    ]
+}

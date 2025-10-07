@@ -22,6 +22,7 @@
   "dependencies": {
     "dayjs": "^1.11.18",
     "firebase": "^12.3.0",
+    "idb": "^8.0.3",
     "jotai": "^2.12.1",
     "lucide-react": "^0.544.0",
     "react": "^18.3.1",

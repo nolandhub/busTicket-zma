@@ -4,7 +4,7 @@ export interface Policies {
 }
 
 export interface BusCompany {
-    compId: string
+    compId: string  
     compName: string
     avatar: string
     imagesInterior: string[]

@@ -44,7 +44,7 @@ const DetailPriceTab: FC<Props> = ({ flashSale, price, typePrice }) => {
                         {finalPrice.map((p: PriceDetail, idx: number) => (
                             <div
                                 key={idx}
-                                className="bg-green-50 rounded-lg p-3 flex justify-between items-center border"
+                                className="bg-green-50 rounded-lg p-3 flex justify-between items-center"
                             >
                                 <Text className="text-gray-700">{p.label}</Text>
                                 <Text className="text-lg font-semibold text-green-600">

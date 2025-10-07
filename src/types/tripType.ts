@@ -21,22 +21,6 @@ export interface PriceDetail {
     value: number
 }
 
-export interface Trip {
-    routeId: string           //saigon-hanoi
-    compId: string           //cuctung
-    compName: string        // Cuc Tung Limousine
-    busName: string         //Limousine 20 Phòng Đôi VIP
-    typePrice: "fixed" | "byRoom" | "byRow"  // đồng giá || phòng || hàng
-    price: PriceDetail | PriceDetail[]                 //giá gốc single || range
-    flashSale: FlashSale | null
-    routeConfig: {
-        forward: RouteDetails
-        backward: RouteDetails
-    }
-    updateTime?: Date
-    isDelete: boolean
-}
-
 export interface RouteDetails {
     //Time + Location
     key: string             // saigon
@@ -51,7 +35,27 @@ export interface RouteDetails {
     dropOff: BasePickDrop[]
 }
 
+export interface TripData {
+    routeId: string           //saigon-hanoi
+    compId: string           //cuctung
+    compName: string        // Cuc Tung Limousine
+    busName: string         //Limousine 20 Phòng Đôi VIP
+    typePrice: "fixed" | "byRoom" | "byRow"  // đồng giá || phòng || hàng
+    price: PriceDetail | PriceDetail[]                 //giá gốc single || range
+    flashSale: FlashSale | null
+    routeConfig: {
+        forward: RouteDetails
+        backward: RouteDetails
+    }
+    updateAt?: Date
+    isDelete: boolean
+}
+
+
+export interface Trip extends TripData {
+    id: string
+}
+
 export interface TripFiltered extends Trip {
     activePickDrop: RouteDetails
 }
-

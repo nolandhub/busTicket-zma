@@ -4,18 +4,22 @@ import { getLabelFromValue } from "@/helper/getLabelFromValue";
 import { useNavigate, useSnackbar } from "zmp-ui";
 import useCoreInit from "./useCoreInit";
 import { useSetRecoilState } from "recoil";
-import { routeIdState } from "@/state";
-import { startTransition } from 'react';
-
+import { buildRouteKey, getTrip2WayAvailable } from "../firebase/firestore/tripCrud";
+import { startTransition, useState } from 'react';
+import { tripState } from "@/state";
+import { dbPromise } from "@/indexDB";
+import { idbService } from "@/indexDB/idbServices";
+import { Trip } from "@/types/tripType";
+import dayjs from "dayjs";
 
 
 export default function useSearch() {
-    const { departDate, destination, departure, setIsReturn, setDeparture, setDestination } = useCoreInit()
-
-    const setRouteId = useSetRecoilState(routeIdState)
-
     const { openSnackbar } = useSnackbar()
     const navigate = useNavigate();
+    const { departDate, destination, departure, setIsReturn, setDeparture, setDestination } = useCoreInit()
+    const setTrips = useSetRecoilState(tripState)
+    const [loading, setLoading] = useState<boolean>(false) //loading if wait data
+
 
     const handleSwitch = () => {
         setIsReturn(true)
@@ -25,6 +29,61 @@ export default function useSearch() {
     const handleSwap = () => {
         setDeparture(destination)
         setDestination(departure)
+    }
+
+    const syncTripIfNeeded = async (routeId: string, localTrip: Trip[]) => {
+        const snapShot = await getTrip2WayAvailable(routeId)
+
+        const isUpdated = snapShot.some(newData => {
+            const check = localTrip.find(t => t.id === newData.id)
+
+            return !check || dayjs(newData.updateAt).valueOf() > (dayjs(check.updateAt)).valueOf()
+            // !local -> new Record on fireStore || UpdateAt changed -> have new Update
+        })
+
+        if (isUpdated) {
+            for (const data of snapShot) {
+                await idbService.upSert("trips", data.id, data)
+            }
+            setTrips(snapShot)
+        }
+    }
+
+    const searchTrips = async (routeId: string) => {
+        try {
+            setLoading(true)
+            const db = await dbPromise
+            const { directKey, reverseKey } = buildRouteKey(routeId)
+            const tripCachedDirect = await db.getAllFromIndex("trips", "routeId", directKey)
+
+            if (tripCachedDirect.length > 0) {
+                setTrips(tripCachedDirect)
+                await syncTripIfNeeded(directKey, tripCachedDirect)  //sync data
+            } else {
+                const tripCachedReverse = await db.getAllFromIndex("trips", "routeId", reverseKey)
+                if (tripCachedReverse.length > 0) {
+                    setTrips(tripCachedDirect)
+                    await syncTripIfNeeded(directKey, tripCachedDirect)  //sync data
+                } else {
+                    // no data cached => get new from fireStore
+                    const trips = await getTrip2WayAvailable(directKey)
+                    setTrips(trips || [])
+
+                    for (const data of trips) {
+                        await idbService.upSert("trips", data.id, data)
+                    }
+                }
+            }
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
+            openSnackbar({
+                icon: true,
+                text: "Đã có lỗi xảy ra trong quá trình lấy dữ liệu, hãy thử lại"
+            });
+            setTrips([])
+        }
     }
 
     const handleSearch = () => {
@@ -52,9 +111,10 @@ export default function useSearch() {
             toLabel: getLabelFromValue(destination),
         })
 
-        startTransition(() => { /* hold old data when wait new data api */
-            setRouteId(`${departure}-${destination}`)
 
+        searchTrips(`${departure}-${destination}`) //Get - Set Trips ATOM (2 way)
+
+        startTransition(() => { /* hold old data when wait new data api */
             if (location.pathname === "/availableTrip") {
                 navigate(url, { replace: true });   //No direct new page base on 'replace'
             } else {
@@ -64,9 +124,11 @@ export default function useSearch() {
     }
 
     return {
+        searchTrips,
         handleSwitch,
         handleSearch,
-        handleSwap
+        handleSwap,
+        loading
     }
 
 

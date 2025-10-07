@@ -1,10 +1,20 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Box, Header, Text } from "zmp-ui";
 import logo from "@/static/favicon.png"
 import appConfig from "../../../app-config.json";
 import { getConfig } from "@/utils/getConfig";
+import { getCompanies } from "@/firebase/firestore/compCrud";
+// import { seedbus } from "@/firebase/firestore/tripCrud";
 
 export const Welcome: FC = () => {
+
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     const res = await getCompanies()
+  //     console.log(res)
+  //   }
+  //   fetch()
+  // }, [])
 
   return (
     <Header

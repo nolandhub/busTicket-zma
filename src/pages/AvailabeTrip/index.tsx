@@ -45,7 +45,6 @@ export const busCompanyMock: BusCompany = {
     ]
 }
 
-
 export default function AvailableTrip() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
@@ -77,11 +76,8 @@ export default function AvailableTrip() {
             />
 
             <Box className="flex-1 overflow-auto space-y-4 p-4  border-t-2 border-t-slate-300">
-
                 <TripList />
-
             </Box>
-
             {
                 <Modal
                     actions={[

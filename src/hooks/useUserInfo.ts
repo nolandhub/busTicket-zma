@@ -7,6 +7,7 @@ import { useSnackbar } from "zmp-ui";
 import { addUser } from "@/firebase/firestore/userCrud"
 import dayjs from "dayjs";
 
+
 export default function useUserInfo() {
     const [userData, setUser] = useRecoilState<userCached | null>(userState)
 
@@ -15,13 +16,14 @@ export default function useUserInfo() {
 
     useEffect(() => {
         const cacheData = () => {
-            //improve loadSpeed
+            //Improve LoadSpeed
             try {
-                const localData = JSON.parse(nativeStorage.getItem("user"))
-                if (localData == null) {
+                const userData = JSON.parse(nativeStorage.getItem("user"))
+
+                if (userData == null) {
                     setUser(null)
                 } else {
-                    setUser(localData)
+                    setUser(userData)
                     setRegistered(true)
                 }
             } catch (error) {
@@ -34,7 +36,7 @@ export default function useUserInfo() {
 
     useEffect(() => {
         const checkSetting = async () => {
-            //switch Registered BTN vs userCard
+            //Switch Registered BTN vs userCard
             try {
                 const { authSetting } = await getSetting();
                 if (!authSetting["scope.userInfo"]) {

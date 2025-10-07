@@ -1,21 +1,18 @@
 import { db } from "@/firebase/fireConfig";
 import { Trip } from "@/types/tripType";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
-import mockTrips from "@/mock/mockTrip.json"
-const ref = collection(db, "trips")
+import { collection, query, where, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
+import mockBuses from "@/mock/mockBusComp.json"
 
-export async function seedTrip() {
-    for (const trip of mockTrips) {
-        try {
-            const docRef = await addDoc(ref, trip);
-            console.log("Đã tạo trip với ID:", docRef.id);
-        } catch (error) {
-            console.error("Lỗi khi tạo trip:", error);
-        }
-        console.log("done mock trip")
+const ref = collection(db, "companies")
 
-    }
-}
+// export async function seedbus() {
+//     try {
+//         await setDoc(doc(db, "companies", "cuctung"), mockBuses)
+//     } catch (error) {
+//         console.error("Lỗi khi tạo bus:", error);
+//     }
+//     console.log("done mock bus")
+// }
 
 export async function getTrip2WayAvailable(routeId: string): Promise<Trip[]> {
     const { directKey, reverseKey } = buildRouteKey(routeId);
@@ -23,7 +20,7 @@ export async function getTrip2WayAvailable(routeId: string): Promise<Trip[]> {
     const ref = collection(db, "trips");
 
     // First, try querying with direct key
-    const directQuery = query(ref, where("routeId", "==", directKey), where("isDelete", "==", false));
+    const directQuery = query(ref, where("routeId", "==", directKey));
     const directSnapshot = await getDocs(directQuery);
 
     // If direct query has results, return them
@@ -35,7 +32,7 @@ export async function getTrip2WayAvailable(routeId: string): Promise<Trip[]> {
     }
 
     // If no results with direct key, try reverse key
-    const reverseQuery = query(ref, where("routeId", "==", reverseKey), where("isDelete", "==", false));
+    const reverseQuery = query(ref, where("routeId", "==", reverseKey));
     const reverseSnapshot = await getDocs(reverseQuery);
 
     return reverseSnapshot.docs.map((doc) => ({
@@ -45,9 +42,9 @@ export async function getTrip2WayAvailable(routeId: string): Promise<Trip[]> {
 }
 
 export function buildRouteKey(routeId: string) {
-    const [split1, split2] = routeId.split("-").map(String)
-    const directKey = `${split1}-${split2}`
-    const reverseKey = `${split2}-${split1}`
+    const [key1, key2] = routeId.split("-").map(String)
+    const directKey = `${key1}-${key2}`
+    const reverseKey = `${key2}-${key1}`
 
     return { directKey, reverseKey }
 }

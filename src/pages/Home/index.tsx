@@ -1,4 +1,4 @@
-import { Box, Button, Page, } from "zmp-ui";
+import { Box, Page, } from "zmp-ui";
 import { Welcome } from "@/components/Home/Welcome";
 import UserHero from "@/components/Home/UserHero";
 import SearchArea from "@/components/Home/SearchArea";
@@ -14,10 +14,9 @@ export default function HomePage() {
                 <UserHero />
                 <SearchArea />
                 <Divider />
-                {/* <RouteSwiper /> */}
+                <RouteSwiper />
                 <Divider />
             </Box>
-
         </Page >
     );
 }

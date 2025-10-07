@@ -1,4 +1,4 @@
-import { FC, lazy, Suspense, useState } from "react";
+import { FC, lazy, Suspense, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text, Modal, useNavigate } from "zmp-ui";
@@ -13,13 +13,25 @@ import { StarsIcon } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import useCoreInit from "@/hooks/useCoreInit";
+import useSearch from "@/hooks/useSearch";
 
 
 export const RouteSwiperContent: FC = () => {
     const popRoutes = useRecoilValue(popRouteState);
     const [selectedRoute, setSelectedRoute] = useState<PopRoute | null>(null);
     const date = useRecoilValue(departureDateState)
+    const { setDeparture, setDestination } = useCoreInit()
+    const { searchTrips } = useSearch()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (selectedRoute) {
+            const [key1, key2] = selectedRoute.routeId.split("-").map(String)
+            setDeparture(key1)
+            setDestination(key2)
+        }
+    }, [selectedRoute])
 
     return (
         <>
@@ -82,10 +94,10 @@ export const RouteSwiperContent: FC = () => {
                                     routeId: selectedRoute.routeId,
                                     date: parseString(date),
                                 })
+                                searchTrips(selectedRoute.routeId)
                                 navigate(url)
                             },
                         },
-
                     ]}
                     onClose={() => setSelectedRoute(null)}
                 />

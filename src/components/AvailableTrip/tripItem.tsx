@@ -13,8 +13,6 @@ import MoreDetail from "./MoreDetails";
 import { busCompanyMock } from "@/pages/AvailabeTrip";
 import ImageViewerCustom from "./ImageViewer";
 
-
-
 const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
     const {
         visibleSheet,
@@ -26,6 +24,11 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
         handleSelectImg,
         setVisibleSheet,
         setActiveTabKey } = useTrip()
+
+    if (trip.isDelete == true) {
+        return (<></>)
+    }
+    // code here trip.busId => lay data from Idb
 
     return (
         <Box className="bg-white rounded-xl border border-slate-300 md:max-w-lg mx-auto shadow-lg">
