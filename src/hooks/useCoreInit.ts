@@ -4,7 +4,6 @@ import {
     departureDateState,
     isReturnState,
     returnDateState,
-    routeIdState
 } from "@/state";
 import { useRecoilState, useResetRecoilState } from "recoil";
 

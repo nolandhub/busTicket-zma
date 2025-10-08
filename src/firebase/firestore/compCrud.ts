@@ -1,12 +1,11 @@
 import { db } from "@/firebase/fireConfig";
 import { BusCompany } from "@/types/busCompanyType";
 import {
-    setDoc,
-    getDoc,
     getDocs,
-    updateDoc,
     collection,
 } from "firebase/firestore";
+
+
 
 const colRef = collection(db, "companies")
 
@@ -15,7 +14,7 @@ export async function getCompanies() {
         const snap = await getDocs(colRef);
         const data = snap.docs.map(doc => ({
             id: doc.id,
-            ...doc.data(), // ép kiểu cho TS
+            ...(doc.data() as Omit<BusCompany, "id">)
         }));
         return data;
     } catch (error) {

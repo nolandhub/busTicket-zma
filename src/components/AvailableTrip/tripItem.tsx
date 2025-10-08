@@ -10,8 +10,9 @@ import { FC } from "react";
 import PriceDisplay from "./PriceDisplay";
 import useTrip from "@/hooks/useTrip";
 import MoreDetail from "./MoreDetails";
-import { busCompanyMock } from "@/pages/AvailabeTrip";
 import ImageViewerCustom from "./ImageViewer";
+import { useRecoilValue } from "recoil";
+import { busCompanyState } from "@/state";
 
 const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
     const {
@@ -28,7 +29,10 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
     if (trip.isDelete == true) {
         return (<></>)
     }
-    // code here trip.busId => lay data from Idb
+
+    const busCompData = useRecoilValue(busCompanyState)
+
+    const busCompFilter = busCompData.find(f => f.compId === trip.compId);
 
     return (
         <Box className="bg-white rounded-xl border border-slate-300 md:max-w-lg mx-auto shadow-lg">
@@ -52,7 +56,7 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
 
                 <Divider className="my-2" size={1} />
 
-                <TripContent busName={trip.busName} compName={trip.compName} onImgClick={() => directTab("3")} />
+                <TripContent avatar={busCompFilter?.avatar} busName={trip.busName} compName={trip.compName} onImgClick={() => directTab("3")} />
 
                 <Box className="flex flex-row mt-2 items-center cursor-pointer">
                     <Box onClick={() => directTab("4")} className="flex flex-wrap max-w-[170px] gap-2">
@@ -75,13 +79,14 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
                 </button>
             </Text>
             {
-                <MoreDetail trip={trip} busCompany={busCompanyMock} sheet={{ visibleSheet, setVisibleSheet }} tab={{ activeTabKey, setActiveTabKey }} handleSelectImg={handleSelectImg} />
+                <MoreDetail trip={trip} busCompany={busCompFilter} sheet={{ visibleSheet, setVisibleSheet }} tab={{ activeTabKey, setActiveTabKey }} handleSelectImg={handleSelectImg} />
             }
             {
                 <ImageViewerCustom
-                    busCompany={busCompanyMock}
+                    busCompany={busCompFilter}
                     imageViewer={{ activeImgKey, visibleImgView, setVisibleImgView }}
                 />
+
             }
         </Box >
     );

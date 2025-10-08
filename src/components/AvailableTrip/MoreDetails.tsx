@@ -11,7 +11,7 @@ import PickDropTab from "./TabDisplay/PickDropTab"
 
 interface MoreDetailsProps {
     trip: TripFiltered;
-    busCompany: BusCompany;
+    busCompany?: BusCompany
     sheet: {
         visibleSheet: boolean;
         setVisibleSheet: (v: boolean) => void;
@@ -36,7 +36,7 @@ const MoreDetail: FC<MoreDetailsProps> = ({ busCompany, trip, sheet, tab, handle
                 <Box className="flex gap-2 items-start">
                     <img
                         alt="Hình ảnh minh họa"
-                        src={busCompany.avatar}
+                        src={busCompany?.avatar ? busCompany.avatar : "https://picsum.photos/200/300"}
                         style={{ borderRadius: "10px", width: "40%", height: "120px" }}
                     />
                     <div>
@@ -69,21 +69,31 @@ const MoreDetail: FC<MoreDetailsProps> = ({ busCompany, trip, sheet, tab, handle
                         </Tabs.Tab>
                         <Tabs.Tab key="3" label="Hình ảnh">
                             <Box className="overflow-auto" p={4}>
-                                <Box className="grid grid-cols-3 gap-2">
-                                    {busCompany.imagesInterior.map((src, idx) => (
-                                        <img
-                                            key={idx}
-                                            className="aspect-square rounded-lg shadow-sm cursor-pointer"
-                                            src={src}
-                                            onClick={() => handleSelectImg(idx)}
-                                        />
-                                    ))}
-                                </Box>
+                                {
+                                    busCompany?.imagesInterior ?
+                                        <Box className="grid grid-cols-3 gap-2">
+                                            {
+                                                busCompany?.imagesInterior.map((src, idx) => (
+                                                    <img
+                                                        key={idx}
+                                                        className="aspect-square rounded-lg shadow-sm cursor-pointer"
+                                                        src={src}
+                                                        onClick={() => handleSelectImg(idx)}
+                                                    />
+                                                ))
+                                            }
+                                        </Box>
+                                        : "Chưa cập nhật hình ảnh"
+                                }
                             </Box>
                         </Tabs.Tab>
                         <Tabs.Tab key="4" label="Chính sách">
                             <Box p={4}>
-                                <PoliciesTab policies={busCompany.policies} />
+                                {busCompany?.policies ?
+                                    <PoliciesTab policies={busCompany.policies} />
+                                    : "Chưa cập nhật chính sách"
+                                }
+
                             </Box>
                         </Tabs.Tab>
                     </Tabs>
@@ -104,3 +114,4 @@ const MoreDetail: FC<MoreDetailsProps> = ({ busCompany, trip, sheet, tab, handle
 };
 
 export default MoreDetail;
+

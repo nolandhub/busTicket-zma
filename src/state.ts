@@ -11,12 +11,6 @@ export const userState = atom<userCached | null>({
     default: null
 });
 
-export const busCompanyState = atom<BusCompany[] | []>(
-    {
-        key: 'busCompany',
-        default: []
-    }
-)
 
 export const departureState = atom<string>({
     key: 'departure',
@@ -50,6 +44,14 @@ export const popRouteState = selector<PopRoute[]>({
         return res;
     },
 });
+
+export const busCompanyState = atom<BusCompany[]>(
+    {
+        key: 'busCompany',
+        default: []
+    }
+)
+
 
 
 

@@ -4,8 +4,11 @@ import UserHero from "@/components/Home/UserHero";
 import SearchArea from "@/components/Home/SearchArea";
 import { Divider } from "@/components/common/Divider";
 import RouteSwiper from "@/components/Home/RoutesSwiper";
+import useBusCompany from "@/hooks/useBusCompany";
 
 export default function HomePage() {
+    const { getSyncCompanies } = useBusCompany()
+    getSyncCompanies()
 
     return (
         <Page className="flex-1 flex flex-col bg-slate-100">

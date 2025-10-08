@@ -5,14 +5,6 @@ import mockBuses from "@/mock/mockBusComp.json"
 
 const ref = collection(db, "companies")
 
-// export async function seedbus() {
-//     try {
-//         await setDoc(doc(db, "companies", "cuctung"), mockBuses)
-//     } catch (error) {
-//         console.error("Lỗi khi tạo bus:", error);
-//     }
-//     console.log("done mock bus")
-// }
 
 export async function getTrip2WayAvailable(routeId: string): Promise<Trip[]> {
     const { directKey, reverseKey } = buildRouteKey(routeId);

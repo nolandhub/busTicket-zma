@@ -1,6 +1,6 @@
 import { openDB } from "idb";
 
-export const dbPromise = openDB("MyAppDB", 1, {
+export const dbPromise = openDB("bus-ticket-zma", 1, {
     upgrade(db) {
         if (!db.objectStoreNames.contains("trips")) {
             const store = db.createObjectStore("trips", { keyPath: "id" })

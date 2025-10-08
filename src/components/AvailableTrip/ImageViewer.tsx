@@ -3,7 +3,7 @@ import { FC } from "react"
 import { ImageViewer } from "zmp-ui"
 
 interface Props {
-    busCompany: BusCompany
+    busCompany?: BusCompany
     imageViewer: {
         activeImgKey: number
         visibleImgView: boolean
@@ -17,10 +17,10 @@ interface ImgProps {
 }
 
 const ImageViewerCustom: FC<Props> = ({ busCompany, imageViewer }) => {
-    const imgsPresent: ImgProps[] = busCompany?.imagesInterior.map((src, idx) => ({
+    const imgsPresent: ImgProps[] = busCompany?.imagesInterior?.map((src, idx) => ({
         src,
-        alt: `image-${idx}`
-    }))
+        alt: `image-${idx}`,
+    })) || [] // fallback khi undefined/ fallback khi undefined
     return (
         <>
             <ImageViewer
@@ -33,3 +33,4 @@ const ImageViewerCustom: FC<Props> = ({ busCompany, imageViewer }) => {
     )
 }
 export default ImageViewerCustom
+

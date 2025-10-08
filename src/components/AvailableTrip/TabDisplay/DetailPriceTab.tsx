@@ -2,7 +2,6 @@ import { formatPrice } from "@/helper/formatPrice";
 import { PriceDetail, FlashSale } from "@/types/tripType";
 import { FC } from "react";
 import { Box, Text } from "zmp-ui";
-
 interface Props {
     flashSale: FlashSale | null
     price: PriceDetail | PriceDetail[]

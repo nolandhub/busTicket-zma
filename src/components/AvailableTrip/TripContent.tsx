@@ -5,13 +5,13 @@ import { Heart } from "lucide-react"
 
 
 
-const TripContent: FC<{ compName: string, busName: string, onImgClick?: () => void }> = ({ busName, compName, onImgClick }) => {
+const TripContent: FC<{ avatar?: string, compName: string, busName: string, onImgClick?: () => void }> = ({ avatar, busName, compName, onImgClick }) => {
     const [liked, setLiked] = useState<boolean>(false)
     const { openSnackbar } = useSnackbar()
     return (
         <Box className="flex flex-row items-start">
             <div className="flex-shrink-0">
-                <img onClick={onImgClick} className="h-[80px] w-[80px] object-cover rounded-xl cursor-pointer" src="https://picsum.photos/400/300" />
+                <img onClick={onImgClick} className="h-[80px] w-[80px] object-cover rounded-xl cursor-pointer" src={avatar ? avatar : "https://picsum.photos/200/303"} />
             </div>
 
             <div className="flex-1 flex-col p-2">

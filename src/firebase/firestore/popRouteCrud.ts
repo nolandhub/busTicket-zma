@@ -1,15 +1,11 @@
 import { db } from "@/firebase/fireConfig";
 import { PopRoute } from "@/types/routeType";
 import {
-    setDoc,
-    getDoc,
     getDocs,
-    updateDoc,
     collection,
 } from "firebase/firestore";
 
 const colRef = collection(db, "popRoutes")
-
 
 export async function getPopRoutes() {
     try {

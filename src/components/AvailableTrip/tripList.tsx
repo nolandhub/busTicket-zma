@@ -10,7 +10,7 @@ export default function TripList() {
                 trips.length > 0 ? (
                     trips.map((t, idx) => <TripItem key={idx} trip={t} />)
                 ) : (
-                    <div>Không tìm thấy chuyến nào</div>
+                    <div>Không tìm thấy chuyến nào.....</div>
                 )
             }
         </>

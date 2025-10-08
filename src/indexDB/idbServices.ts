@@ -2,9 +2,13 @@
 import { dbPromise } from "@/indexDB/index";
 
 export const idbService = {
-    async getAllByIndex(store: string, key: string, querryKey: string) {
+    async getAllData(store: string) {
+        const db = await dbPromise
+        return db.getAll(store)
+    },
+    async getAllByIndex(store: string, idxName: string, idxKey: string) {
         const db = await dbPromise;
-        return db.getAllFromIndex(store, key, querryKey)
+        return db.getAllFromIndex(store, idxName, idxKey)
     },
 
     async getById(store: string, id: string) {
