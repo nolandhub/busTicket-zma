@@ -26,11 +26,11 @@ export default function useRepickCore() {
         if (isReturn || returnDate) {
             resetReturnDate()
             setIsReturn(false)
-            navigate("/")
+            navigate(-1)
         }
         resetReturnDate()
         setIsReturn(false)
-        navigate("/")
+        navigate(-1)
     }
 
     const handleClick = () => {
@@ -40,7 +40,6 @@ export default function useRepickCore() {
         } else {
             navigate(-1)
         }
-
     }
 
     const handleLogicDate = (date: Date) => {

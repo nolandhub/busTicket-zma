@@ -1,10 +1,6 @@
 import { db } from "@/firebase/fireConfig";
 import { Trip } from "@/types/tripType";
-import { collection, query, where, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
-import mockBuses from "@/mock/mockBusComp.json"
-
-const ref = collection(db, "companies")
-
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 export async function getTrip2WayAvailable(routeId: string): Promise<Trip[]> {
     const { directKey, reverseKey } = buildRouteKey(routeId);

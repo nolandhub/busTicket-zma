@@ -1,5 +1,8 @@
+import { hideHeaderState } from "@/state"
 import { BusCompany } from "@/types/busCompanyType"
+import { useAtom } from "jotai"
 import { FC } from "react"
+import { useSetRecoilState } from "recoil"
 import { ImageViewer } from "zmp-ui"
 
 interface Props {
@@ -16,20 +19,27 @@ interface ImgProps {
     alt?: string
 }
 
+
+
 const ImageViewerCustom: FC<Props> = ({ busCompany, imageViewer }) => {
     const imgsPresent: ImgProps[] = busCompany?.imagesInterior?.map((src, idx) => ({
         src,
         alt: `image-${idx}`,
     })) || [] // fallback khi undefined/ fallback khi undefined
+
+    const setHideHeader = useSetRecoilState(hideHeaderState)
+    function handleOnClose() {
+        imageViewer.setVisibleImgView(false)
+        setHideHeader(false)
+
+    }
     return (
-        <>
-            <ImageViewer
-                activeIndex={imageViewer.activeImgKey}
-                images={imgsPresent}
-                onClose={() => imageViewer.setVisibleImgView(false)}
-                visible={imageViewer.visibleImgView}
-            />
-        </>
+        <ImageViewer
+            activeIndex={imageViewer.activeImgKey}
+            images={imgsPresent}
+            onClose={handleOnClose}
+            visible={imageViewer.visibleImgView}
+        />
     )
 }
 export default ImageViewerCustom

@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Text } from "zmp-ui";
+import { Box, Button, Icon, ImageViewer, Text } from "zmp-ui";
 import RouteIndicator from "./RouteIndicatorIcon";
 import { Zap, WalletIcon, HandshakeIcon } from "lucide-react";
 import { Divider } from "../common/Divider";
@@ -24,7 +24,9 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
         directTab,
         handleSelectImg,
         setVisibleSheet,
-        setActiveTabKey } = useTrip()
+        setActiveTabKey,
+        handleSelectTrip
+    } = useTrip()
 
     if (trip.isDelete == true) {
         return (<></>)
@@ -67,7 +69,7 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
                         <LabelWithIcon icon={<HandshakeIcon size={12} color="green" />} label="Đón trả tận nơi" />
                     </Box>
                     <div className="flex-1 text-end">
-                        <Button onClick={() => console.log("Hello")} size="medium">Chọn</Button>
+                        <Button onClick={() => handleSelectTrip(trip)} size="medium">Chọn</Button>
                     </div>
                 </Box>
             </Box>
@@ -86,7 +88,6 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
                     busCompany={busCompFilter}
                     imageViewer={{ activeImgKey, visibleImgView, setVisibleImgView }}
                 />
-
             }
         </Box >
     );

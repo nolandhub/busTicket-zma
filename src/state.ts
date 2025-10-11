@@ -5,12 +5,12 @@ import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 import { Trip, TripFiltered } from "./types/tripType";
 import { getSuitableTimesForDate } from "./helper/filterTime";
 import { BusCompany } from "./types/busCompanyType";
+import { BookingData, TicketData } from "./types/bookingType";
 
 export const userState = atom<userCached | null>({
     key: 'user',
     default: null
 });
-
 
 export const departureState = atom<string>({
     key: 'departure',
@@ -37,14 +37,6 @@ export const isReturnState = atom<boolean>({
     default: false,
 });
 
-export const popRouteState = selector<PopRoute[]>({
-    key: "popRoutes",
-    get: async () => {
-        const res = await getPopRoutes();
-        return res;
-    },
-});
-
 export const busCompanyState = atom<BusCompany[]>(
     {
         key: 'busCompany',
@@ -52,14 +44,48 @@ export const busCompanyState = atom<BusCompany[]>(
     }
 )
 
-
-
-
 export const tripState = atom<Trip[]>({
     key: "trip",
     default: []
 })
 
+export const controlReturnState = atom<boolean>({
+    key: "controlReturn",
+    default: false
+})
+
+export const selectedTripState = atom<TripFiltered | null>({
+    key: "selectedTrip",
+    default: null
+})
+
+export const selectedCompanyState = atom<BusCompany | null>({
+    key: "selectedBus",
+    default: null
+})
+
+export const hideHeaderState = atom<boolean>({
+    key: "hideHeader",
+    default: false
+})
+
+export const bookingState = atom<BookingData | null>({
+    key: "booking",
+    default: null
+})
+
+export const ticketState = atom<TicketData[]>({
+    key: "ticket",
+    default: []
+})
+
+export const popRouteState = selector<PopRoute[]>({
+    key: "popRoutes",
+    get: async () => {
+        const res = await getPopRoutes();
+        return res;
+    },
+});
 
 export const availableTrip = selector<TripFiltered[]>({
     key: "availableTrip",
@@ -79,7 +105,7 @@ export const availableTrip = selector<TripFiltered[]>({
         });
         const tripFilter = getSuitableTimesForDate(tripsFiltered, departDate)
         return tripFilter
-    },
+    }
 });
 
 

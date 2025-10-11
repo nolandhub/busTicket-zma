@@ -1,26 +1,15 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Box, Header, Text } from "zmp-ui";
 import logo from "@/static/favicon.png"
 import appConfig from "../../../app-config.json";
 import { getConfig } from "@/utils/getConfig";
-import { getCompanies } from "@/firebase/firestore/compCrud";
-// import { seedbus } from "@/firebase/firestore/tripCrud";
 
 export const Welcome: FC = () => {
-
-  // useEffect(() => {
-  //   const fetch = async () => {
-  //     const res = await getCompanies()
-  //     console.log(res)
-  //   }
-  //   fetch()
-  // }, [])
-
   return (
     <Header
       className="app-header no-border pl-4 flex-none pb-[6px]"
       showBackIcon={false}
-      backgroundColor="#ECFCCB"
+      backgroundColor="#BBD6F2"
       title={
         (
           <Box flex alignItems="center" className="space-x-2">

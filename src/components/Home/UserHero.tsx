@@ -14,7 +14,7 @@ export default function UserHero() {
 
             {/* UserCard */}
             < Box
-                className="relative w-[80%] sm:w-[80%] md:w-[60%] max-w-md mb-[-80px] top-4"
+                className="relative w-[90%] top-20 mb-[-10px]"
             >
                 <UserCard />
             </Box >

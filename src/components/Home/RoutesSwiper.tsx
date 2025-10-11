@@ -57,7 +57,7 @@ export const RouteSwiperContent: FC = () => {
                                 <Box className="gap-1 px-1">
                                     {route.note && (
                                         <div className="flex items-center space-x-1 mb-1">
-                                            <StarsIcon className="text-yellow-200" size={20} strokeWidth={2} fill="yellow" />
+                                            <StarsIcon className="text-yellow-400" size={20} strokeWidth={2} fill="yellow" />
                                             <Text className="font-medium text-xl">
                                                 {route.note}
                                             </Text>

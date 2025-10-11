@@ -95,7 +95,7 @@ const SearchArea = () => {
                     <Button
                         loading={loading}
                         onClick={handleSearch}
-                        type="danger"
+                        type="highlight"
                         size="medium"
                         className="w-full sm:w-auto"
                         suffixIcon={<Icon icon="zi-search" />}

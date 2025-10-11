@@ -51,7 +51,6 @@ export interface TripData {
     isDelete: boolean
 }
 
-
 export interface Trip extends TripData {
     id: string
 }

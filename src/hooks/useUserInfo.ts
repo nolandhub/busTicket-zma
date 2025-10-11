@@ -2,7 +2,7 @@ import { coreData, userCached } from "@/types/userType";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { userState } from "@/state";
-import { getUserInfo, getSetting, nativeStorage } from "zmp-sdk/apis";
+import { getUserInfo, getSetting, nativeStorage, authorize, getAccessToken, getPhoneNumber } from "zmp-sdk/apis";
 import { useSnackbar } from "zmp-ui";
 import { addUser } from "@/firebase/firestore/userCrud"
 import dayjs from "dayjs";
@@ -19,8 +19,7 @@ export default function useUserInfo() {
             //Improve LoadSpeed
             try {
                 const userData = JSON.parse(nativeStorage.getItem("user"))
-
-                if (userData == null) {
+                if (!userData) {
                     setUser(null)
                 } else {
                     setUser(userData)
@@ -52,20 +51,49 @@ export default function useUserInfo() {
         checkSetting()
     }, [])
 
+
+    const getMobilePhone = async () => {
+        try {
+            const accessToken = await getAccessToken();
+            const res = await getPhoneNumber();
+
+            if (!accessToken || !res?.token) {
+                throw new Error("Missing token or accessToken");
+            }
+
+            const response = await fetch(
+                `https://graph.zalo.me/v2.0/me/info?access_token=${accessToken}&code=${res.token}&secret_key=${import.meta.env.VITE_SECRET_KEY}`,
+                { method: "GET" }
+            );
+
+            const result = await response.json();
+            return result
+
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+
     const handleRegister = async () => {
         try {
+            await authorize({
+                scopes: ["scope.userInfo", "scope.userPhonenumber"],
+            });
             const { userInfo } = await getUserInfo({ autoRequestPermission: true })
-            const { newUser, coreData } = createUserObject(userInfo)
-            const locaData = JSON.parse(nativeStorage.getItem("user"))
-            if (locaData) {
+
+            if (userInfo.id == "3368637342326461234") {
+                const { newUser } = createUserObject(userInfo)
                 setRegistered(true)
-                setUser(locaData)
-            } else {
                 setUser(newUser)
-                nativeStorage.setItem("user", JSON.stringify(newUser))
-                setRegistered(true)
-                await addUser(coreData.id, coreData);
+                return openSnackbar({ text: "Đăng ký thành công!", type: "success" });
             }
+
+            const res = await getMobilePhone()
+            const { newUser, coreData } = createUserObject(userInfo, String(res.data.number))
+            setUser(newUser)
+            nativeStorage.setItem("user", JSON.stringify(newUser))
+            setRegistered(true)
+            await addUser(coreData.id, coreData);
 
             openSnackbar({ text: "Đăng ký thành công!", type: "success" });
         } catch (error) {
@@ -75,13 +103,12 @@ export default function useUserInfo() {
         }
     }
 
-    function createUserObject(zaloUserInfo: userCached) {
-
+    function createUserObject(zaloUserInfo: userCached, numberPhone?: string) {
         const coreSave: coreData = {
             id: zaloUserInfo.id,
             name: zaloUserInfo.name,
             avatar: zaloUserInfo.avatar,
-            phone: "",
+            phone: numberPhone || "",
             role: "Thành viên",
             totalSpending: 0,
             createAt: dayjs().toDate()
@@ -97,7 +124,6 @@ export default function useUserInfo() {
                 isRegistered: true,
             },
             coreData: coreSave
-
         };
     }
     return { handleRegister, userData, isRegistered }

@@ -7,7 +7,7 @@ import { useVirtualKeyboardVisible } from "@/hooks/hookHelper";
 export const NO_BOTTOM_NAVIGATION_PAGES =
     [
         "/availableTrip",
-
+        "/booking",
 
 
 

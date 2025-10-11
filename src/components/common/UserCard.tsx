@@ -1,13 +1,13 @@
 import { Wallet } from "lucide-react";
 import { FC, Suspense } from "react";
 import { Avatar, Box, Text, Button, Spinner } from "zmp-ui";
-
 import useUserInfo from "@/hooks/useUserInfo";
 import { UserCardSkeleton } from "./Skeleton";
+import { formatPrice } from "@/helper/formatPrice";
 
 const RegisterSection: FC<{ handleClick: () => void }> = ({ handleClick }) => {
     return (
-        <Suspense fallback={<Spinner />} >
+        <Suspense fallback={<Spinner />}>
             <Box textAlign="center" className="bg-white rounded-2xl shadow-lg max-w-sm p-2 mx-auto space-y-2">
                 <Text size="large" bold className="text-red-600">
                     Chương trình thành viên
@@ -15,11 +15,11 @@ const RegisterSection: FC<{ handleClick: () => void }> = ({ handleClick }) => {
                 <Text size="normal" bold className="text-gray-700">
                     Tận hưởng ngàn ưu đãi đặc quyền chỉ dành riêng cho bạn &lt;3
                 </Text>
-                <Button type="danger" size="medium" onClick={handleClick}>
+                <Button type="highlight" size="medium" onClick={handleClick}>
                     Đăng ký ngay
                 </Button>
-            </Box >
-        </Suspense >
+            </Box>
+        </Suspense>
     );
 }
 
@@ -32,13 +32,14 @@ const UserCardContent: FC = () => {
         return <RegisterSection handleClick={handleRegister} />
     }
     return (
-        < Box className="bg-white rounded-3xl shadow-md max-w-2xl mx-auto p-5 sm:p-6" >
-            <Box flex alignItems="center" justifyContent="space-between" className="gap-4 ">
-                <Box flex alignItems="center" className="gap-4">
-                    <Avatar backgroundColor="SKYBLUE-GREEN" size={65} src={userData.avatar}>
+        <Box className="bg-white rounded-3xl shadow-md mx-auto p-5">
+            <Box className=" flex space-x-2 gap-3">
+                {/* User Info */}
+                <Box flex alignItems="center" className="gap-2 flex-1 ">
+                    <Avatar backgroundColor="SKYBLUE-GREEN" size={50} src={userData.avatar}>
                         {userData.name?.[0]?.toUpperCase()}
                     </Avatar>
-                    <Box>
+                    <Box className="flex-1 min-w-0">
                         <Text size="large" className="font-bold text-black truncate">
                             {userData.name}
                         </Text>
@@ -49,23 +50,23 @@ const UserCardContent: FC = () => {
                 </Box>
 
                 {/* Wallet */}
-                <Box flex flexDirection="column" alignItems="center">
+                <Box className="flex flex-col items-center">
                     <Box
                         flex
-                        justifyContent="space-between"
-                        className="gap-2 bg-amber-500 text-white px-4 py-2 rounded-full"
+                        alignItems="center"
+                        className="gap-2 bg-amber-500 text-white px-3 py-2 rounded-full max-w-[160px]"
                     >
-                        <Wallet size={20} />
-                        <Text size="small" className="font-semibold">
-                            {Number(userData.totalSpending).toLocaleString("vi-VN")}đ
+                        <Wallet size={18} className="flex-shrink-0" />
+                        <Text size="xSmall" className="font-semibold truncate">
+                            {formatPrice(1020203393)}đ
                         </Text>
                     </Box>
-                    <Text size="xSmall" className="font-bold mt-1 text-center">
-                        Lịch sử giao dịch
+                    <Text size="xSmall" className="font-bold mt-1 text-right whitespace-nowrap">
+                        Lịch sử GD
                     </Text>
                 </Box>
             </Box>
-        </Box >
+        </Box>
     );
 }
 
@@ -78,5 +79,3 @@ const UserCard: FC = () => {
 }
 
 export default UserCard
-
-

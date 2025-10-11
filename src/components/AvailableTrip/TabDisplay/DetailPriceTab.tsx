@@ -1,6 +1,9 @@
 import { formatPrice } from "@/helper/formatPrice";
+import { departureDateState } from "@/state";
 import { PriceDetail, FlashSale } from "@/types/tripType";
+import dayjs from "dayjs";
 import { FC } from "react";
+import { useRecoilValue } from "recoil";
 import { Box, Text } from "zmp-ui";
 interface Props {
     flashSale: FlashSale | null
@@ -9,6 +12,7 @@ interface Props {
 }
 
 const DetailPriceTab: FC<Props> = ({ flashSale, price, typePrice }) => {
+    const departDate = useRecoilValue(departureDateState)
     // Lấy text header dựa vào typePrice
     const getHeaderText = () => {
         switch (typePrice) {
@@ -24,9 +28,8 @@ const DetailPriceTab: FC<Props> = ({ flashSale, price, typePrice }) => {
     };
 
     // Case 1: Có flashSale và đang active
-    if (flashSale && flashSale.isActive === true) {
+    if (flashSale && flashSale.isActive === true && dayjs(flashSale.endTime).valueOf() > dayjs(departDate).valueOf()) {
         const finalPrice = flashSale.saleDetail.finalPrice;
-
         if (
             Array.isArray(finalPrice) &&
             (typePrice === "byRoom" || typePrice === "byRow")
@@ -78,7 +81,6 @@ const DetailPriceTab: FC<Props> = ({ flashSale, price, typePrice }) => {
             );
         }
     }
-
     // Case 2: Không có flashSale → hiện giá gốc
     if (Array.isArray(price)) {
         return (
