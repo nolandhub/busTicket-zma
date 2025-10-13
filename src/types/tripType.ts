@@ -37,6 +37,7 @@ export interface RouteDetails {
 
 export interface TripData {
     routeId: string           //saigon-hanoi
+    trip: string
     compId: string           //cuctung
     compName: string        // Cuc Tung Limousine
     busName: string         //Limousine 20 Phòng Đôi VIP

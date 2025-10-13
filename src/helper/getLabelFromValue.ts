@@ -28,3 +28,11 @@ export const getLabelFromValue = (value: string) => {
     const found = suggestions.find((item) => item.value === value);
     return found?.label;
 };
+
+
+export const getFullLabelFromValue = (value: string) => {
+    const [split1, split2] = value.split("-").map(String)
+    const found1 = getLabelFromValue(split1)
+    const found2 = getLabelFromValue(split2)
+    return `${found1} - ${found2}`
+};

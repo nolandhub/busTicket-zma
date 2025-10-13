@@ -3,15 +3,16 @@ import { FC } from "react";
 import { Box, Text } from "zmp-ui";
 
 interface RouteIndicatorProps {
-    startLocation: string
-    endLocation: string
-    startTime: string
-    duration: string
-    endTime: string
+    startLocation?: string
+    endLocation?: string
+    startTime?: string
+    duration?: string
+    endTime?: string
     onClick?: () => void
 }
 
 const RouteIndicator: FC<RouteIndicatorProps> = ({ startLocation, endLocation, startTime, duration, endTime, onClick }) => {
+
     return (
         <Box onClick={onClick} className="flex gap-1 cursor-pointer">
             {/* Cột giờ */}

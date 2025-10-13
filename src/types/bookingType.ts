@@ -1,13 +1,10 @@
-import { BasePickDrop, PriceDetail } from "./tripType"
+import { BasePickDrop } from "./tripType"
 
 interface Option {
     label: string
     passCount: number
-    total: number
+    totalOptionPrice: number
 }
-
-//ghe don : SL:1 -> price -> 80000
-//ghe doi : SL:2 -> price -> 160000
 
 export interface BookingData {
     bookingId: string
@@ -16,16 +13,16 @@ export interface BookingData {
     busId: string
     busName: string
     tripId: string
-    tripName: string
+    tripName?: string
 
     bookingName: string
     bookingPhone: string
 
-    option?: Option[]
-    totalAll: number
+    option?: Option[] | Option
+    total: number
 
-    pickUp: BasePickDrop           //Time here - PickUp
-    dropOff: BasePickDrop          //Time here - DropOff
+    pickUp: BasePickDrop | null           //Time here - PickUp
+    dropOff: BasePickDrop | null         //Time here - DropOff
 
     createAt?: Date
 }

@@ -16,8 +16,7 @@ import Layout from "@/layout";
 import appConfig from "../app-config.json";
 
 import { dbPromise } from "@/indexDB";
-import { useRecoilValue } from "recoil";
-import { isReturnState } from "./state";
+
 (async () => {
   await dbPromise;
 })();
