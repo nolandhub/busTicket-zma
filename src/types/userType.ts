@@ -7,6 +7,7 @@ export interface coreData {
     role?: string
     totalSpending?: number
     createAt?: Date
+    updateAt?: Date
 }
 
 

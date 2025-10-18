@@ -27,7 +27,6 @@ export default function useBusCompany() {
     }
 
     function getSyncCompanies() {
-
         useEffect(() => {
             const fetchCached = async () => {
                 try {

@@ -1,39 +1,35 @@
-import { useState } from "react";
-import { Box, Button, Icon, useSnackbar, Text } from "zmp-ui";
+import { useEffect, useState } from "react";
+import { Box, Button, Icon, useSnackbar } from "zmp-ui";
 import InfoOption from "./InfoOption";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { bookingState, selectedTripState } from "@/state";
-import PickDrop from "./PickDrop";
-import { BasePickDrop } from "@/types/tripType";
+import { useRecoilValue } from "recoil";
+import { bookingState, priceOptionState, selectedTripState } from "@/state";
 import BookingReview from "./ReviewBooking";
+import SelectTime from "./SelectTime";
 
 export default function BookingStep() {
-    const [step, setStep] = useState<"info" | "selectPlace" | "review">("info")
+    const [step, setStep] = useState<"time" | "info" | "review">("time")
     const tripSelected = useRecoilValue(selectedTripState)
-    const setBookingData = useSetRecoilState(bookingState)
     const dataBooking = useRecoilValue(bookingState)
     const { openSnackbar } = useSnackbar()
+    const priceOpt = useRecoilValue(priceOptionState)
+
 
     if (!tripSelected) {
-        return (
-            <></>
-        )
-    }
-
-    function handlePickDrop(pickUp: BasePickDrop | null, dropOff: BasePickDrop | null) {
-        if (pickUp && dropOff) {
-            setBookingData(prev => {
-                if (!prev) return null; // Hoặc return giá trị mặc định
-                return {
-                    ...prev,
-                    pickUp,
-                    dropOff
-                }
-            })
-        }
+        return null
     }
 
     function handleClick() {
+        if (step == "time") {
+            if (!priceOpt) {
+                openSnackbar({
+                    icon: true,
+                    text: "Vui lòng chọn thời gian xuất bến!",
+                });
+            } else {
+                setStep("info")
+            }
+        }
+
         if (step == "info") {
             if (!dataBooking?.bookingName || !dataBooking?.bookingPhone) {
                 openSnackbar({
@@ -46,28 +42,29 @@ export default function BookingStep() {
                     text: "Vui lòng chọn số lượng loại vé mà bạn muốn đặt",
                 });
             } else {
-                setStep("selectPlace")
+                setStep("review")
             }
-
-        } else if (step == "selectPlace") {
-            setStep("review")
         }
-
     }
 
 
     return (
-        <Box className="flex flex-col gap-4 justify-center">
+        <Box className="flex flex-col gap-4 justify-center bg-slate-100">
             <Box className="flex-1 pt-4">
+                {
+                    step === "time" && (
+                        <SelectTime
+                            snapShotSale={tripSelected?.snapShotSale}
+                            salePrice={tripSelected?.salePrice}
+                            price={tripSelected?.price}
+                        />
+                    )
+                }
                 {step === "info" && (
-                    <InfoOption flashSale={tripSelected?.flashSale} originPrice={tripSelected?.price} />
-                )}
-
-                {step === "selectPlace" && (
-                    <PickDrop
-                        dropOff={tripSelected.activePickDrop.dropOff}
-                        pickUp={tripSelected.activePickDrop.pickUp}
-                        onSelectionChange={handlePickDrop}
+                    <InfoOption
+                        price={tripSelected.price}
+                        salePrice={tripSelected.salePrice}
+                        snapShotSale={tripSelected.snapShotSale}
                     />
                 )}
                 {step === "review" && dataBooking && <BookingReview data={dataBooking} />}
@@ -77,9 +74,7 @@ export default function BookingStep() {
                     Tiếp tục
                 </Button>
             </Box>
-
         </Box >
     )
-
 
 }

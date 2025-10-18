@@ -8,8 +8,10 @@ import useBusCompany from "@/hooks/useBusCompany";
 
 
 export default function HomePage() {
+
     const { getSyncCompanies } = useBusCompany()
     getSyncCompanies()
+
 
     return (
         <Page className="flex-1 flex flex-col bg-slate-100">
@@ -20,6 +22,7 @@ export default function HomePage() {
                 <Divider />
                 <RouteSwiper />
                 <Divider />
+
             </Box>
         </Page >
     );

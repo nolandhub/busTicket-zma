@@ -2,11 +2,10 @@ import { atom, selector } from "recoil";
 import { userCached } from "./types/userType";
 import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
-import { Trip, TripFiltered } from "./types/tripType";
-import { getSuitableTimesForDate } from "./helper/filterTime";
+import { PriceDetail, Trip, TripFiltered } from "./types/tripType";
 import { BusCompany } from "./types/busCompanyType";
 import { BookingData, TicketData } from "./types/bookingType";
-
+import mockTrip from "@/mock/mockTrip.json"
 export const userState = atom<userCached | null>({
     key: 'user',
     default: null
@@ -64,9 +63,16 @@ export const selectedCompanyState = atom<BusCompany | null>({
     default: null
 })
 
+
+//Fixed bug overlay ImageViewer
 export const hideHeaderState = atom<boolean>({
     key: "hideHeader",
     default: false
+})
+
+export const priceOptionState = atom<PriceDetail | null>({
+    key: "priceOption",
+    default: null
 })
 
 export const bookingState = atom<BookingData | null>({
@@ -91,7 +97,6 @@ export const availableTrip = selector<TripFiltered[]>({
     key: "availableTrip",
     get: ({ get }) => {
         const departureKey = get(departureState)
-        const departDate = get(departureDateState)
         const trips = get(tripState)
 
         if (!trips) return [];
@@ -103,8 +108,7 @@ export const availableTrip = selector<TripFiltered[]>({
                 activePickDrop: isForward ? trips.routeConfig.forward : trips.routeConfig.backward
             }
         });
-        const tripFilter = getSuitableTimesForDate(tripsFiltered, departDate)
-        return tripFilter
+        return tripsFiltered
     }
 });
 

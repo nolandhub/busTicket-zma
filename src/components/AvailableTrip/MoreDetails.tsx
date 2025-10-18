@@ -59,7 +59,12 @@ const MoreDetail: FC<MoreDetailsProps> = ({ busCompany, trip, sheet, tab, handle
                     >
                         <Tabs.Tab key="1" label="Chi tiết giá">
                             <Box p={4}>
-                                <DetailPriceTab price={trip.price} typePrice={trip.typePrice} flashSale={trip.flashSale} />
+                                <DetailPriceTab
+                                    price={trip.price}
+                                    priceType={trip.priceType}
+                                    salePrice={trip.salePrice}
+                                    snapShotSale={trip.snapShotSale}
+                                />
                             </Box>
                         </Tabs.Tab>
                         <Tabs.Tab key="2" label="Đón/Trả">

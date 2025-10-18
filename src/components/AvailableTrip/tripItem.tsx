@@ -38,20 +38,21 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
 
     return (
         <Box className="bg-white rounded-xl border border-slate-300 md:max-w-lg mx-auto shadow-lg">
-            <FlashSaleCard flashSale={trip.flashSale} />
+            <FlashSaleCard snapShotSale={trip.snapShotSale} />
             <Box className="bg-white p-2 rounded-t-xl">
                 <Box className="flex-1 flex flex-row">
                     <RouteIndicator
                         startLocation={trip.activePickDrop.startLocation}
                         endLocation={trip.activePickDrop.endLocation}
-                        startTime={trip.activePickDrop.startTime}
-                        duration={trip.activePickDrop.duration}
-                        endTime={trip.activePickDrop.endTime}
+                        // startTime={trip.activePickDrop.startTime}
+                        // duration={trip.activePickDrop.duration}
+                        // endTime={trip.activePickDrop.endTime}
                         onClick={() => directTab("2")}
                     />
                     <PriceDisplay
-                        originPrice={trip.price}
-                        flashSale={trip.flashSale}
+                        price={trip.price}
+                        snapShotSale={trip.snapShotSale}
+                        salePrice={trip.salePrice}
                         onDetailClick={() => directTab("1")}  /* setVisible(true) */
                     />
                 </Box>

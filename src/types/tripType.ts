@@ -1,34 +1,33 @@
-export interface SaleDetail {
-    type: "fixed" | "percent"
-    value: number                    //200000đ || 50%    
-    finalPrice: PriceDetail | PriceDetail[]    //singlePrice || rangePrice
+export interface PriceDetail {
+    time: string
+    detail: {
+        label: string
+        value: number
+    }[]
 }
 
-export interface FlashSale {
-    saleDetail: SaleDetail
-    endTime: string;
-    isActive: boolean;
+export interface SaleDetail {
+    saleId: string
+    label: string
+    type: "fixed" | "percent"
+    value: number
+    startDate: string
+    endDate: string
+    updateAt: string
+    isActive: boolean
 }
+
 
 export interface BasePickDrop {
     title: string,
-    subTitle: string,
-    time: string
-}
-
-export interface PriceDetail {
-    label: string
-    value: number
+    subTitle: string
 }
 
 export interface RouteDetails {
-    //Time + Location
+    // + Location
     key: string             // saigon
-    startLocation: string
-    endLocation: string
-    startTime: string     //  04:00
-    duration: string     // 10h 20p
-    endTime: string      //  08:00
+    startLocation: string   //default
+    endLocation: string     //default
 
     //PickDrop
     pickUp: BasePickDrop[]
@@ -36,19 +35,27 @@ export interface RouteDetails {
 }
 
 export interface TripData {
-    routeId: string           //saigon-hanoi
-    trip: string
+    routeId: string            //saigon-hanoi
+    routeName: string         //Sai Gon - Ha Noi
     compId: string           //cuctung
-    compName: string        // Cuc Tung Limousine
-    busName: string         //Limousine 20 Phòng Đôi VIP
-    typePrice: "fixed" | "byRoom" | "byRow"  // đồng giá || phòng || hàng
-    price: PriceDetail | PriceDetail[]                 //giá gốc single || range
-    flashSale: FlashSale | null
+    compName: string        //Cuc Tung Limousine
+    busName: string        //Limousine 20 Phòng Đôi VIP
+
+    //Price
+    priceType: "fixed" | "byRoom" | "byRow"
+    price: PriceDetail[]
+
+    saleId?: string | null
+    snapShotSale?: SaleDetail | null
+    salePrice?: PriceDetail[] | null
+
     routeConfig: {
         forward: RouteDetails
         backward: RouteDetails
     }
-    updateAt?: Date
+
+    createAt: Date  //to ISOString
+    updateAt: Date  //to ISOString
     isDelete: boolean
 }
 
@@ -59,3 +66,7 @@ export interface Trip extends TripData {
 export interface TripFiltered extends Trip {
     activePickDrop: RouteDetails
 }
+
+
+
+

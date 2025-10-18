@@ -1,5 +1,5 @@
 export interface Policies {
-    title: string,
+    title: string
     description: string[]
 }
 

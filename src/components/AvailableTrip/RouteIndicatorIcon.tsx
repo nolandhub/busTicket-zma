@@ -32,7 +32,7 @@ const RouteIndicator: FC<RouteIndicatorProps> = ({ startLocation, endLocation, s
             <Box className="flex items-center">
                 <div className="flex flex-col items-center">
                     <MapPinIcon size={12} strokeWidth={3} className="text-blue-500" />
-                    <div className="h-10 w-px bg-slate-500" />
+                    <div className="h-14 w-px bg-slate-500" />
                     <Locate size={12} strokeWidth={4} className="text-red-400" />
                 </div>
             </Box>

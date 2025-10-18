@@ -1,16 +1,21 @@
 import { BasePickDrop } from "./tripType"
 
-interface Option {
-    label: string
-    passCount: number
-    totalOptionPrice: number
+export interface Option {
+    time: string;           // "08:00 - 10:00"
+    label: string;          // "Phòng VIP"
+    value: number;          // 600000
+    quantity: number;       // 2
+    subtotal: number;       // 1200000
+    passCount?: number;     // Số lượng hành khách (optional)
+    totalOptionPrice?: number; // Tổng giá option (optional, có thể duplicate với subtotal)
 }
 
 export interface BookingData {
     bookingId: string
     zaloId: string
 
-    busId: string
+    compId: string
+    compName: string
     busName: string
     tripId: string
     tripName?: string

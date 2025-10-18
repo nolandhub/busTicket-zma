@@ -1,0 +1,173 @@
+import { db } from "@/firebase/fireConfig";
+import { ConfigPricing } from "@/types/configPricing";
+import { PopRoute } from "@/types/routeType";
+import {
+    getDocs,
+    collection,
+    addDoc,
+} from "firebase/firestore";
+
+import mockConfigPrice from "@/mock/mockConfigPrice.json"
+
+
+const colRef = collection(db, "configPrices")
+
+export async function getPopRoutes() {
+    try {
+        const snap = await getDocs(colRef);
+        const data = snap.docs.map(doc => ({
+            id: doc.id,
+            ...(doc.data() as Omit<PopRoute, "id">), // ép kiểu cho TS
+        }));
+        return data;
+    } catch (error) {
+        console.error("[FIRESTORE ERROR] getConfigPrices failed:", error);
+        return [];
+    }
+}
+
+export async function addConfigPrices(data: ConfigPricing) {
+    try {
+        await addDoc(colRef, data)
+        console.log("OK")
+    } catch (error) {
+        console.log(error)
+
+    }
+}
+
+
+export async function seedConfig() {
+    const data: ConfigPricing = {
+        "routeId": "saigon-hanoi",
+        "compId": "cuctung",
+        "type": "normal",
+        "name": "Giá ngày thường theo thứ trong tuần - Cúc Tùng Limousine",
+        "holiday": null,
+        "month": null,
+        "weekOfDay": [
+            {
+                "day": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "finalPrice": [
+                    {
+                        "time": "08:00",
+                        "price": [
+                            {
+                                "label": "Phòng đơn",
+                                "value": 750000
+                            },
+                            {
+                                "label": "Phòng đôi",
+                                "value": 1100000
+                            }
+                        ],
+                        "discount": null
+                    },
+                    {
+                        "time": "20:00",
+                        "price": [
+                            {
+                                "label": "Phòng đơn",
+                                "value": 800000
+                            },
+                            {
+                                "label": "Phòng đôi",
+                                "value": 1150000
+                            }
+                        ],
+                        "discount": null
+                    }
+                ],
+                "discount": null
+            },
+            {
+                "day": [
+                    5,
+                    6
+                ],
+                "finalPrice": [
+                    {
+                        "time": "08:00",
+                        "price": [
+                            {
+                                "label": "Phòng đơn",
+                                "value": 850000
+                            },
+                            {
+                                "label": "Phòng đôi",
+                                "value": 1250000
+                            }
+                        ],
+                        "discount": null
+                    },
+                    {
+                        "time": "20:00",
+                        "price": [
+                            {
+                                "label": "Phòng đơn",
+                                "value": 900000
+                            },
+                            {
+                                "label": "Phòng đôi",
+                                "value": 1300000
+                            }
+                        ],
+                        "discount": null
+                    }
+                ],
+                "discount": {
+                    "type": "percent",
+                    "value": 5
+                }
+            },
+            {
+                "day": [
+                    0,
+                    7
+                ],
+                "finalPrice": [
+                    {
+                        "time": "08:00",
+                        "price": [
+                            {
+                                "label": "Phòng đơn",
+                                "value": 950000
+                            },
+                            {
+                                "label": "Phòng đôi",
+                                "value": 1400000
+                            }
+                        ],
+                        "discount": null
+                    },
+                    {
+                        "time": "20:00",
+                        "price": [
+                            {
+                                "label": "Phòng đơn",
+                                "value": 1000000
+                            },
+                            {
+                                "label": "Phòng đôi",
+                                "value": 1500000
+                            }
+                        ],
+                        "discount": {
+                            "type": "percent",
+                            "value": 10
+                        }
+                    }
+                ],
+                "discount": null
+            }
+        ],
+        "isActive": true
+    }
+
+    await addConfigPrices(data)
+}

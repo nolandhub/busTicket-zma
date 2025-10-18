@@ -1,21 +1,24 @@
-import { formatPrice } from "@/helper/formatPrice";
 import { departureDateState } from "@/state";
-import { PriceDetail, FlashSale } from "@/types/tripType";
+import { PriceDetail, SaleDetail } from "@/types/tripType";
 import dayjs from "dayjs";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { Box, Text } from "zmp-ui";
+import ListPriceDetail from "../ListPriceDetail";
+
 interface Props {
-    flashSale: FlashSale | null
-    price: PriceDetail | PriceDetail[]
-    typePrice: "fixed" | "byRoom" | "byRow"
+    snapShotSale?: SaleDetail | null;
+    price: PriceDetail[];
+    salePrice?: PriceDetail[] | null;
+    priceType: string;
 }
 
-const DetailPriceTab: FC<Props> = ({ flashSale, price, typePrice }) => {
-    const departDate = useRecoilValue(departureDateState)
-    // Lấy text header dựa vào typePrice
-    const getHeaderText = () => {
-        switch (typePrice) {
+const DetailPriceTab: FC<Props> = ({ snapShotSale, price, salePrice, priceType }) => {
+    const departDate = useRecoilValue(departureDateState);
+
+    // Lấy text header dựa vào priceType
+    const headerText = useMemo(() => {
+        switch (priceType) {
             case "byRoom":
                 return "Giá theo phòng";
             case "byRow":
@@ -25,99 +28,36 @@ const DetailPriceTab: FC<Props> = ({ flashSale, price, typePrice }) => {
             default:
                 return "Bảng giá";
         }
-    };
+    }, [priceType]);
 
-    // Case 1: Có flashSale và đang active
-    if (flashSale && flashSale.isActive === true && dayjs(flashSale.endTime).valueOf() > dayjs(departDate).valueOf()) {
-        const finalPrice = flashSale.saleDetail.finalPrice;
-        if (
-            Array.isArray(finalPrice) &&
-            (typePrice === "byRoom" || typePrice === "byRow")
-        ) {
-            return (
-                <Box>
-                    <div className="bg-green-600 rounded-t-lg px-4 py-2 flex items-center justify-between">
-                        <Text className="text-white font-semibold">{getHeaderText()}</Text>
-                        <span className="bg-yellow-400 text-green-800 text-xs font-bold px-2 py-1 rounded">
-                            FLASH SALE
-                        </span>
-                    </div>
-                    <div className="space-y-2 p-3 bg-green-50 rounded-b-lg border">
-                        {finalPrice.map((p: PriceDetail, idx: number) => (
-                            <div
-                                key={idx}
-                                className="bg-green-50 rounded-lg p-3 flex justify-between items-center"
-                            >
-                                <Text className="text-gray-700">{p.label}</Text>
-                                <Text className="text-lg font-semibold text-green-600">
-                                    {formatPrice(p.value)}đ
-                                </Text>
-                            </div>
-                        ))}
-                    </div>
-                </Box>
-            );
-        }
+    // Kiểm tra sale có active và còn hạn không
+    const isSaleActive = useMemo(() => {
+        if (!snapShotSale?.isActive || !salePrice) return false;
+        const depart = dayjs(departDate);
+        const saleEnd = dayjs(snapShotSale.endDate);
+        return !depart.isAfter(saleEnd);
+    }, [snapShotSale, departDate, salePrice]);
 
-        // finalPrice chỉ là một object
-        if (!Array.isArray(finalPrice)) {
-            return (
-                <Box>
-                    <div className="bg-green-600 rounded-t-lg px-4 py-2 flex items-center justify-between">
-                        <Text className="text-white font-semibold">{getHeaderText()}</Text>
-                        <span className="bg-yellow-300 text-green-800 text-xs font-bold px-2 py-1 rounded">
-                            FLASH SALE
-                        </span>
-                    </div>
-                    <div className="p-3 bg-white rounded-b-lg border">
-                        <div className="bg-green-50 rounded-lg p-3 flex justify-between items-center border">
-                            <Text className="text-gray-700">{finalPrice.label}</Text>
-                            <Text className="text-xl font-semibold text-green-600 border">
-                                {formatPrice(finalPrice.value)}đ
-                            </Text>
-                        </div>
-                    </div>
-                </Box>
-            );
-        }
-    }
-    // Case 2: Không có flashSale → hiện giá gốc
-    if (Array.isArray(price)) {
-        return (
-            <Box>
-                <div className="bg-green-600 rounded-t-lg px-4 py-2">
-                    <Text className="text-white font-semibold">{getHeaderText()}</Text>
-                </div>
-                <div className="space-y-2 p-3 bg-white rounded-b-lg border">
-                    {price.map((p: PriceDetail, idx: number) => (
-                        <div
-                            key={idx}
-                            className="bg-green-50 rounded-lg p-3 flex justify-between items-center border"
-                        >
-                            <Text className="text-gray-700">{p.label}</Text>
-                            <Text className="text-lg font-semibold text-green-600">
-                                {formatPrice(p.value)}đ
-                            </Text>
-                        </div>
-                    ))}
-                </div>
-            </Box>
-        );
-    }
+    // Quyết định giá nào sẽ hiển thị
+    const displayPrice = isSaleActive && salePrice ? salePrice : price;
+    const showSaleBadge = isSaleActive && snapShotSale;
 
     return (
         <Box>
-            <div className="bg-green-600 rounded-t-lg px-4 py-2">
-                <Text className="text-white font-semibold">{getHeaderText()}</Text>
+            {/* Header */}
+            <div className="bg-green-600 rounded-t-lg px-4 py-2 flex items-center justify-between">
+                <Text className="text-white font-semibold">{headerText}</Text>
+                {showSaleBadge && (
+                    <span className="bg-yellow-400 text-green-800 text-xs font-bold px-2 py-1 rounded">
+                        {snapShotSale.label}
+                    </span>
+                )}
             </div>
-            <div className="p-3 bg-white rounded-b-lg border">
-                <div className="bg-green-50 rounded-lg p-3 flex justify-between items-center border">
-                    <Text className="text-gray-700">{price.label}</Text>
-                    <Text className="text-xl font-semibold text-green-600">
-                        {formatPrice(price.value)}đ
-                    </Text>
-                </div>
-            </div>
+
+            {/* Price Content */}
+            {
+                <ListPriceDetail prices={displayPrice} />
+            }
         </Box>
     );
 };

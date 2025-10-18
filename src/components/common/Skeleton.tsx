@@ -70,7 +70,5 @@ export const UserCardSkeleton = () => {
                 </Box>
             </Box>
         </Box>
-
-
     );
 }

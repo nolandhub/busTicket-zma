@@ -30,9 +30,7 @@ const PickDropTab: FC<Props> = ({ pickUp, dropOff }) => {
                                             {item.subTitle}
                                         </Text>
                                     </div>
-                                    <div className="bg-green-600 text-white px-3 py-1 rounded-lg text-sm font-semibold whitespace-nowrap">
-                                        {item.time}
-                                    </div>
+
                                 </div>
                             </div>
                         ))}
@@ -58,9 +56,6 @@ const PickDropTab: FC<Props> = ({ pickUp, dropOff }) => {
                                         <Text className="text-sm text-gray-600">
                                             {item.subTitle}
                                         </Text>
-                                    </div>
-                                    <div className="bg-green-600 text-white px-3 py-1 rounded-lg text-sm font-semibold whitespace-nowrap">
-                                        {item.time}
                                     </div>
                                 </div>
                             </div>
