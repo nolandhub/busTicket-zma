@@ -4,6 +4,7 @@ import ListPriceDetail from "../AvailableTrip/ListPriceDetail";
 import dayjs from "dayjs";
 import { useRecoilValue } from "recoil";
 import { departureDateState } from "@/state";
+import { Box, Text } from "zmp-ui";
 
 interface SelectTimeProps {
     snapShotSale?: SaleDetail | null
@@ -23,9 +24,10 @@ const SelectTime: FC<SelectTimeProps> = ({ price, salePrice, snapShotSale }) => 
     const activePrice = isSaleActive && salePrice ? salePrice : price
 
     return (
-        <>
+        <Box className="flex flex-col p-2 space-y-4">
+            <Text className="font-bold text-2xl text-center">Chọn giờ xuất bến</Text>
             <ListPriceDetail prices={activePrice} />
-        </>
+        </Box>
     )
 
 }

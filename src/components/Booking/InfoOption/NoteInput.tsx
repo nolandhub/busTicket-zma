@@ -7,14 +7,12 @@ interface NoteInputProps {
     label: string;
     value: string;
     onChange: (value: string) => void;
-    isError?: boolean;
 }
 
-const NoteInput: FC<NoteInputProps> = ({ label, value, onChange, isError }) => {
+const NoteInput: FC<NoteInputProps> = ({ label, value, onChange }) => {
     return (
         <Box>
             <TextArea
-                status={isError ? "error" : ""}
                 errorText="Vui lòng không bỏ trống nội dung."
                 maxLength={50}
                 showCount

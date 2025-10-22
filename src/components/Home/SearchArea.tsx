@@ -70,7 +70,7 @@ const SearchArea = () => {
                             placeholder={parseString(departDate)}
                             onChange={(date) => setDepartDate(date)}
                         />
-                        {returnDate && isReturn
+                        {/* {returnDate && isReturn
                             && <DatePicker
                                 label="Ngày về"
                                 startDate={new Date()}
@@ -78,15 +78,17 @@ const SearchArea = () => {
                                 placeholder={parseString(returnDate)}
                                 onChange={(date) => setReturnDate(date)}
                             />
-                        }
+                        } */}
                     </Box>
-                    <Box className="flex justify-end">
+
+
+                    {/* <Box className="flex justify-end">
                         <Switch
                             checked={isReturn}
                             onChange={handleSwitch}
                             label="Khứ hồi"
                         />
-                    </Box>
+                    </Box> */}
                 </Box>
 
 

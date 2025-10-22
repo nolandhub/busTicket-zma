@@ -3,7 +3,8 @@ import useCoreInit from "./useCoreInit";
 import { useState } from "react";
 
 export default function useRepickCore() {
-    const { departDate,
+    const {
+        departDate,
         isReturn,
         returnDate,
         setReturnDate,

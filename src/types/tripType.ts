@@ -33,6 +33,10 @@ export interface TripDetail {
     dropOff: BasePickDrop[]
 }
 
+//1: startPoint , 2: endPoint ,3: 2Point , null:noPoint
+export type Transfer = "1" | "2" | "3" | null
+//1: trung chuyển ở điểm đi , 2: trung chuyển điểm đến  ,3: trung chuyển 2 chiều , null:noPoint
+
 export interface TripData {
     routeId: string            //saigon-hanoi
     routeName: string         //Sai Gon - Ha Noi
@@ -49,7 +53,7 @@ export interface TripData {
     salePrice?: PriceDetail[] | null
 
     tripConfig: {
-        hasTransfer?: "1" | "2" | "3" | null  //1: startPoint , 2: endPoint ,3: 2Point , null:noPoint
+        hasTransfer?: Transfer   //1: startPoint , 2: endPoint ,3: 2Point , null:noPoint
         forward: TripDetail
         backward: TripDetail
     }

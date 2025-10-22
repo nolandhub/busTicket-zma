@@ -1,30 +1,57 @@
-import { useState, useMemo } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useState, useMemo, useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { bookingState, selectedTripState, userState } from "@/state";
 import { PriceDetail } from "@/types/tripType";
 import { Option } from "@/types/bookingType";
+import useCoreInit from "./useCoreInit";
 
 export default function useBookingOption(price: PriceDetail) {
     const tripSelected = useRecoilValue(selectedTripState);
     const userData = useRecoilValue(userState);
-    const setBooking = useSetRecoilState(bookingState);
 
-    // User info
-    const [name, setName] = useState(userData?.name || "");
-    const [phone, setPhone] = useState(userData?.phone || "");
+    const [dataBooking, setBooking] = useRecoilState(bookingState);
 
-    // Quantities: { "detailIndex": quantity }
-    // Ví dụ: { "0": 2, "1": 1 } => detail[0] có 2 vé, detail[1] có 1 vé
-    const [quantities, setQuantities] = useState<Record<number, number>>({});
+    const { isReturn, returnDate, departDate } = useCoreInit()
+
+    // User info - Khởi tạo từ Recoil state trước, fallback về userData
+    const [name, setName] = useState(
+        userData?.name || dataBooking.bookingName || ""
+    );
+
+    const [phone, setPhone] = useState(
+        userData?.phone || dataBooking.bookingPhone || ""
+    );
+
+    // Quantities: Khởi tạo từ Recoil state nếu có
+    const [quantities, setQuantities] = useState<Record<number, number>>(() => {
+        // Restore quantities từ options đã lưu trong dataBooking
+        if (dataBooking.option && dataBooking.option.length > 0) {
+            const restoredQuantities: Record<number, number> = {};
+
+            dataBooking.option.forEach(opt => {
+                // Tìm index của detail item dựa vào label và value
+                const detailIdx = price.detail.findIndex(
+                    d => d.label === opt.label && d.value === opt.value
+                );
+
+                if (detailIdx !== -1 && opt.quantity > 0) {
+                    restoredQuantities[detailIdx] = opt.quantity;
+                }
+            });
+
+            return restoredQuantities;
+        }
+
+        return {};
+    });
 
     // Update quantity cho một detail item
     const updateQuantity = (detailIdx: number, change: number) => {
         setQuantities(prev => {
             const currentQty = prev[detailIdx] || 0;
-            const newQty = Math.max(0, currentQty + change); // Không cho âm
+            const newQty = Math.max(0, currentQty + change);
 
             if (newQty === 0) {
-                // Xóa key nếu quantity = 0
                 const { [detailIdx]: _, ...rest } = prev;
                 return rest;
             }
@@ -51,8 +78,7 @@ export default function useBookingOption(price: PriceDetail) {
                     value: detail.value,
                     quantity: qty,
                     subtotal: detail.value * qty,
-                    passCount: qty,  //  passCount
-                    totalOptionPrice: detail.value * qty  // Thêm totalOptionPrice
+                    totalOptionPrice: detail.value * qty
                 });
             }
         });
@@ -65,24 +91,47 @@ export default function useBookingOption(price: PriceDetail) {
         return options.reduce((sum, option) => sum + option.subtotal, 0);
     }, [options]);
 
+    // Auto-save vào Recoil state khi có thay đổi
+    useEffect(() => {
+        if (!tripSelected) return;
+
+        setBooking((prev) => ({
+            ...prev,
+            bookingName: name,
+            bookingPhone: phone,
+            option: options,
+            total: total
+        }));
+    }, [name, phone, options, total, tripSelected]);
+
     const saveInfoStep = () => {
         if (!tripSelected) return;
 
         setBooking((prev) => ({
             ...prev,
+            //identity
             bookingId: "",
             zaloId: prev?.zaloId || userData?.id || "",
+
+            //trip
             compId: tripSelected.compId,
             compName: tripSelected.compName,
             busName: tripSelected.busName,
             tripId: tripSelected.id,
             tripName: tripSelected.routeName,
+
+            //date
+            bookingDate: departDate,
+
+            //infoUser
             bookingName: name,
             bookingPhone: phone,
-            option: options, // Lưu options đã tính toán
+            option: options,
             total,
-            pickUp: prev?.pickUp || null,
-            dropOff: prev?.dropOff || null,
+
+            //pickDrop
+            pickUp: prev?.pickUp,
+            dropOff: prev?.dropOff
         }));
     };
 
@@ -96,6 +145,10 @@ export default function useBookingOption(price: PriceDetail) {
         updateQuantity,
         total,
         options,
-        saveInfoStep
+        saveInfoStep,
+        returnDate,
+        departDate,
+        isReturn,
+        dataBooking
     };
 }

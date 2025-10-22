@@ -21,10 +21,11 @@ const PickSelect: FC<PickSelectProps> = ({
     transferEnabled = false,
     transferValue,
     transferLabel,
-    titleFormat = (item) => `${item.title} — ${item.subTitle}`,
+    titleFormat = (item) => `${item.title} - ${item.subTitle}`,
 }) => {
     return (
         <Select
+            defaultValue={-1}
             label={label}
             placeholder={label}
             value={value}

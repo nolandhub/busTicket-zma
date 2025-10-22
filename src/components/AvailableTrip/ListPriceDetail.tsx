@@ -28,7 +28,7 @@ const ListPriceDetail: FC<Props> = ({ prices }) => {
                         key={idx}
                         onClick={() => selectPriceOption(timeSlot)}
                         className={`rounded-lg p-3 border transition cursor-pointer 
-              ${isSelected
+                                ${isSelected
                                 ? "bg-green-600 border-green-700"
                                 : "bg-green-50 border-green-200 hover:bg-green-100"}
             `}

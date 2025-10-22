@@ -6,6 +6,8 @@ import { FC, useEffect } from "react"
 import PickDrop from "../Booking/InfoOption/PickDrop"
 import { debounce } from "lodash"
 import PriceItem from "./InfoOption/PriceItems"
+import { useRecoilValue } from "recoil"
+import { bookingState } from "@/state"
 
 interface InfoOptionProps {
     price: PriceDetail
@@ -21,12 +23,15 @@ const InfoOption: FC<InfoOptionProps> = ({ price }) => {
         quantities,
         updateQuantity,
         total,
-        saveInfoStep
+        saveInfoStep,
+        dataBooking
     } = useBookingOption(price)
 
     const saveInfoDebounced = debounce(() => {
         saveInfoStep()
-    }, 500)
+    }, 200)
+
+    const bookingData = useRecoilValue(bookingState)
 
     useEffect(() => {
         saveInfoDebounced()
@@ -35,23 +40,25 @@ const InfoOption: FC<InfoOptionProps> = ({ price }) => {
 
     return (
         <Box className="flex-1 flex-col p-2 bg-slate-50 rounded-2xl">
-            <Text bold size="xLarge" className="text-center">Thông tin</Text>
+            <Text bold size="xLarge" className="text-center">Thông tin đặt vé</Text>
 
             {/* User Info */}
             <div className="flex flex-col gap-2 mt-4">
                 <Input
                     prefix={<Box pl={4}><Icon icon="zi-info-circle" /></Box>}
                     label="Tên người đi"
-                    value={name}
+                    value={bookingData?.bookingName || name}
                     onChange={(n) => setName(n.target.value)}
                     placeholder="Nhập tên của bạn"
+                    clearable={{ mode: "focus" }}
                 />
                 <Input
                     prefix={<Box pl={4}><Icon icon="zi-call" /></Box>}
                     label="Số điện thoại"
-                    value={phone}
+                    value={bookingData?.bookingPhone || phone}
                     onChange={(p) => setPhone(p.target.value)}
                     placeholder="Nhập số điện thoại"
+                    clearable={{ mode: "focus" }}
                 />
             </div>
 
@@ -90,7 +97,7 @@ const InfoOption: FC<InfoOptionProps> = ({ price }) => {
                     </Text>
                     <Box className="flex items-baseline gap-1">
                         <Text className="text-3xl font-bold text-emerald-600">
-                            {formatPrice(total)}
+                            {formatPrice(dataBooking.total)}
                         </Text>
                         <Text className="text-xl font-semibold text-emerald-600">đ</Text>
                     </Box>

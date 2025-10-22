@@ -1,4 +1,4 @@
-import { Box, Page, } from "zmp-ui";
+import { Box, Page } from "zmp-ui";
 import { Welcome } from "@/components/Home/Welcome";
 import UserHero from "@/components/Home/UserHero";
 import SearchArea from "@/components/Home/SearchArea";
@@ -8,7 +8,6 @@ import useBusCompany from "@/hooks/useBusCompany";
 
 
 export default function HomePage() {
-
 
     const { getSyncCompanies } = useBusCompany()
     getSyncCompanies()

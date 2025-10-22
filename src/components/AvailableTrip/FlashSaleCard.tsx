@@ -68,8 +68,8 @@ const FlashSaleCard: FC<{ snapShotSale?: SaleDetail | null }> = ({ snapShotSale 
 
     return (
         <Box className="flex items-center bg-white rounded-t-xl overflow-hidden">
-            <div className="flex items-center justify-center bg-green-500 border-r border-slate-300 p-2 min-w-0">
-                <Zap size={18} strokeWidth={4} fill="yellow" color="yellow" className="shrink-0" />
+            <div className="flex items-center justify-center bg-green-500 border-r border-slate-300 py-2 px-1 min-w-0">
+                <Zap size={20} strokeWidth={4} fill="yellow" color="yellow" className="shrink-0" />
                 <Text className="text-white text-md font-bold ml-1 leading-tight line-clamp-2">
                     {snapShotSale.label}
                 </Text>

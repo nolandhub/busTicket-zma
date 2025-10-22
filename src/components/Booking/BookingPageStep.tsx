@@ -4,15 +4,26 @@ import SelectTime from "./SelectTime";
 import useBookingStep from "@/hooks/useBookingStep";
 import InfoOption from "./InfoOption";
 import { useEffect, useState } from "react";
-import ButtonOrder from "../common/buttons/ButtonOrder";
+import ConfirmSection from "./ConfirmSection";
 
 export default function BookingStep() {
-    const { step, tripSelected, handleNext, handleBack, handleOrder, dataBooking, priceOpt } = useBookingStep()
+    const {
+        step,
+        tripSelected,
+        handleNext,
+        handleBack,
+        dataBooking,
+        priceOpt,
+        handleConfirm
+    } = useBookingStep()
+
     const [isHidden, setHidden] = useState<boolean>(false)
 
     useEffect(() => {
         if (step == "review") {
             setHidden(true)
+        } else if (step == "info" || "time") {
+            setHidden(false)
         }
     }, [step])
 
@@ -30,26 +41,30 @@ export default function BookingStep() {
                     <>
                         <InfoOption price={priceOpt} />
                     </>
-
                 )}
                 {step === "review" && dataBooking && (
-                    <>
+                    <Box className=" flex flex-col gap-2">
+                        <div className="flex justify-start items-center my-2 ml-1">
+                            <Button className="flex font-bold  items-center text-center" prefixIcon={<Icon icon="zi-arrow-left" />} onClick={handleBack}>
+                                Chỉnh sửa
+                            </Button>
+                        </div>
                         <BookingReview data={dataBooking} />
-                        <ButtonOrder onOrder={(messageToken) => { handleOrder(messageToken) }} />
-                    </>
+
+                        <ConfirmSection total={dataBooking.total || 0} onConfirm={() => { handleConfirm(dataBooking) }} />
+                    </Box>
                 )}
             </Box>
 
-            {/*             {`${isHidden ? "hidden" : "sticky flex justify-around"}`}
- */}
-            <Box className={`${isHidden ? "hidden" : "sticky flex justify-around"}`}>
-                <Button prefixIcon={<Icon icon="zi-arrow-left" />} onClick={handleBack}>
+            <Box className={`${isHidden ? "hidden" : "sticky px-6 gap-6 bottom-0 flex justify-around pb-2"}`}>
+                <Button fullWidth prefixIcon={<Icon icon="zi-arrow-left" />} onClick={handleBack}>
                     Quay lại
                 </Button>
-                <Button suffixIcon={<Icon icon="zi-arrow-right" />} onClick={handleNext}>
+                <Button fullWidth suffixIcon={<Icon icon="zi-arrow-right" />} onClick={handleNext}>
                     Tiếp tục
                 </Button>
             </Box>
+
         </Box>
     )
 }

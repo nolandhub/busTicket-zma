@@ -3,8 +3,8 @@ import { BasePickDrop } from "@/types/tripType";
 import { Box } from "zmp-ui";
 import PickSelect from "./PickSelect";
 import NoteInput from "./NoteInput";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { bookingState, priceOptionState } from "@/state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { bookingState } from "@/state";
 
 interface PickDropProps {
     hasTransfer?: string | null;
@@ -17,48 +17,37 @@ const PickDrop: FC<PickDropProps> = ({
     dropOff,
     hasTransfer,
 }) => {
-    const [pickupValue, setPickupValue] = useState("");
-    const [dropoffValue, setDropoffValue] = useState("");
-    const [pickUpNote, setPickUpNote] = useState("");
-    const [dropOffNote, setDropOffNote] = useState("");
-    const [isError1, setError1] = useState<boolean>(false);
-    const [isError2, setError2] = useState<boolean>(false);
 
-    // ✅ THÊM DÒNG NÀY
-    const setBooking = useSetRecoilState(bookingState);
+    const [dataBooking, setBooking] = useRecoilState(bookingState)
+    const pickupValue = dataBooking.pickUpValue ?? ""
+    const dropoffValue = dataBooking.dropOffValue ?? ""
+    const pickUpNote = dataBooking.pickUpNote ?? ""
+    const dropOffNote = dataBooking.dropOffNote ?? ""
 
     useEffect(() => {
+        if (!pickupValue && !dropoffValue) return; // Không làm gì nếu chưa chọn
+
         const pickup =
-            pickupValue != null && pickupValue !== "999"
+            pickupValue && pickupValue !== "999"
                 ? pickUp[Number(pickupValue)] ?? null
                 : pickupValue === "999"
                     ? { title: "Trung Chuyển Tận Nơi", subTitle: pickUpNote }
                     : null;
 
         const dropoff =
-            dropoffValue != null && dropoffValue !== "1000"
+            dropoffValue && dropoffValue !== "1000"
                 ? dropOff[Number(dropoffValue)] ?? null
                 : dropoffValue === "1000"
                     ? { title: "Trung Chuyển Tận Nơi", subTitle: dropOffNote }
                     : null;
 
-        // Validate note fields
-        setError1(hasTransfer != null && (hasTransfer === "1" || hasTransfer === "3") && !pickUpNote);
-        setError2(hasTransfer != null && (hasTransfer === "2" || hasTransfer === "3") && !dropOffNote);
+        setBooking((prev) => ({
+            ...prev,
+            pickUp: pickup,
+            dropOff: dropoff
+        }));
 
-        const ready = pickupValue !== "" || dropoffValue !== "";
-        if (ready) {
-            setBooking((prev) => {
-                if (!prev) return null;
-                return {
-                    ...prev,
-                    pickUp: pickup,
-                    dropOff: dropoff
-                };
-            });
-        }
-
-    }, [pickupValue, dropoffValue, pickUpNote, dropOffNote, hasTransfer, pickUp, dropOff, setBooking]);
+    }, [pickupValue, dropoffValue, pickUpNote, dropOffNote]);
 
     return (
         <div className="flex flex-col gap-4 mt-4 bg-white rounded-xl border p-4 shadow-md">
@@ -67,7 +56,7 @@ const PickDrop: FC<PickDropProps> = ({
                 label="Chọn điểm đón"
                 options={pickUp}
                 value={pickupValue}
-                onChange={setPickupValue}
+                onChange={(val) => setBooking(prev => ({ ...prev, pickUpValue: val }))}
                 transferEnabled={hasTransfer === "1" || hasTransfer === "3"}
                 transferValue="999"
                 transferLabel="Trung Chuyển Tận Nơi"
@@ -77,8 +66,7 @@ const PickDrop: FC<PickDropProps> = ({
                 <NoteInput
                     label="Ghi chú điểm đón"
                     value={pickUpNote}
-                    onChange={setPickUpNote}
-                    isError={isError1}
+                    onChange={(val) => setBooking(prev => ({ ...prev, pickUpNote: val }))}
                 />
             )}
 
@@ -87,7 +75,7 @@ const PickDrop: FC<PickDropProps> = ({
                 label="Chọn điểm trả"
                 options={dropOff}
                 value={dropoffValue}
-                onChange={setDropoffValue}
+                onChange={(val) => setBooking(prev => ({ ...prev, dropOffValue: val }))}
                 transferEnabled={hasTransfer === "2" || hasTransfer === "3"}
                 transferValue="1000"
                 transferLabel="Trung Chuyển Tận Nơi"
@@ -98,8 +86,7 @@ const PickDrop: FC<PickDropProps> = ({
                     <NoteInput
                         label="Ghi chú điểm trả"
                         value={dropOffNote}
-                        onChange={setDropOffNote}
-                        isError={isError2}
+                        onChange={(val) => setBooking(prev => ({ ...prev, dropOffNote: val }))}
                     />
                 </Box>
             )}
@@ -108,3 +95,5 @@ const PickDrop: FC<PickDropProps> = ({
 };
 
 export default PickDrop;
+
+

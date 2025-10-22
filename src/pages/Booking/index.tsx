@@ -10,10 +10,9 @@ export default function BookingPage() {
     return (
         <Page className="flex-1 flex flex-col bg-slate-100 ">
             <BackHeader onClickChange={() => setOpenChanged(true)} />
-            <Box className="flex-1 overflow-auto p-4">
+            <Box className="flex-1 overflow-auto ">
                 <BookingStep />
             </Box>
-
 
             <ModalChange visible={openChanged} onClose={() => setOpenChanged(false)} />
         </Page >

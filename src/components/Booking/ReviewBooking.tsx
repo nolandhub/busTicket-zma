@@ -136,11 +136,6 @@ const BookingReview: FC<BookingReviewProps> = ({ data }) => {
                 </div>
             )}
 
-            {/* Tổng tiền */}
-            <div className="flex justify-between items-center pt-2">
-                <span className="font-bold text-lg">Tổng tiền:</span>
-                <span className="font-bold text-xl text-green-600">{formatPrice(data.total)}đ</span>
-            </div>
         </div>
     );
 };

@@ -6,13 +6,12 @@ export interface Option {
     value: number;          // 600000
     quantity: number;       // 2
     subtotal: number;       // 1200000
-    passCount?: number;     // Số lượng hành khách (optional)
     totalOptionPrice?: number; // Tổng giá option (optional, có thể duplicate với subtotal)
 }
 
 export interface BookingData {
     bookingId: string
-    zaloId: string | ''
+    zaloId: string
 
     compId: string
     compName: string
@@ -20,25 +19,36 @@ export interface BookingData {
     tripId: string
     tripName: string
 
+    bookingDate: Date
+
+    //Scale --> future
+    // isReturn: boolean
+    // returnDate?: Date | null
+
+
     bookingName: string
     bookingPhone: string
 
     option?: Option[] | null
-    total?: number
+    total: number
 
     pickUp: BasePickDrop | null            //Time here - PickUp
     dropOff: BasePickDrop | null       //Time here - DropOff
 
+    pickUpValue: string
+    dropOffValue: string
+    pickUpNote: string
+    dropOffNote: string
+
     createAt?: Date
 }
 
-export interface TicketData extends BookingData {
+export type TicketStatus = "pending" | "confirmed" | "used" | "cancelled"
+
+export interface Ticket extends BookingData {
+    id: string
     busNumber: string
     seatName: string
-    status: "pending" | "confirmed" | "used" | "cancelled"
+    status: TicketStatus
     updateAt?: Date
-}
-
-export interface Ticket extends TicketData {
-    id: string
 }

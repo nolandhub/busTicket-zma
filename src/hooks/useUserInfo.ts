@@ -2,10 +2,13 @@ import { coreData, userCached } from "@/types/userType";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { isRegisteredState, userState } from "@/state";
-import { getUserInfo, getSetting, nativeStorage, authorize, getAccessToken, getPhoneNumber } from "zmp-sdk/apis";
+import {
+    getUserInfo, getSetting,
+    nativeStorage, authorize,
+    getAccessToken, getPhoneNumber
+} from "zmp-sdk/apis";
 import { useSnackbar } from "zmp-ui";
 import { addUser } from "@/firebase/firestore/userCrud"
-import dayjs from "dayjs";
 
 export default function useUserInfo() {
     const [userData, setUser] = useRecoilState<userCached | null>(userState)
@@ -109,7 +112,7 @@ export default function useUserInfo() {
             phone: numberPhone || "",
             role: "Thành viên",
             totalSpending: 0,
-            createAt: dayjs().toDate()
+            createAt: new Date()
         };
 
         return {

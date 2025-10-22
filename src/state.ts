@@ -4,7 +4,8 @@ import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 import { PriceDetail, Trip, TripFiltered } from "./types/tripType";
 import { BusCompany } from "./types/busCompanyType";
-import { BookingData, TicketData } from "./types/bookingType";
+import { BookingData, Ticket } from "./types/bookingType";
+
 export const userState = atom<userCached | null>({
     key: 'user',
     default: null
@@ -80,12 +81,31 @@ export const priceOptionState = atom<PriceDetail | null>({
     default: null
 })
 
-export const bookingState = atom<BookingData | null>({
+export const bookingState = atom<BookingData>({
     key: "booking",
-    default: null
+    default: {
+        bookingId: "",
+        zaloId: "",
+        compId: "",
+        compName: "",
+        busName: "",
+        tripId: "",
+        tripName: "",
+        bookingDate: new Date(),
+        bookingName: "",
+        bookingPhone: "",
+        option: [],
+        total: 0,
+        pickUp: null,
+        dropOff: null,
+        pickUpValue: "",
+        dropOffValue: "",
+        pickUpNote: "",
+        dropOffNote: "",
+    },
 })
 
-export const ticketState = atom<TicketData[]>({
+export const ticketState = atom<Ticket[]>({
     key: "ticket",
     default: []
 })
