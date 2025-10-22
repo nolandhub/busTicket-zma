@@ -1,6 +1,5 @@
 import { PriceDetail } from "@/types/tripType";
 
-// Helper: Tính min/max từ PriceDetail[]
 export function getPriceRange(priceList: PriceDetail[]) {
     // Lấy tất cả các giá trị từ detail của mỗi time slot
     const allValues: number[] = [];

@@ -1,7 +1,7 @@
 import { db } from "@/firebase/fireConfig";
 import { Trip } from "@/types/tripType";
 import { collection, query, where, getDocs, setDoc, addDoc } from "firebase/firestore";
-import mockTrip from "@/mock/mockTrip.json"
+import mockTrip from "@/mock/mockTrip"
 
 const ref = collection(db, "trips");
 
@@ -38,16 +38,4 @@ export function buildRouteKey(routeId: string) {
     const reverseKey = `${key2}-${key1}`
 
     return { directKey, reverseKey }
-}
-
-export default async function seedTrip() {
-    try {
-        await addDoc(ref, mockTrip)
-        console.log(mockTrip)
-
-    } catch (error) {
-        console.log(error)
-
-    }
-
 }

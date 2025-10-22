@@ -12,17 +12,14 @@ export default function TripList() {
                 <div className="text-red-600">Hiện tại, chúng tôi chưa khai thác chuyến này.....</div>
                 <div className="text-red-600">Cảm ơn bạn đã quan tâm! &lt;3</div>
             </>
-
         )
     }
 
     return (
         <>
             {
-                tripsFilter.length > 0 ? (
+                tripsFilter.length > 0 && (
                     tripsFilter.map((t, idx) => <TripItem key={idx} trip={t} />)
-                ) : (
-                    <div className="text-red-600">Chuyến này hôm nay đã hết, vui lòng chọn sang ngày khác. Xin Cảm ơn !!</div>
                 )
             }
         </>

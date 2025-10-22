@@ -15,7 +15,7 @@ const RegisterSection: FC<{ handleClick: () => void }> = ({ handleClick }) => {
                 <Text size="normal" bold className="text-gray-700">
                     Tận hưởng ngàn ưu đãi đặc quyền chỉ dành riêng cho bạn &lt;3
                 </Text>
-                <Button type="highlight" size="medium" onClick={handleClick}>
+                <Button type="danger" size="medium" onClick={handleClick}>
                     Đăng ký ngay
                 </Button>
             </Box>
@@ -25,6 +25,7 @@ const RegisterSection: FC<{ handleClick: () => void }> = ({ handleClick }) => {
 
 const UserCardContent: FC = () => {
     const { handleRegister, userData, isRegistered } = useUserInfo()
+
     if (!isRegistered) {
         return <RegisterSection handleClick={handleRegister} />
     }

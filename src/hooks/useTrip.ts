@@ -1,7 +1,7 @@
 import { hideHeaderState, selectedTripState } from "@/state"
 import { TripFiltered } from "@/types/tripType"
 import { useState } from "react"
-import { useSetRecoilState } from "recoil"
+import { useRecoilValue, useSetRecoilState } from "recoil"
 import { useNavigate } from "zmp-ui"
 
 export default function useTrip() {
@@ -16,6 +16,9 @@ export default function useTrip() {
     const [activeImgKey, setActiveImgKey] = useState<number>(0)
     const [visibleImgView, setVisibleImgView] = useState<boolean>(false)
     const setSelectedTrip = useSetRecoilState(selectedTripState)
+
+
+
     const navigate = useNavigate()
 
     function directTab(index: string) {

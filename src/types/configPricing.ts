@@ -7,7 +7,7 @@ export interface BaseRule {
 }
 
 export interface WeekPriceRule extends BaseRule {
-    day: number[]           // ví dụ [2,3,4]
+    day: number[]           // ví dụ [0,1,2,3,4,5,6]  7 day of week
 }
 
 export interface DatePriceRule extends BaseRule {
@@ -21,17 +21,14 @@ export interface MonthPriceRule extends BaseRule {
 export interface PricingRule {
     routeId: string
     compId: string
-    type: "special" | "normal" | "custom"
-    name?: string
+    type: "holiday" | "daily" | "monthly"
     holiday?: DatePriceRule[] | null
     weekOfDay?: WeekPriceRule[] | null
     month?: MonthPriceRule[] | null
     isActive: boolean
-    createAt: Date   //to ISOString
-    updateAt: Date    //to ISOString 
+    createAt: Date   //to ISO String
+    updateAt: Date    //to ISO String
 }
-
-
 
 //Date[] -> Month -> WeekOfDay -> Default -> None(Call)
 

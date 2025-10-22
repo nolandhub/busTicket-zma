@@ -1,5 +1,5 @@
 // components/TripDates.tsx
-import { Box, Text } from "zmp-ui";
+import { Box } from "zmp-ui";
 import { parseString } from "@/utils/date";
 
 export default function TripDates({

@@ -1,4 +1,4 @@
-import { Box, Button, Icon, ImageViewer, Text } from "zmp-ui";
+import { Box, Button, Icon, Text } from "zmp-ui";
 import RouteIndicator from "./RouteIndicatorIcon";
 import { Zap, WalletIcon, HandshakeIcon } from "lucide-react";
 import { Divider } from "../common/Divider";
@@ -29,7 +29,7 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
     } = useTrip()
 
     if (trip.isDelete == true) {
-        return (<></>)
+        return null
     }
 
     const busCompData = useRecoilValue(busCompanyState)

@@ -1,13 +1,11 @@
-import { FC, lazy, Suspense, useEffect, useState } from "react";
+import { FC, Suspense, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box, Text, Modal, useNavigate } from "zmp-ui";
+import { Box, Text, Modal } from "zmp-ui";
 import { Section } from "../common/Section";
 import { departureDateState, popRouteState } from "@/state";
 import { PopRouteSlideSkeleton } from "../common/Skeleton";
 import { PopRoute } from "@/types/routeType";
-import { buildURL } from "@/helper/buildURL";
-import { parseString } from "@/utils/date";
 import { formatPrice } from "@/helper/formatPrice";
 import { StarsIcon } from "lucide-react";
 import "swiper/css";
@@ -15,15 +13,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import useCoreInit from "@/hooks/useCoreInit";
 import useSearch from "@/hooks/useSearch";
+import useUserInfo from "@/hooks/useUserInfo";
 
 
 export const RouteSwiperContent: FC = () => {
     const popRoutes = useRecoilValue(popRouteState);
     const [selectedRoute, setSelectedRoute] = useState<PopRoute | null>(null);
-    const date = useRecoilValue(departureDateState)
     const { setDeparture, setDestination } = useCoreInit()
-    const { searchTrips } = useSearch()
-    const navigate = useNavigate()
+    const { handleSearch } = useSearch()
+    const { isRegistered } = useUserInfo()
+
 
     useEffect(() => {
         if (selectedRoute) {
@@ -88,18 +87,18 @@ export const RouteSwiperContent: FC = () => {
                             text: "Đặt Ngay",
                             highLight: true,
                             onClick: () => {
-                                const url = buildURL("/availableTrip", {
-                                    fromLabel: selectedRoute.fromLabel,
-                                    toLabel: selectedRoute.toLabel,
-                                    routeId: selectedRoute.routeId,
-                                    date: parseString(date),
-                                })
-                                searchTrips(selectedRoute.routeId)
-                                navigate(url)
+                                handleSearch()
+                                if (!isRegistered) {
+                                    setTimeout(() => {
+                                        setSelectedRoute(null)
+                                    }, 2000)
+                                }
                             },
                         },
                     ]}
-                    onClose={() => setSelectedRoute(null)}
+                    onClose={() => {
+                        setSelectedRoute(null)
+                    }}
                 />
             )}
         </>

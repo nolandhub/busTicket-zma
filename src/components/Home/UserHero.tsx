@@ -11,11 +11,8 @@ export default function UserHero() {
         >
             {/* overlay */}
             < Box className="absolute inset-0 bg-black/5" />
-
             {/* UserCard */}
-            < Box
-                className="relative w-[90%] top-20 mb-[-10px]"
-            >
+            < Box className="relative w-[90%] top-20 mb-[-10px]">
                 <UserCard />
             </Box >
         </Box >

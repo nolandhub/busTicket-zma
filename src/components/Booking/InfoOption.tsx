@@ -1,48 +1,37 @@
 import { Box, Icon, Input, Text } from "zmp-ui"
-import { PriceDetail, SaleDetail } from "@/types/tripType"
+import { PriceDetail } from "@/types/tripType"
 import { formatPrice } from "@/helper/formatPrice"
-import { useBookingOption } from "@/hooks/useBookingOption"
-import PriceItem from "./PriceItem"
+import useBookingOption from "@/hooks/useBookingOption"
 import { FC, useEffect } from "react"
-import PickDrop from "./PickDrop"
+import PickDrop from "../Booking/InfoOption/PickDrop"
 import { debounce } from "lodash"
+import PriceItem from "./InfoOption/PriceItems"
 
 interface InfoOptionProps {
-    price: PriceDetail[]
-    salePrice?: PriceDetail[] | null
-    snapShotSale?: SaleDetail | null
+    price: PriceDetail
 }
 
-const InfoOption: FC<InfoOptionProps> = ({ price, salePrice, snapShotSale }) => {
+const InfoOption: FC<InfoOptionProps> = ({ price }) => {
     const {
         tripSelected,
-        handlePickDrop,
         name,
         phone,
         setName,
         setPhone,
         quantities,
-        selectedDetailIndexes,
         updateQuantity,
-        updateSelectedDetail,
         total,
-        saveInfoStep,
-        displayPrice
-    } = useBookingOption(price, salePrice, snapShotSale)
+        saveInfoStep
+    } = useBookingOption(price)
 
     const saveInfoDebounced = debounce(() => {
         saveInfoStep()
-    }, 500) // chỉ gọi sau 500ms không có thay đổi
+    }, 500)
 
     useEffect(() => {
         saveInfoDebounced()
-        return () => saveInfoDebounced.cancel() // cleanup để tránh leak
-    }, [name, phone, total, quantities, selectedDetailIndexes])
-
-    // Generate unique key cho mỗi PriceItem
-    const generateKey = (priceDetail: PriceDetail, detailIndex: number) => {
-        return `${priceDetail.time}-${detailIndex}`;
-    }
+        return () => saveInfoDebounced.cancel()
+    }, [name, phone, total, quantities])
 
     return (
         <Box className="flex-1 flex-col p-2 bg-slate-50 rounded-2xl">
@@ -66,31 +55,27 @@ const InfoOption: FC<InfoOptionProps> = ({ price, salePrice, snapShotSale }) => 
                 />
             </div>
 
-            {/* Price Items */}
+            {/* Price Items - Map qua từng detail */}
             <Box className="flex flex-col gap-2 mt-4">
-                {displayPrice.map((priceDetail, timeSlotIdx) => {
-                    const selectedIdx = selectedDetailIndexes[timeSlotIdx] || 0;
-                    const quantityKey = generateKey(priceDetail, selectedIdx);
-
-                    return (
-                        <PriceItem
-                            key={quantityKey}
-                            priceDetail={priceDetail}
-                            selectedDetailIndex={selectedIdx}
-                            quantity={quantities[quantityKey] || 0}
-                            onIncrease={() => updateQuantity(timeSlotIdx, selectedIdx, +1)}
-                            onDecrease={() => updateQuantity(timeSlotIdx, selectedIdx, -1)}
-                            onSelectDetail={(detailIdx) => updateSelectedDetail(timeSlotIdx, detailIdx)}
-                        />
-                    );
-                })}
+                {price.detail.map((detail, idx) => (
+                    <PriceItem
+                        key={idx}
+                        priceDetail={{
+                            ...price,
+                            detail: [detail] // Chỉ truyền 1 detail item
+                        }}
+                        quantity={quantities[idx] || 0}
+                        onIncrease={() => updateQuantity(idx, 1)}
+                        onDecrease={() => updateQuantity(idx, -1)}
+                    />
+                ))}
             </Box>
 
             {/* Pick & Drop */}
             <Box className="mt-4">
                 {tripSelected && (
                     <PickDrop
-                        onSelectionChange={handlePickDrop}
+                        hasTransfer={tripSelected.tripConfig.hasTransfer}
                         pickUp={tripSelected.activePickDrop.pickUp}
                         dropOff={tripSelected.activePickDrop.dropOff}
                     />

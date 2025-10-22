@@ -17,7 +17,6 @@ export type userCached = coreData & {
     dob?: string
     address?: string
     favorite?: string
-    isRegistered?: boolean
 }
 
 

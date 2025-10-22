@@ -145,7 +145,8 @@ const PriceDisplay: FC<Props> = ({
             {onDetailClick && (
                 <Text
                     onClick={onDetailClick}
-                    className="cursor-pointer underline underline-offset-2 font-medium text-end text-indigo-700 text-sm mt-1"
+                    className="cursor-pointer underline underline-offset-2 
+                    font-medium text-end text-indigo-700 text-sm mt-1"
                 >
                     Thông tin chi tiết
                 </Text>

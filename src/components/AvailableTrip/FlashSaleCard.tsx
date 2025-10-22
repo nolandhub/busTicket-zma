@@ -67,18 +67,18 @@ const FlashSaleCard: FC<{ snapShotSale?: SaleDetail | null }> = ({ snapShotSale 
     }
 
     return (
-        <Box className="flex items-center justify-between bg-white rounded-t-xl overflow-hidden">
-            <div className="flex flex-1 items-center justify-center bg-green-500 border-r border-slate-300 py-1">
-                <Zap size={20} strokeWidth={4} fill="yellow" color="yellow" />
-                <Text bold className="text-white ml-1 whitespace-nowrap">
+        <Box className="flex items-center bg-white rounded-t-xl overflow-hidden">
+            <div className="flex items-center justify-center bg-green-500 border-r border-slate-300 p-2 min-w-0">
+                <Zap size={18} strokeWidth={4} fill="yellow" color="yellow" className="shrink-0" />
+                <Text className="text-white text-md font-bold ml-1 leading-tight line-clamp-2">
                     {snapShotSale.label}
                 </Text>
             </div>
 
-            <div className="flex flex-1 items-center justify-center py-1 px-2">
-                <Text className="text-green-700 font-semibold text-[13px] text-center whitespace-nowrap truncate">
+            <div className="flex items-center justify-center py-1 px-2 shrink-0">
+                <Text className="text-green-700 font-semibold text-sm">
                     Thời gian:{" "}
-                    <span className="text-red-500 text-md font-bold ml-1">
+                    <span className="text-red-500 font-bold">
                         {splitDD_HH_MM_SS(remainingTime)}
                     </span>
                 </Text>

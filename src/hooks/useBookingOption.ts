@@ -1,158 +1,101 @@
 import { useState, useMemo } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { bookingState, departureDateState, selectedTripState } from "@/state";
-import dayjs from "dayjs";
-import { BasePickDrop, PriceDetail, SaleDetail } from "@/types/tripType";
+import { bookingState, selectedTripState, userState } from "@/state";
+import { PriceDetail } from "@/types/tripType";
 import { Option } from "@/types/bookingType";
 
-export function useBookingOption(
-    price: PriceDetail[],
-    salePrice?: PriceDetail[] | null,
-    snapShotSale?: SaleDetail | null
-) {
+export default function useBookingOption(price: PriceDetail) {
     const tripSelected = useRecoilValue(selectedTripState);
-    const departDate = useRecoilValue(departureDateState);
+    const userData = useRecoilValue(userState);
     const setBooking = useSetRecoilState(bookingState);
 
     // User info
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
+    const [name, setName] = useState(userData?.name || "");
+    const [phone, setPhone] = useState(userData?.phone || "");
 
-    // Pick & Drop selections
-    const [pickUp, setPickUp] = useState<BasePickDrop | null>(null);
-    const [dropOff, setDropOff] = useState<BasePickDrop | null>(null);
+    // Quantities: { "detailIndex": quantity }
+    // Ví dụ: { "0": 2, "1": 1 } => detail[0] có 2 vé, detail[1] có 1 vé
+    const [quantities, setQuantities] = useState<Record<number, number>>({});
 
-    // Quantities: { "timeSlot-detailIndex": quantity }
-    const [quantities, setQuantities] = useState<Record<string, number>>({});
-
-    // Selected detail indexes cho mỗi time slot
-    const [selectedDetailIndexes, setSelectedDetailIndexes] = useState<Record<number, number>>({});
-
-    // Kiểm tra sale có active không
-    const isSaleActive = useMemo(() => {
-        if (!snapShotSale?.isActive || !salePrice) return false;
-        const depart = dayjs(departDate);
-        const saleEnd = dayjs(snapShotSale.endDate);
-        return !depart.isAfter(saleEnd);
-    }, [snapShotSale, salePrice, departDate]);
-
-    // Quyết định hiển thị giá nào
-    const displayPrice = isSaleActive && salePrice ? salePrice : price;
-
-    // Generate key cho quantity tracking
-    const generateKey = (priceDetail: PriceDetail, detailIndex: number) => {
-        return `${priceDetail.time}-${detailIndex}`;
-    };
-
-    // Update quantity
-    const updateQuantity = (timeSlotIdx: number, detailIdx: number, change: number) => {
-        const priceDetail = displayPrice[timeSlotIdx];
-        const key = generateKey(priceDetail, detailIdx);
-
+    // Update quantity cho một detail item
+    const updateQuantity = (detailIdx: number, change: number) => {
         setQuantities(prev => {
-            const currentQty = prev[key] || 0;
-            const newQty = Math.max(0, currentQty + change);
+            const currentQty = prev[detailIdx] || 0;
+            const newQty = Math.max(0, currentQty + change); // Không cho âm
 
             if (newQty === 0) {
-                const { [key]: _, ...rest } = prev;
+                // Xóa key nếu quantity = 0
+                const { [detailIdx]: _, ...rest } = prev;
                 return rest;
             }
 
-            return { ...prev, [key]: newQty };
+            return {
+                ...prev,
+                [detailIdx]: newQty
+            };
         });
     };
 
-    // Update selected detail index cho time slot
-    const updateSelectedDetail = (timeSlotIdx: number, detailIdx: number) => {
-        setSelectedDetailIndexes(prev => ({
-            ...prev,
-            [timeSlotIdx]: detailIdx
-        }));
-    };
-
-    // Build options array
+    // Build options array từ quantities
     const options: Option[] = useMemo(() => {
         const allOptions: Option[] = [];
 
-        displayPrice.forEach((priceDetail, timeSlotIdx) => {
-            priceDetail.detail.forEach((detailItem, detailIdx) => {
-                const key = generateKey(priceDetail, detailIdx);
-                const qty = quantities[key] || 0;
+        Object.entries(quantities).forEach(([detailIdxStr, qty]) => {
+            const detailIdx = parseInt(detailIdxStr);
+            const detail = price.detail[detailIdx];
 
-                if (qty > 0) {
-                    const itemValue = Number(detailItem.value);
-                    const itemSubtotal = itemValue * qty;
-
-                    allOptions.push({
-                        time: priceDetail.time,
-                        label: detailItem.label,
-                        value: itemValue,
-                        quantity: qty,
-                        subtotal: itemSubtotal,
-                        passCount: qty, // Same as quantity
-                        totalOptionPrice: itemSubtotal // Same as subtotal
-                    });
-                }
-            });
+            if (detail && qty > 0) {
+                allOptions.push({
+                    time: price.time || "",
+                    label: detail.label,
+                    value: detail.value,
+                    quantity: qty,
+                    subtotal: detail.value * qty,
+                    passCount: qty,  //  passCount
+                    totalOptionPrice: detail.value * qty  // Thêm totalOptionPrice
+                });
+            }
         });
 
         return allOptions;
-    }, [quantities, displayPrice]);
+    }, [quantities, price]);
 
     // Tính tổng tiền
     const total = useMemo(() => {
         return options.reduce((sum, option) => sum + option.subtotal, 0);
     }, [options]);
 
-    // Handle pick/drop selection
-    const handlePickDrop = (pickup: BasePickDrop, dropoff: BasePickDrop) => {
-        setPickUp(pickup);
-        setDropOff(dropoff);
-    };
-
-    // Save booking info
     const saveInfoStep = () => {
         if (!tripSelected) return;
 
-        const bookingData = {
-            bookingId: "", // Will be generated when submitting
-            zaloId: "", // Will be filled from user context
-
+        setBooking((prev) => ({
+            ...prev,
+            bookingId: "",
+            zaloId: prev?.zaloId || userData?.id || "",
             compId: tripSelected.compId,
             compName: tripSelected.compName,
             busName: tripSelected.busName,
             tripId: tripSelected.id,
             tripName: tripSelected.routeName,
-
             bookingName: name,
             bookingPhone: phone,
-
-            option: options,
+            option: options, // Lưu options đã tính toán
             total,
-
-            pickUp,
-            dropOff,
-
-            createAt: new Date()
-        };
-
-        setBooking(bookingData);
+            pickUp: prev?.pickUp || null,
+            dropOff: prev?.dropOff || null,
+        }));
     };
 
     return {
         tripSelected,
-        handlePickDrop,
         name,
         phone,
         setName,
         setPhone,
         quantities,
-        selectedDetailIndexes,
         updateQuantity,
-        updateSelectedDetail,
         total,
         options,
-        saveInfoStep,
-        displayPrice
+        saveInfoStep
     };
 }

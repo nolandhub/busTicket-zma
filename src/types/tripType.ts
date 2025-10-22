@@ -17,13 +17,12 @@ export interface SaleDetail {
     isActive: boolean
 }
 
-
 export interface BasePickDrop {
-    title: string,
-    subTitle: string
+    title?: string,
+    subTitle?: string
 }
 
-export interface RouteDetails {
+export interface TripDetail {
     // + Location
     key: string             // saigon
     startLocation: string   //default
@@ -49,9 +48,10 @@ export interface TripData {
     snapShotSale?: SaleDetail | null
     salePrice?: PriceDetail[] | null
 
-    routeConfig: {
-        forward: RouteDetails
-        backward: RouteDetails
+    tripConfig: {
+        hasTransfer?: "1" | "2" | "3" | null  //1: startPoint , 2: endPoint ,3: 2Point , null:noPoint
+        forward: TripDetail
+        backward: TripDetail
     }
 
     createAt: Date  //to ISOString
@@ -64,7 +64,7 @@ export interface Trip extends TripData {
 }
 
 export interface TripFiltered extends Trip {
-    activePickDrop: RouteDetails
+    activePickDrop: TripDetail
 }
 
 

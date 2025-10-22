@@ -1,55 +1,48 @@
 import { coreData, userCached } from "@/types/userType";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { userState } from "@/state";
+import { isRegisteredState, userState } from "@/state";
 import { getUserInfo, getSetting, nativeStorage, authorize, getAccessToken, getPhoneNumber } from "zmp-sdk/apis";
 import { useSnackbar } from "zmp-ui";
 import { addUser } from "@/firebase/firestore/userCrud"
 import dayjs from "dayjs";
 
-
 export default function useUserInfo() {
     const [userData, setUser] = useRecoilState<userCached | null>(userState)
 
-    const [isRegistered, setRegistered] = useState<boolean>(false)
+    const [isRegistered, setIsRegistered] = useRecoilState(isRegisteredState)
     const { openSnackbar } = useSnackbar()
 
     useEffect(() => {
-        const cacheData = () => {
-            //Improve LoadSpeed
+        const init = async () => {
             try {
-                const userData = JSON.parse(nativeStorage.getItem("user"))
-                if (!userData) {
-                    setUser(null)
-                } else {
-                    setUser(userData)
-                    setRegistered(true)
-                }
-            } catch (error) {
-                console.error("[Cache] Lỗi khi đọc localStorage:", error)
-                setUser(null)
-            }
-        }
-        cacheData()
-    }, [])
+                const userCache = nativeStorage.getItem("user");
 
-    useEffect(() => {
-        const checkSetting = async () => {
-            //Switch Registered BTN vs userCard
-            try {
-                const { authSetting } = await getSetting();
-                if (!authSetting["scope.userInfo"]) {
-                    setRegistered(false)
+                if (!userCache) {
                     setUser(null)
+                    setIsRegistered(false)
+                    return;
+                } else {
+                    if (import.meta.env.DEV) return
+
+                    const { authSetting } = await getSetting();
+                    if (!authSetting["scope.userInfo"]) {
+                        setIsRegistered(false)
+                        setUser(null)
+                        return;
+                    }
+
+                    setUser(JSON.parse(userCache))
+                    setIsRegistered(true)
                 }
+
             } catch (error) {
-                console.log("Đã có lỗi với localStr", error)
-                setRegistered(false)
-                setUser(null)
+                console.error("[Cache] Lỗi khi đọc nativeStorage:", error);
+                setIsRegistered(false)
             }
-        }
-        checkSetting()
-    }, [])
+        };
+        init();
+    }, []);
 
 
     const getMobilePhone = async () => {
@@ -81,10 +74,16 @@ export default function useUserInfo() {
             });
             const { userInfo } = await getUserInfo({ autoRequestPermission: true })
 
-            if (userInfo.id == "3368637342326461234") {
+            if (import.meta.env.DEV) {
                 const { newUser } = createUserObject(userInfo)
-                setRegistered(true)
+                setIsRegistered(true)
                 setUser(newUser)
+                nativeStorage.setItem("user", JSON.stringify(newUser))
+                return openSnackbar({ text: "Developer environment, register successfully", type: "success" });
+            }
+
+            if (userData) {
+                setIsRegistered(true)
                 return openSnackbar({ text: "Đăng ký thành công!", type: "success" });
             }
 
@@ -92,9 +91,8 @@ export default function useUserInfo() {
             const { newUser, coreData } = createUserObject(userInfo, String(res.data.number))
             setUser(newUser)
             nativeStorage.setItem("user", JSON.stringify(newUser))
-            setRegistered(true)
+            setIsRegistered(true)
             await addUser(coreData.id, coreData);
-
             openSnackbar({ text: "Đăng ký thành công!", type: "success" });
         } catch (error) {
             console.error("[useUserInfo] Lỗi khi lấy userInfo từ Zalo SDK:", error);
@@ -116,12 +114,11 @@ export default function useUserInfo() {
 
         return {
             newUser: {
-                ...coreSave, // lấy hết field đã có trong storedData
+                ...coreSave,
                 dob: "",
                 address: "",
                 gender: "",
                 favorite: "",
-                isRegistered: true,
             },
             coreData: coreSave
         };

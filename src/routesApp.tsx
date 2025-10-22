@@ -3,7 +3,7 @@ import HomePage from "@/pages/Home";
 import AvailableTrip from "./pages/AvailabeTrip";
 import RepickCore from "./pages/RepickCore";
 import BookingPage from "./pages/Booking";
-import PickDrop from "./components/Booking/PickDrop";
+import PickDrop from "./components/Booking/InfoOption/PickDrop";
 
 // HomePage
 export default function AppRoutes() {
@@ -14,7 +14,7 @@ export default function AppRoutes() {
                 <Route path="/availableTrip" element={<AvailableTrip />}></Route>
                 <Route path="/repickCore" element={<RepickCore />}></Route>
                 <Route path="/booking" element={<BookingPage />}></Route>
-                
+
             </Route>
         </AnimationRoutes>
     );

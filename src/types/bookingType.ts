@@ -12,22 +12,22 @@ export interface Option {
 
 export interface BookingData {
     bookingId: string
-    zaloId: string
+    zaloId: string | ''
 
     compId: string
     compName: string
     busName: string
     tripId: string
-    tripName?: string
+    tripName: string
 
     bookingName: string
     bookingPhone: string
 
-    option?: Option[] | Option
-    total: number
+    option?: Option[] | null
+    total?: number
 
-    pickUp: BasePickDrop | null           //Time here - PickUp
-    dropOff: BasePickDrop | null         //Time here - DropOff
+    pickUp: BasePickDrop | null            //Time here - PickUp
+    dropOff: BasePickDrop | null       //Time here - DropOff
 
     createAt?: Date
 }

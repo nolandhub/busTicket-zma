@@ -1,21 +1,24 @@
-import { icons } from "lucide-react";
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { showFunctionButtonWidget } from "zmp-sdk/apis";
-import { Icon, useNavigate, useSnackbar } from "zmp-ui";
+import { useSnackbar } from "zmp-ui";
 
+interface props {
+    onOrder: (messageToken) => void
+}
 
-function buttonOrder() {
+const buttonOrder: FC<props> = ({ onOrder }) => {
     const snackBar = useSnackbar()
     useEffect(() => {
         showFunctionButtonWidget({
             id: "orderButton",
             type: "ORDER",
-            text: "Đặt hàng",
+            text: "Đặt xe",
             color: "#0068FF",
             textColor: "#FFFFFF",
             borderRadius: "48px",
             onDataReceived: (messageToken) => {
-                console.log(messageToken);
+                onOrder(messageToken)
+
                 snackBar.openSnackbar({
                     type: "success",
                     text: "Order của bạn đã được tiếp nhận, Cảm ơn bạn !",

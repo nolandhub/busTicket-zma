@@ -1,6 +1,5 @@
 import { hideHeaderState } from "@/state"
 import { BusCompany } from "@/types/busCompanyType"
-import { useAtom } from "jotai"
 import { FC } from "react"
 import { useSetRecoilState } from "recoil"
 import { ImageViewer } from "zmp-ui"
@@ -18,8 +17,6 @@ interface ImgProps {
     src: string
     alt?: string
 }
-
-
 
 const ImageViewerCustom: FC<Props> = ({ busCompany, imageViewer }) => {
     const imgsPresent: ImgProps[] = busCompany?.imagesInterior?.map((src, idx) => ({

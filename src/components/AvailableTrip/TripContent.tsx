@@ -2,9 +2,6 @@ import { Box, Text, useSnackbar } from "zmp-ui"
 import { FC, useState } from "react"
 import { Heart } from "lucide-react"
 
-
-
-
 const TripContent: FC<{ avatar?: string, compName: string, busName: string, onImgClick?: () => void }> = ({ avatar, busName, compName, onImgClick }) => {
     const [liked, setLiked] = useState<boolean>(false)
     const { openSnackbar } = useSnackbar()

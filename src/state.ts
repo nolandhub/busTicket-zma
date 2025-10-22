@@ -5,7 +5,6 @@ import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 import { PriceDetail, Trip, TripFiltered } from "./types/tripType";
 import { BusCompany } from "./types/busCompanyType";
 import { BookingData, TicketData } from "./types/bookingType";
-import mockTrip from "@/mock/mockTrip.json"
 export const userState = atom<userCached | null>({
     key: 'user',
     default: null
@@ -47,6 +46,12 @@ export const tripState = atom<Trip[]>({
     key: "trip",
     default: []
 })
+
+// export const tripLoadingState = atom<boolean>({
+//     key: 'tripLoadingState',
+//     default: true  // Mặc định là đang loading
+// });
+
 
 export const controlReturnState = atom<boolean>({
     key: "controlReturn",
@@ -93,6 +98,11 @@ export const popRouteState = selector<PopRoute[]>({
     },
 });
 
+export const isRegisteredState = atom<boolean>({
+    key: "isRegistered",
+    default: false
+})
+
 export const availableTrip = selector<TripFiltered[]>({
     key: "availableTrip",
     get: ({ get }) => {
@@ -102,10 +112,10 @@ export const availableTrip = selector<TripFiltered[]>({
         if (!trips) return [];
 
         const tripsFiltered: TripFiltered[] = trips.map(trips => {
-            const isForward = trips.routeConfig.forward.key == departureKey //check forward/backward
+            const isForward = trips.tripConfig.forward.key == departureKey //check forward/backward
             return {
                 ...trips,
-                activePickDrop: isForward ? trips.routeConfig.forward : trips.routeConfig.backward
+                activePickDrop: isForward ? trips.tripConfig.forward : trips.tripConfig.backward
             }
         });
         return tripsFiltered
