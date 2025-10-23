@@ -1,7 +1,6 @@
 import { Ticket } from "@/types/bookingType";
 import { db } from "../fireConfig";
 import { collection, doc, getDocs, addDoc, setDoc } from "firebase/firestore";
-import { generateTicketId } from "@/helper/generateID";
 
 const ref = collection(db, "tickets")
 

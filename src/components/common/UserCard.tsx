@@ -8,7 +8,7 @@ import { formatPrice } from "@/helper/formatPrice";
 const RegisterSection: FC<{ handleClick: () => void }> = ({ handleClick }) => {
     return (
         <Suspense fallback={<Spinner />}>
-            <Box textAlign="center" className="bg-white rounded-2xl shadow-lg max-w-sm p-2 mx-auto space-y-2">
+            <Box textAlign="center" className="bg-white rounded-2xl shadow-lg max-w-sm p-2 mx-auto space-y-2 mb-4">
                 <Text size="large" bold className="text-red-600">
                     Chương trình thành viên
                 </Text>
@@ -33,7 +33,7 @@ const UserCardContent: FC = () => {
         return <RegisterSection handleClick={handleRegister} />
     }
     return (
-        <Box className="bg-white rounded-3xl shadow-md mx-auto p-5">
+        <Box className="bg-white rounded-t-3xl mx-auto p-5">
             <Box className=" flex space-x-2 gap-3">
                 {/* User Info */}
                 <Box flex alignItems="center" className="gap-2 flex-1 ">
@@ -55,11 +55,11 @@ const UserCardContent: FC = () => {
                     <Box
                         flex
                         alignItems="center"
-                        className="gap-2 bg-amber-500 text-white px-3 py-2 rounded-full max-w-[160px]"
+                        className="gap-2 bg-green-500 text-white px-3 py-2 rounded-full max-w-[160px]"
                     >
                         <Wallet size={18} className="flex-shrink-0" />
-                        <Text size="xSmall" className="font-semibold truncate">
-                            {formatPrice(1020203393)}đ
+                        <Text size="xSmall" className="font-bold truncate">
+                            {formatPrice(userData.totalSpending)}đ
                         </Text>
                     </Box>
                     <Text size="xSmall" className="font-bold mt-1 text-right whitespace-nowrap">

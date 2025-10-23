@@ -2,8 +2,11 @@ import { AnimationRoutes, Route } from "zmp-ui";
 import HomePage from "@/pages/Home";
 import AvailableTrip from "./pages/AvailabeTrip";
 import BookingPage from "./pages/Booking";
-// import RepickCore from "./pages/RepickCore";
+import Profile from "./pages/Profile";
+import Ticket from "./pages/Ticket/Index";
+import Gift from "./pages/Gift";
 
+// import RepickCore from "./pages/RepickCore";
 // HomePage
 export default function AppRoutes() {
     return (
@@ -12,6 +15,11 @@ export default function AppRoutes() {
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="/availableTrip" element={<AvailableTrip />}></Route>
                 <Route path="/booking" element={<BookingPage />}></Route>
+                <Route path="/profile" element={<Profile />}></Route>
+                <Route path="/ticket" element={<Ticket />}></Route>
+                <Route path="/gift" element={<Gift />}></Route>
+
+
 
                 {/* Turn on navigate returnDate - p */}
                 {/* <Route path="/repickCore" element={<RepickCore />}></Route> */}

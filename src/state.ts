@@ -1,12 +1,12 @@
 import { atom, selector } from "recoil";
-import { userCached } from "./types/userType";
+import { UserCached } from "./types/userType";
 import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 import { PriceDetail, Trip, TripFiltered } from "./types/tripType";
 import { BusCompany } from "./types/busCompanyType";
 import { BookingData, Ticket } from "./types/bookingType";
 
-export const userState = atom<userCached | null>({
+export const userState = atom<UserCached | null>({
     key: 'user',
     default: null
 });

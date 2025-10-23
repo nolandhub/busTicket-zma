@@ -18,6 +18,8 @@ const ListPriceDetail: FC<Props> = ({ prices }) => {
         setPriceOpt(price)
     }
 
+    
+
     return (
         <div className="space-y-3 p-3 bg-white rounded-b-lg border">
             {prices.map((timeSlot, idx) => {

@@ -1,4 +1,4 @@
-import { coreData, userCached } from "@/types/userType";
+import { CoreData, UserCached } from "@/types/userType";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { isRegisteredState, userState } from "@/state";
@@ -11,7 +11,7 @@ import { useSnackbar } from "zmp-ui";
 import { addUser } from "@/firebase/firestore/userCrud"
 
 export default function useUserInfo() {
-    const [userData, setUser] = useRecoilState<userCached | null>(userState)
+    const [userData, setUser] = useRecoilState<UserCached | null>(userState)
 
     const [isRegistered, setIsRegistered] = useRecoilState(isRegisteredState)
     const { openSnackbar } = useSnackbar()
@@ -104,8 +104,8 @@ export default function useUserInfo() {
         }
     }
 
-    function createUserObject(zaloUserInfo: userCached, numberPhone?: string) {
-        const coreSave: coreData = {
+    function createUserObject(zaloUserInfo: UserCached, numberPhone?: string) {
+        const coreSave: CoreData = {
             id: zaloUserInfo.id,
             name: zaloUserInfo.name,
             avatar: zaloUserInfo.avatar,

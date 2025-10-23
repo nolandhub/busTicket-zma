@@ -1,5 +1,5 @@
 //User INFO
-export interface coreData {
+export interface CoreData {
     id: string
     name: string
     avatar: string
@@ -12,7 +12,7 @@ export interface coreData {
 
 
 // Dữ liệu cá nhân chỉ lưu ở local
-export type userCached = coreData & {
+export type UserCached = CoreData & {
     gender?: string
     dob?: string
     address?: string
