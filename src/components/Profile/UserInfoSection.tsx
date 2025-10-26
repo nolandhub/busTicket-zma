@@ -1,5 +1,5 @@
 import { userState } from "@/state";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Box, Text } from "zmp-ui";
 import { Divider } from "../common/Divider";
@@ -10,21 +10,23 @@ import FormEditInfo from "./FormEditInfo";
 import dayjs from "dayjs";
 import PrivacyPolicies from "./PrivacyPolicies";
 import MembershipPolicies from "./MemberProgram";
+import { UserCached } from "@/types/userType";
 
 interface Props {
+    empty?: boolean
     label: string
     value: string
     hideDivider?: boolean
 }
 
-const InfoSection: FC<Props> = ({ label, value, hideDivider }) => {
+export const InfoSection: FC<Props> = ({ label, value, hideDivider, empty }) => {
     return (
         <>
             <div className="flex justify-between">
                 <Text className="font-normal text-zinc-500">
                     {label}
                 </Text>
-                <Text className="font-semibold">
+                <Text className={`${empty ? "text-red-600 font-semibold" : "font-semibold"}`}>
                     {value}
                 </Text>
             </div>
@@ -33,26 +35,30 @@ const InfoSection: FC<Props> = ({ label, value, hideDivider }) => {
     )
 }
 
-const UserInfoSection = () => {
-    const userData = useRecoilValue(userState)
-    const {
+interface UserInfoSection {
+    userData: UserCached | null,
+    percent: number,
+    onEdit: () => void,
+    onMemberProgram: () => void,
+    onPrivacyPolicies: () => void,
+}
+
+const UserInfoSection: FC<UserInfoSection> = (
+    {
+        userData,
+        percent,
         onEdit,
         onMemberProgram,
         onPrivacyPolicies,
-        visibleForm,
-        setVisibleForm,
-        visiblePrivacyPolicies, setVisiblePrivacyPolicies,
-        handleSave,
-        visibleMember, setVisibleMember,
-    } = useProfile()
+    }) => {
 
     return (
-        <Box className="flex flex-col rounded-lg pb-14">
-            <Box className="flex flex-col p-2 bg-white rounded-b-3xl">
-                <Text.Header className="">Thăng hạng thành viên</Text.Header>
+        <Box className="flex flex-col pb-20">
+            <Box className="flex flex-col border-l border-b border-r border-slate-200 p-2 bg-white rounded-b-2xl shadow-md">
+                <Text.Header >Thăng hạng thành viên</Text.Header>
                 <Box className="mt-2">
-                    <Box className="flex flex-1 items-center gap-4 p-4 bg-gradient-to-r from-green-50 to-yellow-50 rounded-xl shadow-sm">
-                        <div >
+                    <Box className="flex border border-slate-200 flex-1 items-center gap-4 p-4 bg-gradient-to-r from-green-50 to-yellow-50 rounded-xl shadow-sm">
+                        <div>
                             <BusFrontIcon
                                 className="bg-green-500 text-white rounded-full p-2.5 shadow-lg"
                                 size={45}
@@ -63,7 +69,7 @@ const UserInfoSection = () => {
                                 trailColor="#e5e7eb"
                                 strokeColor="#84cc16"
                                 strokeWidth={8}
-                                completed={70}
+                                completed={percent}
                                 maxCompleted={100}
                             />
                         </div>
@@ -87,12 +93,15 @@ const UserInfoSection = () => {
                 </Box>
             </Box>
 
-            <Box className="mt-4 p-2 bg-white rounded-md">
-                <Text onClick={onMemberProgram} className="cursor-pointer font-semibold py-2 p-2">Chính sách chương trình thành viên</Text>
-                <Divider className="border border-slate-100" size={1} />
-                <Text onClick={onPrivacyPolicies} className="cursor-pointer font-semibold py-2 p-2">Chính sách bảo mật</Text>
+            <Box className="mt-4 p-2 bg-white rounded-md shadow-md border border-slate-300">
+                <Text onClick={onMemberProgram} className="cursor-pointer font-semibold py-2 p-2">
+                    Chính sách chương trình thành viên</Text>
+                <Divider className="border border-slate-100 " size={1} />
+                <Text onClick={onPrivacyPolicies} className="cursor-pointer font-semibold py-2 p-2">
+                    Chính sách bảo mật</Text>
             </Box>
 
+            {/* Update Info */}
             <Box className="flex justify-between p-2 mt-4">
                 <Text.Header>Tài Khoản</Text.Header>
                 <Box onClick={onEdit} className="cursor-pointer flex py-1 space-x-2 rounded-md hover:bg-slate-200">
@@ -101,7 +110,7 @@ const UserInfoSection = () => {
                 </Box>
             </Box>
 
-            <Box className="p-4 space-y-4 bg-white">
+            <Box className="p-4 space-y-4 bg-white rounded-lg border border-slate-300 shadow-md">
                 <InfoSection label={"Họ tên"} value={userData?.name || "--"} />
                 <InfoSection label={"Giới tính"} value={userData?.gender || "--"} />
                 <InfoSection label={"Ngày sinh"} value={userData?.dob ? dayjs(userData?.dob).format('DD/MM/YYYY') : "--"} />
@@ -109,19 +118,6 @@ const UserInfoSection = () => {
                 <InfoSection label={"Địa chỉ"} value={userData?.address || "--"} />
                 <InfoSection hideDivider={true} label={"Nhà xe yêu thích"} value={userData?.favorite || "--"} />
             </Box>
-            {
-                (visibleForm && <FormEditInfo
-                    onClose={() => setVisibleForm(false)}
-                    onSave={(formData) => handleSave(formData)}
-                    userData={userData}
-                />)
-            }
-            {
-                <PrivacyPolicies onClose={() => setVisiblePrivacyPolicies(false)} isVisible={visiblePrivacyPolicies} />
-            }
-            {
-                <MembershipPolicies onClose={() => setVisibleMember(false)} isVisible={visibleMember} />
-            }
         </Box >
     )
 }

@@ -1,10 +1,13 @@
-import { atom, selector } from "recoil";
+import { atom, selector, useRecoilValue } from "recoil";
 import { UserCached } from "./types/userType";
 import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
 import { PriceDetail, Trip, TripFiltered } from "./types/tripType";
 import { BusCompany } from "./types/busCompanyType";
 import { BookingData, Ticket } from "./types/bookingType";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "./firebase/fireConfig";
+import { nativeStorage } from "zmp-sdk";
 
 export const userState = atom<UserCached | null>({
     key: 'user',
@@ -76,6 +79,7 @@ export const hideHeaderState = atom<boolean>({
     default: false
 })
 
+
 export const priceOptionState = atom<PriceDetail | null>({
     key: "priceOption",
     default: null
@@ -90,25 +94,27 @@ export const bookingState = atom<BookingData>({
         compName: "",
         busName: "",
         tripId: "",
-        tripName: "",
-        bookingDate: new Date(),
+        routeName: "",
+        bookingDate: "",
         bookingName: "",
         bookingPhone: "",
         option: [],
         total: 0,
+        totalPassCount: 0,
         pickUp: null,
         dropOff: null,
         pickUpValue: "",
         dropOffValue: "",
         pickUpNote: "",
         dropOffNote: "",
+        isDelete: false
     },
 })
 
 export const ticketState = atom<Ticket[]>({
     key: "ticket",
-    default: []
-})
+    default: [],
+});
 
 export const popRouteState = selector<PopRoute[]>({
     key: "popRoutes",

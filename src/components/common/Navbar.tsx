@@ -2,19 +2,16 @@ import { BottomNavigation, Box, useLocation, useNavigate } from "zmp-ui";
 import { Icon } from "zmp-ui"
 import { useMemo, useState } from "react";
 import { useVirtualKeyboardVisible } from "@/hooks/hookHelper";
+import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilValue } from "recoil";
 /////////////////Remember Me/////////////////////////////////
 /*  Custom hide navBar for special page */
-export const NO_BOTTOM_NAVIGATION_PAGES =
-    [
-        "/availableTrip",
-        "/booking",
+export const NO_BOTTOM_NAVIGATION_PAGES = [
 
+    "/availableTrip",
+    "/booking",
 
-
-        /* Add another page that you dont want to show navBar */
-    ];
-
-
+    /* Add another page that you dont want to show navBar */
+];
 /*  Custom hide navBar for special page */
 /////////////////Remember Me/////////////////////////////////
 
@@ -29,7 +26,7 @@ const BottomNav = () => {
     }, [location]);
 
     if (noBottomNav || keyboardVisible) {
-        return <></>;
+        return null;
     }
 
     function handleChange(key: string) {

@@ -1,5 +1,5 @@
 import { CoreData, UserCached } from "@/types/userType";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { isRegisteredState, userState } from "@/state";
 import {
@@ -19,25 +19,36 @@ export default function useUserInfo() {
     useEffect(() => {
         const init = async () => {
             try {
+                //dev
+                if (import.meta.env.DEV) {
+                    const userCache = localStorage.getItem("user");
+                    if (!userCache) {
+                        setUser(null)
+                        setIsRegistered(false)
+                        return;
+                    }
+                    setIsRegistered(true)
+                    setUser(JSON.parse(userCache))
+                    return
+                }
+                //prod
                 const userCache = nativeStorage.getItem("user");
-
                 if (!userCache) {
                     setUser(null)
                     setIsRegistered(false)
                     return;
-                } else {
-                    if (import.meta.env.DEV) return
-
-                    const { authSetting } = await getSetting();
-                    if (!authSetting["scope.userInfo"]) {
-                        setIsRegistered(false)
-                        setUser(null)
-                        return;
-                    }
-
-                    setUser(JSON.parse(userCache))
-                    setIsRegistered(true)
                 }
+
+                const { authSetting } = await getSetting();
+                if (!authSetting["scope.userInfo"]) {
+                    setIsRegistered(false)
+                    setUser(null)
+                    return;
+                }
+
+
+                setUser(JSON.parse(userCache))
+                setIsRegistered(true)
 
             } catch (error) {
                 console.error("[Cache] Lỗi khi đọc nativeStorage:", error);
@@ -46,7 +57,6 @@ export default function useUserInfo() {
         };
         init();
     }, []);
-
 
     const getMobilePhone = async () => {
         try {

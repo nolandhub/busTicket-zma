@@ -17,9 +17,9 @@ export interface BookingData {
     compName: string
     busName: string
     tripId: string
-    tripName: string
+    routeName: string
 
-    bookingDate: Date
+    bookingDate: string
 
     //Scale --> future
     // isReturn: boolean
@@ -29,8 +29,9 @@ export interface BookingData {
     bookingName: string
     bookingPhone: string
 
-    option?: Option[] | null
+    option: Option[]
     total: number
+    totalPassCount: number
 
     pickUp: BasePickDrop | null            //Time here - PickUp
     dropOff: BasePickDrop | null       //Time here - DropOff
@@ -40,15 +41,21 @@ export interface BookingData {
     pickUpNote: string
     dropOffNote: string
 
-    createAt?: Date
+    createAt?: string
+    updateAt?: Date
+
+    isDelete: boolean
 }
 
 export type TicketStatus = "pending" | "confirmed" | "used" | "cancelled"
 
-export interface Ticket extends BookingData {
+export interface Ticket extends Omit<BookingData, "pickUpValue" | "dropOffValue" | "pickUpNote" | "dropOffNote"> {
     id: string
     busNumber: string
     seatName: string
     status: TicketStatus
+    cancelReason?: string
     updateAt?: Date
+    createUser?: string
+    updateUser?: string
 }

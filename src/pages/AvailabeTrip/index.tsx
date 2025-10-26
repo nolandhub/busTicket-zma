@@ -9,11 +9,12 @@ export default function AvailableTrip() {
 
     return (
         <Page className="flex-1 flex flex-col bg-slate-100">
-            <BackHeader onClickChange={() => setVisible(true)} />
+            <BackHeader backTo="/" onClickChange={() => setVisible(true)} />
 
             <Box className="flex-1 overflow-auto space-y-4 p-4 border-t-2 border-t-slate-300">
                 <TripList />
             </Box>
+
             <ModalChange visible={visible} onClose={() => setVisible(false)} />
         </Page >
     );

@@ -4,15 +4,17 @@ import { Box, Input } from "zmp-ui";
 const { TextArea } = Input;
 
 interface NoteInputProps {
+    isError?: boolean
     label: string;
     value: string;
     onChange: (value: string) => void;
 }
 
-const NoteInput: FC<NoteInputProps> = ({ label, value, onChange }) => {
+const NoteInput: FC<NoteInputProps> = ({ label, value, isError, onChange }) => {
     return (
         <Box>
             <TextArea
+                status={isError ? "error" : ""}
                 errorText="Vui lòng không bỏ trống nội dung."
                 maxLength={50}
                 showCount

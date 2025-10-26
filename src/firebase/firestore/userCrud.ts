@@ -1,5 +1,5 @@
 import { db } from "@/firebase/fireConfig";
-import { coreData } from "@/types/userType";
+import { CoreData } from "@/types/userType";
 import {
     doc,
     setDoc,
@@ -11,7 +11,7 @@ import {
 
 const USER_COLLECTION = "users";
 
-export async function addUser(id: string, data: coreData) {
+export async function addUser(id: string, data: CoreData) {
     try {
         const userId = id;
         const ref = doc(db, USER_COLLECTION, userId);
@@ -45,7 +45,7 @@ export async function getAllUsers() {
     }
 }
 
-export async function updateUser(id: string, data: Partial<coreData>) {
+export async function updateUser(id: string, data: Partial<CoreData>) {
     try {
         const ref = doc(db, USER_COLLECTION, id);
         await updateDoc(ref, data);

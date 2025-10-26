@@ -1,9 +1,9 @@
 import { Locate, MapPinIcon } from "lucide-react";
 import { FC } from "react";
 import { Box, Text } from "zmp-ui";
-import { Divider } from "../common/Divider";
 
 interface RouteIndicatorProps {
+    size?: number
     startLocation?: string
     subStartLocation?: string
     endLocation?: string
@@ -14,7 +14,7 @@ interface RouteIndicatorProps {
     onClick?: () => void
 }
 
-const RouteIndicator: FC<RouteIndicatorProps> = ({ startLocation, subStartLocation, endLocation, subEndLocation, startTime, duration, endTime, onClick }) => {
+const RouteIndicator: FC<RouteIndicatorProps> = ({ size, startLocation, subStartLocation, endLocation, subEndLocation, startTime, duration, endTime, onClick }) => {
 
     return (
         <Box onClick={onClick} className="flex gap-1 cursor-pointer">
@@ -35,7 +35,7 @@ const RouteIndicator: FC<RouteIndicatorProps> = ({ startLocation, subStartLocati
             <Box className="flex items-center">
                 <div className="flex flex-col items-center">
                     <MapPinIcon size={16} strokeWidth={3} className="text-blue-500" />
-                    <div className="h-14 w-px bg-slate-500" />
+                    <div className={`${size ? `h-${size} w-px bg-slate-500` : "h-14 w-px bg-slate-500"}`} />
                     <Locate size={16} strokeWidth={4} className="text-red-400" />
                 </div>
             </Box>

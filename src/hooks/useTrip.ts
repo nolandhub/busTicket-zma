@@ -17,8 +17,6 @@ export default function useTrip() {
     const [visibleImgView, setVisibleImgView] = useState<boolean>(false)
     const setSelectedTrip = useSetRecoilState(selectedTripState)
 
-
-
     const navigate = useNavigate()
 
     function directTab(index: string) {

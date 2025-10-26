@@ -33,11 +33,11 @@ const UserCardContent: FC = () => {
         return <RegisterSection handleClick={handleRegister} />
     }
     return (
-        <Box className="bg-white rounded-t-3xl mx-auto p-5">
+        <Box className="bg-white rounded-t-2xl mx-auto p-5 border-l border-t border-r border-slate-200">
             <Box className=" flex space-x-2 gap-3">
                 {/* User Info */}
                 <Box flex alignItems="center" className="gap-2 flex-1 ">
-                    <Avatar backgroundColor="SKYBLUE-GREEN" size={50} src={userData.avatar}>
+                    <Avatar className="border border-slate-300 " backgroundColor="SKYBLUE-GREEN" size={50} src={userData.avatar}>
                         {userData.name?.[0]?.toUpperCase()}
                     </Avatar>
                     <Box className="flex-1 min-w-0">
@@ -55,7 +55,7 @@ const UserCardContent: FC = () => {
                     <Box
                         flex
                         alignItems="center"
-                        className="gap-2 bg-green-500 text-white px-3 py-2 rounded-full max-w-[160px]"
+                        className="gap-2 bg-green-500 text-white px-3 py-2 rounded-full max-w-[160px] border border-green-600"
                     >
                         <Wallet size={18} className="flex-shrink-0" />
                         <Text size="xSmall" className="font-bold truncate">

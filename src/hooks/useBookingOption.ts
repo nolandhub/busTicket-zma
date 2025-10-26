@@ -4,6 +4,7 @@ import { bookingState, selectedTripState, userState } from "@/state";
 import { PriceDetail } from "@/types/tripType";
 import { Option } from "@/types/bookingType";
 import useCoreInit from "./useCoreInit";
+import { getLabelFromValue } from "@/helper/getLabelFromValue";
 
 export default function useBookingOption(price: PriceDetail) {
     const tripSelected = useRecoilValue(selectedTripState);
@@ -91,16 +92,20 @@ export default function useBookingOption(price: PriceDetail) {
         return options.reduce((sum, option) => sum + option.subtotal, 0);
     }, [options]);
 
+    const totalPassCount = useMemo(() => {
+        return options.reduce((sum, option) => sum + option.quantity, 0);
+    }, [options]);
+
     // Auto-save vào Recoil state khi có thay đổi
     useEffect(() => {
         if (!tripSelected) return;
-
         setBooking((prev) => ({
             ...prev,
             bookingName: name,
             bookingPhone: phone,
             option: options,
-            total: total
+            total: total,
+            passCount: totalPassCount
         }));
     }, [name, phone, options, total, tripSelected]);
 
@@ -118,20 +123,21 @@ export default function useBookingOption(price: PriceDetail) {
             compName: tripSelected.compName,
             busName: tripSelected.busName,
             tripId: tripSelected.id,
-            tripName: tripSelected.routeName,
+            routeName: tripSelected.routeName,
 
             //date
-            bookingDate: departDate,
+            bookingDate: departDate.toISOString(),
 
             //infoUser
             bookingName: name,
             bookingPhone: phone,
             option: options,
             total,
+            totalPassCount,
 
             //pickDrop
-            pickUp: prev?.pickUp,
-            dropOff: prev?.dropOff
+            pickUp: dataBooking.pickUp,
+            dropOff: dataBooking.pickUp
         }));
     };
 

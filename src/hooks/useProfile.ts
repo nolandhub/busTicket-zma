@@ -1,6 +1,6 @@
 import { userState } from "@/state"
-import { useState } from "react"
-import { useSetRecoilState } from "recoil"
+import { useEffect, useState } from "react"
+import { useRecoilValue, useSetRecoilState } from "recoil"
 import { nativeStorage } from "zmp-sdk"
 import { useSnackbar } from "zmp-ui"
 
@@ -9,8 +9,17 @@ export default function useProfile() {
     const [visiblePrivacyPolicies, setVisiblePrivacyPolicies] = useState<boolean>(false)
     const [visibleMember, setVisibleMember] = useState<boolean>(false)
     const setUserData = useSetRecoilState(userState)
-
     const { openSnackbar } = useSnackbar()
+
+    const userData = useRecoilValue(userState)
+    const [percent, setPercent] = useState<number>(userData?.totalSpending || 0)
+
+
+    useEffect(() => {
+        if (userData?.totalSpending) {
+            return setPercent(userData?.totalSpending * 100 / 699000)
+        }
+    }, [userData?.totalSpending])
 
     function onEdit() {
         setVisibleForm(true)
@@ -50,7 +59,9 @@ export default function useProfile() {
         onEdit,
         onPrivacyPolicies,
         onMemberProgram,
-        visibleMember, setVisibleMember
+        visibleMember, setVisibleMember,
+        percent,
+        userData
 
     }
 }

@@ -7,8 +7,9 @@ const PrivacyPolicies: FC<{ isVisible?: boolean; onClose: () => void }> = ({ isV
             title="CHÍNH SÁCH BẢO MẬT"
             visible={isVisible}
             onClose={onClose}
+            zIndex={1200}
         >
-            <Box className="p-4 space-y-5 overflow-y-auto max-h-[80vh] leading-relaxed text-gray-700">
+            <Box className="p-4 space-y-5 overflow-y-auto max-h-[60vh] leading-relaxed text-gray-700">
 
                 {/* Giới thiệu */}
                 <Box>

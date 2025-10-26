@@ -64,6 +64,7 @@ const PickDrop: FC<PickDropProps> = ({
 
             {pickupValue === "999" && (
                 <NoteInput
+                    isError={!pickUpNote}
                     label="Ghi chú điểm đón"
                     value={pickUpNote}
                     onChange={(val) => setBooking(prev => ({ ...prev, pickUpNote: val }))}
@@ -82,13 +83,12 @@ const PickDrop: FC<PickDropProps> = ({
                 titleFormat={(item) => `${item.subTitle} — ${item.title}`}
             />
             {dropoffValue === "1000" && (
-                <Box>
-                    <NoteInput
-                        label="Ghi chú điểm trả"
-                        value={dropOffNote}
-                        onChange={(val) => setBooking(prev => ({ ...prev, dropOffNote: val }))}
-                    />
-                </Box>
+                <NoteInput
+                    isError={!dropOffNote}
+                    label="Ghi chú điểm trả"
+                    value={dropOffNote}
+                    onChange={(val) => setBooking(prev => ({ ...prev, dropOffNote: val }))}
+                />
             )}
         </div>
     );

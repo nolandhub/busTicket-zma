@@ -14,18 +14,10 @@ export default function BookingStep() {
         handleBack,
         dataBooking,
         priceOpt,
-        handleConfirm
+        handleConfirm,
+        loading,
+        hiddenStepBtn
     } = useBookingStep()
-
-    const [isHidden, setHidden] = useState<boolean>(false)
-
-    useEffect(() => {
-        if (step == "review") {
-            setHidden(true)
-        } else if (step == "info" || "time") {
-            setHidden(false)
-        }
-    }, [step])
 
     return (
         <Box className="flex flex-col gap-4 justify-center bg-slate-100">
@@ -38,12 +30,10 @@ export default function BookingStep() {
                     />
                 )}
                 {step === "info" && priceOpt && (
-                    <>
-                        <InfoOption price={priceOpt} />
-                    </>
+                    <InfoOption price={priceOpt} />
                 )}
                 {step === "review" && dataBooking && (
-                    <Box className=" flex flex-col gap-2">
+                    <Box className="flex flex-col gap-2">
                         <div className="flex justify-start items-center my-2 ml-1">
                             <Button className="flex font-bold  items-center text-center" prefixIcon={<Icon icon="zi-arrow-left" />} onClick={handleBack}>
                                 Chỉnh sửa
@@ -51,12 +41,12 @@ export default function BookingStep() {
                         </div>
                         <BookingReview data={dataBooking} />
 
-                        <ConfirmSection total={dataBooking.total || 0} onConfirm={() => { handleConfirm(dataBooking) }} />
+                        <ConfirmSection loading={loading} total={dataBooking.total || 0} onConfirm={() => { handleConfirm(dataBooking) }} />
                     </Box>
                 )}
             </Box>
 
-            <Box className={`${isHidden ? "hidden" : "sticky px-6 gap-6 bottom-0 flex justify-around pb-2"}`}>
+            <Box className={`${hiddenStepBtn ? "hidden" : "sticky px-6 gap-6 bottom-0 flex justify-around pb-2"}`}>
                 <Button fullWidth prefixIcon={<Icon icon="zi-arrow-left" />} onClick={handleBack}>
                     Quay lại
                 </Button>

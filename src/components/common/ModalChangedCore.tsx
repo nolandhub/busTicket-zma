@@ -8,21 +8,18 @@ interface ModalChangeProps {
 }
 export default function ModalChange({ visible, onClose }: ModalChangeProps) {
     return (
-        <>
-            <Modal
-                actions={[
-                    {
-                        close: true,
-                        highLight: true,
-                        text: 'Đóng'
-                    }
-                ]}
-                onClose={onClose}
-                visible={visible}
-            >
-                <SearchArea />
-            </Modal>
-        </>
-
+        <Modal
+            actions={[
+                {
+                    close: true,
+                    highLight: true,
+                    text: 'Đóng'
+                }
+            ]}
+            onClose={onClose}
+            visible={visible}
+        >
+            <SearchArea />
+        </Modal>
     )
 }
