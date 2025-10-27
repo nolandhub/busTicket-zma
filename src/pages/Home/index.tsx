@@ -6,7 +6,6 @@ import { Divider } from "@/components/common/Divider";
 import RouteSwiper from "@/components/Home/RoutesSwiper";
 import useBusCompany from "@/hooks/useBusCompany";
 
-
 export default function HomePage() {
     const { getSyncCompanies } = useBusCompany()
     getSyncCompanies()

@@ -43,8 +43,6 @@ const FormEditInfo: FC<Props> = ({ userData, onClose, onSave, hideFormEdit }) =>
             title="Cập nhật thông tin"
             visible={hideFormEdit}
             onClose={onClose}
-            zIndex={1200}
-
         >
             <Box
                 className="custom-bottom-sheet h-[560px]"
@@ -101,8 +99,6 @@ const FormEditInfo: FC<Props> = ({ userData, onClose, onSave, hideFormEdit }) =>
                         value={new Date(formData.dob) || new Date()}
                         onChange={(value) => setFormData({ ...formData, dob: String(value) })}
                     />
-
-
 
                     <Input
                         clearable={{ mode: "focus" }}

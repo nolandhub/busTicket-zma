@@ -30,4 +30,3 @@ export function buildURL(
     const queryString = queryParams.toString();
     return queryString ? `${path}?${queryString}` : path;
 }
-

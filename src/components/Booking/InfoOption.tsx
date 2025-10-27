@@ -45,6 +45,7 @@ const InfoOption: FC<InfoOptionProps> = ({ price }) => {
             {/* User Info */}
             <div className="flex flex-col gap-2 mt-4">
                 <Input
+                    type="text"
                     prefix={<Box pl={4}><Icon icon="zi-info-circle" /></Box>}
                     label="Tên người đi"
                     value={bookingData?.bookingName || name}

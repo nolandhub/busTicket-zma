@@ -1,10 +1,11 @@
 import { BottomNavigation, Box, useLocation, useNavigate } from "zmp-ui";
 import { Icon } from "zmp-ui"
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useVirtualKeyboardVisible } from "@/hooks/hookHelper";
 import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilValue } from "recoil";
 /////////////////Remember Me/////////////////////////////////
 /*  Custom hide navBar for special page */
+
 export const NO_BOTTOM_NAVIGATION_PAGES = [
 
     "/availableTrip",
@@ -20,6 +21,10 @@ const BottomNav = () => {
     const [activeKey, setActiveKey] = useState(location.pathname);
     const keyboardVisible = useVirtualKeyboardVisible();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setActiveKey(location.pathname)
+    }, [location.pathname])
 
     const noBottomNav = useMemo(() => {
         return NO_BOTTOM_NAVIGATION_PAGES.includes(location.pathname);
@@ -52,9 +57,9 @@ const BottomNav = () => {
                 label="Xem Vé"
             />
             <BottomNavigation.Item
-                key={"/gift"}
-                icon={<Icon icon="zi-bookmark" />}
-                label="Quà Tặng"
+                key={"/notify"}
+                icon={<Icon icon="zi-notif" />}
+                label="Thông Báo"
             />
             <BottomNavigation.Item
                 key={"/profile"}

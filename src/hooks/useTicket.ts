@@ -5,22 +5,22 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useSnackbar } from "zmp-ui";
 
-
 export default function useTicket() {
     const ticketData = useRecoilValue(ticketState)
-    const [isLoadingClick, setIsLoadingClick] = useState<boolean>(false)
+    const [loadingRefresh, setLoadingRefresh] = useState<boolean>(false)
     const { openSnackbar } = useSnackbar()
     const [ticketSelected, setTicketSelected] = useState<Ticket | null>(null)
     const [isCancel, setCancel] = useState<boolean>(false)
+    const [loadingCancel, setLoadingCancel] = useState<boolean>(false)
 
     const handleRefresh = () => {
-        setIsLoadingClick(true)
+        setLoadingRefresh(true)
         setTimeout(() => {
             openSnackbar({
                 type: "success",
                 text: "Dữ liệu đã được làm mới"
             })
-            setIsLoadingClick(false)
+            setLoadingRefresh(false)
         }, 1200)
     }
 
@@ -31,9 +31,6 @@ export default function useTicket() {
     const cancelledTickets = ticketData.filter((t) => t.status === "cancelled");
     const [visible, setVisible] = useState<boolean>(false)
     const [cancelReason, setCancelReason] = useState<string>("")
-
-
-
 
 
     const handleCancel = () => {
@@ -60,6 +57,7 @@ export default function useTicket() {
                     text: "Hãy nhập lý do để chúng tôi phục vụ bạn tốt hơn. Cảm ơn bạn!.."
                 })
             } else {
+                setLoadingCancel(true)
                 setTimeout(() => {
                     openSnackbar({
                         type: "success",
@@ -69,6 +67,7 @@ export default function useTicket() {
                     setCancelReason("")
                     setTicketSelected(null)
                     setCancel(false)
+                    setLoadingCancel(false)
                 }, 1200)
             }
         }
@@ -79,11 +78,12 @@ export default function useTicket() {
     }
 
     return {
+        loadingCancel, setLoadingCancel,
         visible, setVisible,
         cancelledTickets,
         currentTickets,
         usedTickets,
-        isLoadingClick,
+        loadingRefresh,
         handleRefresh,
         ticketSelected, setTicketSelected,
         isCancel,

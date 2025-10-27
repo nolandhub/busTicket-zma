@@ -4,14 +4,10 @@ import TicketItem from "./TicketItem";
 import { PackageOpenIcon, } from "lucide-react";
 import { Ticket } from "@/types/bookingType";
 import useTicket from "@/hooks/useTicket";
-import DetailTicket from "./DetailTicket";
 
 
-const TicketList: FC<{ ticketFilter: Ticket[], isLoadingClick?: boolean, onClick?: () => void }> = ({ ticketFilter, isLoadingClick, onClick }) => {
-    const { ticketSelected, setTicketSelected, isCancel,
-        handleChange,
-        handleCancel } = useTicket()
 
+const TicketList: FC<{ ticketFilter: Ticket[], isLoadingClick?: boolean, onClick?: () => void, handleSetTicket: (data) => void }> = ({ ticketFilter, isLoadingClick, onClick, handleSetTicket }) => {
     if (ticketFilter.length === 0) {
         return (
             <Box className="flex-1 h-[78vh] flex items-center justify-center">
@@ -33,17 +29,7 @@ const TicketList: FC<{ ticketFilter: Ticket[], isLoadingClick?: boolean, onClick
     return (
         <>
             {
-                ticketFilter.map((t, idx) => (<TicketItem key={idx} onCick={(data) => setTicketSelected(data)} dataTicket={t} />))
-            }
-            {
-                ticketSelected &&
-                <DetailTicket
-                    ticketSelected={ticketSelected}
-                    onCancel={handleCancel}
-                    onChange={(val) => { handleChange(val) }}
-                    onClose={() => setTicketSelected(null)}
-                    isCancel={isCancel}
-                />
+                ticketFilter.map((t, idx) => (<TicketItem key={idx} onCick={(data) => handleSetTicket(data)} dataTicket={t} />))
             }
         </>
     )

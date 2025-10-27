@@ -79,7 +79,6 @@ export default function useSearch() {
 
             setTrips(busTrips)
 
-
         } catch (error) {
             console.log(error)
             openSnackbar({
@@ -91,13 +90,11 @@ export default function useSearch() {
     }
 
     const handleSearch = () => {
-
         if (!isRegistered) {
             navigate("/")
             openSnackbar({
-                text: "HÃY ĐĂNG KÝ ,TRƯỚC KHI TÌM CHUYẾN!",
-                type: "countdown",
-                duration: 3000
+                text: "BẠN CHƯA ĐĂNG KÝ ,HÃY ĐĂNG KÝ TRƯỚC KHI TÌM CHUYẾN!",
+                type: "error",
             });
             return
         }

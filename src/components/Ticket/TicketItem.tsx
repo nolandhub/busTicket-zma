@@ -14,14 +14,13 @@ import useTicket from "@/hooks/useTicket";
 import { QRCodeCanvas } from "qrcode.react";
 import { useRecoilValue } from "recoil";
 import { busCompanyState } from "@/state";
-import { getLabelFromValue } from "@/helper/getLabelFromValue";
+
 interface Props {
     dataTicket: Ticket
     onCick: (data: Ticket) => void
 }
 const TicketItem: FC<Props> = ({ dataTicket, onCick }) => {
 
-    const { setTicketSelected } = useTicket()
     const statusConfig: Record<TicketStatus, {
         icon: FC<any>;
         bgColor: string;
@@ -86,7 +85,7 @@ const TicketItem: FC<Props> = ({ dataTicket, onCick }) => {
                 <Box className="flex space-x-1 ml-2 items-center">
                     <Clock4 size={18} className="text-blue-600" strokeWidth={3} />
                     <Text bold className="text-stone-500">Thời gian xe xuất bến: </Text>
-                    <Text className="text-start text-lg font-medium">{dataTicket?.option[0].time || "-- : --"} </Text>
+                    <Text className="text-start text-lg font-medium">{dataTicket.option[0].time || "-- : --"} </Text>
                 </Box>
 
                 <Divider size={1} className="my-1" />

@@ -4,7 +4,7 @@ import AvailableTrip from "./pages/AvailabeTrip";
 import BookingPage from "./pages/Booking";
 import Profile from "./pages/Profile";
 import Ticket from "./pages/Ticket/Index";
-import Gift from "./pages/Gift";
+import Notify from "./pages/Notify";
 
 // import RepickCore from "./pages/RepickCore";
 // HomePage
@@ -17,7 +17,7 @@ export default function AppRoutes() {
                 <Route path="/booking" element={<BookingPage />}></Route>
                 <Route path="/profile" element={<Profile />}></Route>
                 <Route path="/ticket" element={<Ticket />}></Route>
-                <Route path="/gift" element={<Gift />}></Route>
+                <Route path="/notify" element={<Notify />}></Route>
 
 
 

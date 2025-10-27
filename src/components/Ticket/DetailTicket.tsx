@@ -4,22 +4,21 @@ import { formatDateVN } from "@/utils/date"
 import { Clock } from "lucide-react"
 import { FC } from "react"
 import { Box, Button, Input, Modal, Text } from "zmp-ui"
-import { InfoSection } from "../Profile/UserInfoSection"
+import { InfoSection } from "../Profile/UserInfo"
 import RouteIndicator from "../AvailableTrip/RouteIndicatorIcon"
-
+import { Divider } from "../common/Divider"
 
 interface Props {
+    loadingCancel: boolean
     ticketSelected: Ticket
     onClose?: () => void
     onCancel: () => void
     isCancel?: boolean
     onChange?: (val: string) => void
-
-
-
 }
 
-const DetailTicket: FC<Props> = ({ onClose, ticketSelected, onChange, isCancel, onCancel }) => {
+const DetailTicket: FC<Props> = ({ onClose, ticketSelected,
+    onChange, isCancel, onCancel, loadingCancel }) => {
     return (
         <Modal
             actions={[
@@ -32,7 +31,6 @@ const DetailTicket: FC<Props> = ({ onClose, ticketSelected, onChange, isCancel, 
             onClose={onClose}
             title="Chi tiết thông tin"
             visible
-            zIndex={1200}
         >
             <Box className="flex-1 space-y-2 bg-slate-100 p-4 rounded-t-lg ">
                 <Box className="flex justify-between">
@@ -45,20 +43,22 @@ const DetailTicket: FC<Props> = ({ onClose, ticketSelected, onChange, isCancel, 
 
                 <Text size="xLarge" className="text-center font-bold">{ticketSelected.routeName}</Text>
 
-                <Box className="flex gap-4 justify-between items-start bg-slate-50 p-4">
-                    <Box className="flex flex-col w-fit max-w-[160px]">
-                        <Text bold>{ticketSelected.compName}</Text>
-                        <Text size="xxSmall" className="truncate">{ticketSelected.busName}</Text>
-                    </Box>
+                <Box className="flex flex-col gap-4">
+                    <div className="flex flex-col ml-1 gap-2">
+                        <Text>{ticketSelected.compName}</Text>
+                        <Text className="text-start font-medium text-slate-500">{ticketSelected.busName}</Text>
 
+                    </div>
                     <RouteIndicator
                         startLocation={ticketSelected.pickUp?.title}
                         endLocation={ticketSelected.dropOff?.title}
-                        size={12}
+                        size={8}
                     />
-
                 </Box>
-                <Box className="flex flex-col gap-1">
+
+                <Divider size={1} />
+
+                <Box className="flex flex-col gap-2">
                     <Text.Title>Thông tin hành khách</Text.Title>
                     <Box className="flex flex-col gap-2">
                         <InfoSection hideDivider={true} label="Người đặt:" value={ticketSelected.bookingName} />
@@ -93,6 +93,7 @@ const DetailTicket: FC<Props> = ({ onClose, ticketSelected, onChange, isCancel, 
                 </Box>
 
             </Box>
+            <Divider size={2} />
 
             <Box className="p-3 flex justify-between items-center bg-blue-50 rounded-b-lg shadow-sm ">
                 <Text className="text-sm font-semibold text-blue-600 tracking-wide">
@@ -112,6 +113,7 @@ const DetailTicket: FC<Props> = ({ onClose, ticketSelected, onChange, isCancel, 
                 />
                 <Box className="flex justify-end">
                     <Button
+                        loading={loadingCancel}
                         onClick={onCancel}
                         type="danger"
                         size="small"
@@ -121,7 +123,7 @@ const DetailTicket: FC<Props> = ({ onClose, ticketSelected, onChange, isCancel, 
                 </Box>
             </Box>
 
-        </Modal>
+        </Modal >
     )
 }
 

@@ -1,5 +1,6 @@
 import { addTicket } from "@/firebase/firestore/ticketCrud"
 import { generateBookingId, generateTicketId } from "@/helper/generateID"
+import { hasAlphabet } from "@/helper/hasAlphabet"
 import { idbService } from "@/indexDB/idbServices"
 import { bookingState, priceOptionState, selectedTripState, ticketState } from "@/state"
 import { BookingData, Ticket } from "@/types/bookingType"
@@ -60,9 +61,21 @@ export default function useBookingStep() {
                     icon: true,
                     text: "Vui lòng điền đầy đủ thông tin trung chuyển!...",
                 });
+            } else if (dataBooking.bookingPhone.length < 10 || hasAlphabet(dataBooking.bookingPhone)) {
+                openSnackbar({
+                    icon: true,
+                    text: "Số điện thoại không hợp lệ. Xin hãy nhập lại!",
+                });
+            } else if (!dataBooking.dropOff || !dataBooking.pickUp) {
+                openSnackbar({
+                    icon: true,
+                    text: "Vui lòng chọn thông tin cho điểm đón/ trả",
+                });
             } else {
                 setStep("review")
             }
+
+
         }
     }
 
@@ -95,8 +108,6 @@ export default function useBookingStep() {
                 })
                 resetBooking()
             }, 1400)
-
-
 
         } catch (error) {
             console.log(error)
