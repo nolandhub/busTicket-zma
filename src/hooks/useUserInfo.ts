@@ -31,26 +31,29 @@ export default function useUserInfo() {
                     setUser(JSON.parse(userCache))
                     return
                 }
+
                 //prod
+                const { authSetting } = await getSetting();
+                if (!authSetting["scope.userInfo"]) {
+                    setUser(null)
+                    return;
+                }
+
                 const userCache = nativeStorage.getItem("user");
+
                 if (!userCache) {
                     setUser(null)
                     setIsRegistered(false)
                     return;
                 }
 
-                const { authSetting } = await getSetting();
-                if (!authSetting["scope.userInfo"]) {
-                    setIsRegistered(false)
-                    setUser(null)
-                    return;
-                }
 
                 setUser(JSON.parse(userCache))
                 setIsRegistered(true)
 
             } catch (error) {
                 console.error("[Cache] Lỗi khi đọc nativeStorage:", error);
+
                 setUser(null)
             }
         };
@@ -86,7 +89,6 @@ export default function useUserInfo() {
             });
             const { userInfo } = await getUserInfo({ autoRequestPermission: true })
 
-
             if (import.meta.env.DEV) {
                 const { newUser } = createUserObject(userInfo)
                 setIsRegistered(true)
@@ -107,6 +109,7 @@ export default function useUserInfo() {
 
         } catch (error) {
             console.error("[useUserInfo] Lỗi khi lấy userInfo từ Zalo SDK:", error);
+            openSnackbar({ text: "Đã có lỗi xảy ra, hãy thử lại sau!", type: "error" });
         }
     }
 

@@ -12,7 +12,6 @@ import { idbService } from "@/indexDB/idbServices";
 import { Trip } from "@/types/tripType";
 import dayjs from "dayjs";
 import busTrips from "@/mock/mockTrip";
-import useUserInfo from "./useUserInfo";
 import useBusCompany from "./useBusCompany";
 
 export default function useSearch() {
@@ -21,7 +20,6 @@ export default function useSearch() {
     const { departDate, destination, departure, setIsReturn, setDeparture, setDestination } = useCoreInit()
     const setTrips = useSetRecoilState(tripState)
     const [loading, setLoading] = useState<boolean>(false) //loading if wait data
-    const { isRegistered } = useUserInfo()
 
 
     const { getSyncCompanies } = useBusCompany()
@@ -95,15 +93,6 @@ export default function useSearch() {
     }
 
     const handleSearch = () => {
-        if (!isRegistered) {
-            navigate("/")
-            openSnackbar({
-                text: "BẠN CHƯA ĐĂNG KÝ ,HÃY ĐĂNG KÝ TRƯỚC KHI TÌM CHUYẾN!",
-                type: "error",
-            });
-            return
-        }
-
         if (departure === destination) {
             openSnackbar({
                 icon: true,
@@ -119,8 +108,6 @@ export default function useSearch() {
             });
             return
         }
-
-
 
         const url = buildURL("/availableTrip", {
             from: departure,

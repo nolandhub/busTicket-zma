@@ -88,11 +88,9 @@ const FormEditInfo: FC<Props> = ({ userData, onClose, onSave, hideFormEdit }) =>
                         <Select.Option title="Khác" value={2} />
                     </Select>
 
-
-
                     <DatePicker
-                        startYear={2000}
-                        // endYear={Number(new Date().getFullYear)}
+
+                        endYear={Number(new Date().getFullYear)}
                         endDate={new Date()}
                         label="Ngày sinh"
                         helperText="Chọn ngày sinh"
@@ -115,41 +113,28 @@ const FormEditInfo: FC<Props> = ({ userData, onClose, onSave, hideFormEdit }) =>
                         value={formData.favorite}
                         onChange={(e) => setFormData({ ...formData, favorite: e.target.value })}
                     />
-                </Box>
 
-                <Box
-                    flex
-                    flexDirection="row"
-                    mt={1}
-                    pt={6}
-                >
                     <Box
-                        pr={1}
-                        style={{
-                            flex: 1
-                        }}
-                    >
+                        className="flex flex-row gap-6 pb-14">
                         <Button
+
                             onClick={onClose}
                             fullWidth
                             variant="secondary"
                         >
                             Hủy bỏ
                         </Button>
-                    </Box>
-                    <Box
-                        pl={1}
-                        style={{
-                            flex: 1
-                        }}
-                    >
                         <Button
                             onClick={handleSubmit}
                             fullWidth>
                             Cập nhật
                         </Button>
+
                     </Box>
+
+
                 </Box>
+
             </Box>
         </Sheet>
     )

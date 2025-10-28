@@ -14,7 +14,7 @@ export default function NotificationPageContent() {
             {TAB_CONFIG.map(({ key, label, component: Component }) => (
                 <Tabs.Tab key={key} label={label}>
                     <Box
-                        className="flex-1 h-[82vh] flex items-center justify-center"
+                        className="flex-1 h-[84vh] flex items-center justify-center"
                         p={4}
                     >
                         <Component />
