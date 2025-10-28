@@ -1,4 +1,4 @@
-import { Box, Page } from "zmp-ui";
+import { Page } from "zmp-ui";
 import BackHeader from "@/components/common/BackHeader";
 import NotificationPageContent from "@/components/Notify/NotifyContent";
 

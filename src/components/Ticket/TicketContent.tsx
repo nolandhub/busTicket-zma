@@ -44,7 +44,7 @@ export default function TicketPageContent() {
                 {TAB_CONFIG.map(({ key, label, dataKey }) => (
                     <Tabs.Tab key={key} label={label}>
                         <Box
-                            className="flex-1 h-[82vh] items-center justify-center space-y-8 overflow-auto"
+                            className="flex-1 h-[82vh] pb-20 items-center justify-center space-y-8 overflow-auto"
                             p={4}
                         >
                             <TicketList

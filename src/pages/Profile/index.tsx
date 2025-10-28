@@ -5,7 +5,7 @@ import ProfileContent from "@/components/Profile/ProfileContent";
 export default function Profile() {
     return (
         <Page className="flex-1 flex flex-col bg-slate-100">
-            <BackHeader title={"Thông tin cá nhân"} />
+            <BackHeader backTo="/" title={"Thông tin cá nhân"} />
             <ProfileContent />
         </Page >
     );

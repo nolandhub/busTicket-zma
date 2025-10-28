@@ -2,11 +2,11 @@ import { addTicket } from "@/firebase/firestore/ticketCrud"
 import { generateBookingId, generateTicketId } from "@/helper/generateID"
 import { hasAlphabet } from "@/helper/hasAlphabet"
 import { idbService } from "@/indexDB/idbServices"
-import { bookingState, priceOptionState, selectedTripState, ticketState } from "@/state"
+import { bookingState, priceOptionState, selectedTripState } from "@/state"
 import { BookingData, Ticket } from "@/types/bookingType"
 import { BasePickDrop } from "@/types/tripType"
 import { useEffect, useState } from "react"
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil"
+import { useRecoilValue, useResetRecoilState } from "recoil"
 import { useNavigate, useSnackbar } from "zmp-ui"
 
 export default function useBookingStep() {

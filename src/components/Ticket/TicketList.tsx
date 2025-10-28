@@ -3,9 +3,6 @@ import { Box, Icon, Text } from "zmp-ui";
 import TicketItem from "./TicketItem";
 import { PackageOpenIcon, } from "lucide-react";
 import { Ticket } from "@/types/bookingType";
-import useTicket from "@/hooks/useTicket";
-
-
 
 const TicketList: FC<{ ticketFilter: Ticket[], isLoadingClick?: boolean, onClick?: () => void, handleSetTicket: (data) => void }> = ({ ticketFilter, isLoadingClick, onClick, handleSetTicket }) => {
     if (ticketFilter.length === 0) {

@@ -5,6 +5,7 @@ import BookingPage from "./pages/Booking";
 import Profile from "./pages/Profile";
 import Ticket from "./pages/Ticket/Index";
 import Notify from "./pages/Notify";
+import RegisterPage from "./pages/RegisterPage";
 
 // import RepickCore from "./pages/RepickCore";
 // HomePage
@@ -13,6 +14,7 @@ export default function AppRoutes() {
         <AnimationRoutes>
             <Route>
                 <Route path="/" element={<HomePage />}></Route>
+
                 <Route path="/availableTrip" element={<AvailableTrip />}></Route>
                 <Route path="/booking" element={<BookingPage />}></Route>
                 <Route path="/profile" element={<Profile />}></Route>

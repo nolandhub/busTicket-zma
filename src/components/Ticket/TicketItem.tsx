@@ -65,7 +65,7 @@ const TicketItem: FC<Props> = ({ dataTicket, onCick }) => {
 
     return (
         <Box className="bg-white rounded-lg border border-gray-400 shadow-md">
-            <Box className="flex justify-between p-2 bg-blue-500 rounded-t-lg">
+            <Box className="flex justify-between p-2 bg-blue-500 rounded-t-md">
                 <div className="flex space-x-2 items-center">
                     <LucideBusFront className="text-slate-50" size={25} strokeWidth={2} />
                     <Text className="font-bold text-yellow-200">
@@ -122,7 +122,7 @@ const TicketItem: FC<Props> = ({ dataTicket, onCick }) => {
                         subEndLocation={dataTicket?.dropOff?.subTitle || "Chưa cập nhật"}
                     />
                     <div
-                        className={`w-40 h-30 rounded-lg ${busCompFilter?.id ? `bg-[url(${busCompFilter.avatar})]` : "bg-[url(https://i.pinimg.com/736x/17/b7/6c/17b76c78de979b6cf2600a8e957403a7.jpg)]"} bg-cover bg-center`}
+                        className={`w-40 h-30 rounded-lg ${busCompFilter?.id ? `bg-[url(${busCompFilter?.avatar})]` : "bg-[url(https://i.pinimg.com/736x/17/b7/6c/17b76c78de979b6cf2600a8e957403a7.jpg)]"} bg-cover bg-center`}
                     />
                 </Box>
 

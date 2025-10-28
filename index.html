@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
+
+  <link rel="preconnect" href="https://graph.zalo.me">
+  <link rel="preconnect" href="https://h5.zadn.vn">
+  <link rel="dns-prefetch" href="https://graph.zalo.me">
+  <link rel="dns-prefetch" href="https://h5.zadn.vn">
+
+  <link rel="modulepreload" href="/src/app.tsx">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
   <meta http-equiv="Content-Security-Policy"
     content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:" />
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
+
+  <link rel="icon" href="/src/static/favicon.webp">
+  <link rel="icon" href="/src/static/banner.webp">
 
   <meta name="theme-color" content="#007aff" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="msapplication-tap-highlight" content="no" />
-  <link rel="preload" href="https://serverapi-pi.vercel.app/Probus/bg-hero.webp" as="image">
+
   <title>Zalo Mini App</title>
 </head>
 
 <body>
+
   <div id="app"></div>
   <!-- built script files will be auto injected -->
 

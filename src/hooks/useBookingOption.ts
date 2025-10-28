@@ -4,7 +4,6 @@ import { bookingState, selectedTripState, userState } from "@/state";
 import { PriceDetail } from "@/types/tripType";
 import { Option } from "@/types/bookingType";
 import useCoreInit from "./useCoreInit";
-import { getLabelFromValue } from "@/helper/getLabelFromValue";
 
 export default function useBookingOption(price: PriceDetail) {
     const tripSelected = useRecoilValue(selectedTripState);

@@ -2,7 +2,7 @@ import { Ticket } from "@/types/bookingType";
 import { db } from "../fireConfig";
 import { collection, doc, setDoc, onSnapshot, query, where, updateDoc } from "firebase/firestore";
 import { useSetRecoilState } from "recoil";
-import { ticketState, userState } from "@/state";
+import { ticketState } from "@/state";
 import { useEffect, useState } from "react";
 import useUserInfo from "@/hooks/useUserInfo";
 
@@ -17,7 +17,6 @@ export async function addTicket(data: Ticket) {
         console.log("[firestore] addTicket " + error)
     }
 }
-
 
 export async function updateTicket(id: string, data) {
     try {

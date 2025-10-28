@@ -1,13 +1,11 @@
-import { BottomNavigation, Box, useLocation, useNavigate } from "zmp-ui";
+import { BottomNavigation, useLocation, useNavigate } from "zmp-ui";
 import { Icon } from "zmp-ui"
 import { useEffect, useMemo, useState } from "react";
 import { useVirtualKeyboardVisible } from "@/hooks/hookHelper";
-import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilValue } from "recoil";
 /////////////////Remember Me/////////////////////////////////
 /*  Custom hide navBar for special page */
 
 export const NO_BOTTOM_NAVIGATION_PAGES = [
-
     "/availableTrip",
     "/booking",
 

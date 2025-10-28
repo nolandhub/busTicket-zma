@@ -1,7 +1,7 @@
 import { hideHeaderState, selectedTripState } from "@/state"
 import { TripFiltered } from "@/types/tripType"
 import { useState } from "react"
-import { useRecoilValue, useSetRecoilState } from "recoil"
+import {  useSetRecoilState } from "recoil"
 import { useNavigate } from "zmp-ui"
 
 export default function useTrip() {

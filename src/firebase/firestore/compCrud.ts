@@ -5,8 +5,6 @@ import {
     collection,
 } from "firebase/firestore";
 
-
-
 const colRef = collection(db, "companies")
 
 export async function getCompanies() {

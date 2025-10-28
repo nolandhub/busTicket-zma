@@ -3,16 +3,17 @@ import { parseString } from "@/utils/date";
 import { getLabelFromValue } from "@/helper/getLabelFromValue";
 import { useNavigate, useSnackbar } from "zmp-ui";
 import useCoreInit from "./useCoreInit";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { buildRouteKey, getTrip2WayAvailable } from "../firebase/firestore/tripCrud";
-import { startTransition, useEffect, useState } from 'react';
-import { isRegisteredState, tripState } from "@/state";
-import { dbPromise } from "@/indexDB";
+import { useSetRecoilState } from "recoil";
+import { getTrip2WayAvailable } from "../firebase/firestore/tripCrud";
+import { startTransition, useState } from 'react';
+import { tripState } from "@/state";
+
 import { idbService } from "@/indexDB/idbServices";
 import { Trip } from "@/types/tripType";
 import dayjs from "dayjs";
 import busTrips from "@/mock/mockTrip";
 import useUserInfo from "./useUserInfo";
+import useBusCompany from "./useBusCompany";
 
 export default function useSearch() {
     const { openSnackbar } = useSnackbar()
@@ -21,6 +22,10 @@ export default function useSearch() {
     const setTrips = useSetRecoilState(tripState)
     const [loading, setLoading] = useState<boolean>(false) //loading if wait data
     const { isRegistered } = useUserInfo()
+
+
+    const { getSyncCompanies } = useBusCompany()
+    getSyncCompanies()
 
     const handleSwitch = () => {
         setIsReturn(true)
@@ -114,6 +119,8 @@ export default function useSearch() {
             });
             return
         }
+
+
 
         const url = buildURL("/availableTrip", {
             from: departure,

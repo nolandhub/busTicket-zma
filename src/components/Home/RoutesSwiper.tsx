@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text, Modal } from "zmp-ui";
 import { Section } from "../common/Section";
-import { departureDateState, popRouteState } from "@/state";
+import { popRouteState } from "@/state";
 import { PopRouteSlideSkeleton } from "../common/Skeleton";
 import { PopRoute } from "@/types/routeType";
 import { formatPrice } from "@/helper/formatPrice";

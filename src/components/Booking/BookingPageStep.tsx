@@ -3,7 +3,6 @@ import BookingReview from "./ReviewBooking";
 import SelectTime from "./SelectTime";
 import useBookingStep from "@/hooks/useBookingStep";
 import InfoOption from "./InfoOption";
-import { useEffect, useState } from "react";
 import ConfirmSection from "./ConfirmSection";
 
 export default function BookingStep() {

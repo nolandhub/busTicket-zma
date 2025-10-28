@@ -1,15 +1,10 @@
-import { userState } from "@/state";
-import { FC, useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { FC } from "react";
 import { Box, Text } from "zmp-ui";
 import { Divider } from "../common/Divider";
 import { BusFrontIcon, Coins, Edit } from "lucide-react";
 import { Progress } from "zmp-ui";
-import useProfile from "@/hooks/useProfile";
-import FormEditInfo from "./FormEditInfo";
+
 import dayjs from "dayjs";
-import PrivacyPolicies from "./PrivacyPolicies";
-import MembershipPolicies from "./MemberProgram";
 import { UserCached } from "@/types/userType";
 
 interface Props {

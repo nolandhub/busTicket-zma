@@ -1,5 +1,5 @@
 import { MapPin, Locate } from "lucide-react";
-import { Box, Button, DatePicker, Icon, Switch } from "zmp-ui";
+import { Box, Button, DatePicker, Icon } from "zmp-ui";
 import InputPicker from "../common/InputPicker";
 import useCoreInit from "@/hooks/useCoreInit";
 import useSearch from "@/hooks/useSearch";

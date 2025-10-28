@@ -1,5 +1,5 @@
 import { CoreData, UserCached } from "@/types/userType";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { isRegisteredState, userState } from "@/state";
 import {
@@ -12,9 +12,9 @@ import { addUser } from "@/firebase/firestore/userCrud"
 
 export default function useUserInfo() {
     const [userData, setUser] = useRecoilState<UserCached | null>(userState)
-
     const [isRegistered, setIsRegistered] = useRecoilState(isRegisteredState)
     const { openSnackbar } = useSnackbar()
+
 
     useEffect(() => {
         const init = async () => {
@@ -46,13 +46,12 @@ export default function useUserInfo() {
                     return;
                 }
 
-
                 setUser(JSON.parse(userCache))
                 setIsRegistered(true)
 
             } catch (error) {
                 console.error("[Cache] Lỗi khi đọc nativeStorage:", error);
-                setIsRegistered(false)
+                setUser(null)
             }
         };
         init();
@@ -87,6 +86,7 @@ export default function useUserInfo() {
             });
             const { userInfo } = await getUserInfo({ autoRequestPermission: true })
 
+
             if (import.meta.env.DEV) {
                 const { newUser } = createUserObject(userInfo)
                 setIsRegistered(true)
@@ -95,22 +95,18 @@ export default function useUserInfo() {
                 return openSnackbar({ text: "Developer environment, register successfully", type: "success" });
             }
 
-            if (userData) {
-                setIsRegistered(true)
-                return openSnackbar({ text: "Đăng ký thành công!", type: "success" });
-            }
-
             const res = await getMobilePhone()
             const { newUser, coreData } = createUserObject(userInfo, String(res.data.number))
+
             setUser(newUser)
             nativeStorage.setItem("user", JSON.stringify(newUser))
-            setIsRegistered(true)
             await addUser(coreData.id, coreData);
+
+            setIsRegistered(true)
             openSnackbar({ text: "Đăng ký thành công!", type: "success" });
+
         } catch (error) {
             console.error("[useUserInfo] Lỗi khi lấy userInfo từ Zalo SDK:", error);
-            openSnackbar({ text: "Đã có lỗi xảy ra, hãy thử lại sau!", type: "error" });
-            setUser(null)
         }
     }
 
@@ -138,5 +134,3 @@ export default function useUserInfo() {
     }
     return { handleRegister, userData, isRegistered }
 }
-
-

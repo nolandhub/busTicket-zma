@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { BasePickDrop } from "@/types/tripType";
-import { Box } from "zmp-ui";
 import PickSelect from "./PickSelect";
 import NoteInput from "./NoteInput";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { bookingState } from "@/state";
 
 interface PickDropProps {

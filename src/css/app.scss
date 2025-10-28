@@ -3,6 +3,13 @@
 body {
   background-color: var(--zmp-background-color);
   user-select: none;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto;
+  margin: 0;
+  padding: 0;
 }
 
 .zaui-routes {
@@ -40,6 +47,23 @@ body {
 .zaui-btn-tertiary.zaui-btn-highlight,
 .zaui-bottom-navigation-item-active {
   color: var(--colors-green-70);
+  /* đổi màu chữ */
+  background-color: var(--colors-green-20);
+  /* màu nền nhẹ */
+  border-radius: 12px;
+  /* bo tròn nếu muốn */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  /* đổ bóng */
+  transform: scale(1.05);
+  /* phóng to nhẹ */
+  transition: all 0.2s ease-in-out;
+  /* animation mượt */
+}
+
+/* Khi hover item active */
+.zaui-bottom-navigation-item-active:hover {
+  background-color: var(--colors-green-20);
+  transform: scale(1.08);
 }
 
 .zaui-btn-primary,
@@ -49,7 +73,7 @@ body {
 .zaui-btn-primary.zaui-btn-highlight:active,
 .zaui-btn-primary:focus-visible,
 .zaui-btn-primary.zaui-btn-highlight:focus-visible {
-  background-color: var(--zmp-primary-color);
+  background-color: var(--colors-green-70);
 }
 
 .zaui-btn-primary:active,
@@ -60,18 +84,18 @@ body {
 }
 
 .zaui-picker-item-selected {
-  color: var(--zmp-primary-color);
+  color: var(--colors-green-70);
 }
 
 .zaui-input-affix-wrapper-focused,
 .zaui-input-affix-wrapper:hover,
 .zaui-input-affix-wrapper:focus,
 .zaui-input-affix-wrapper:focus-visible {
-  border-color: var(--zmp-primary-color);
+  border-color: var(--colors-green-70);
 }
 
 .zaui-tabs-tabbar-active-line {
-  background-color: var(--zmp-primary-color);
+  background-color: var(--colors-green-70);
 }
 
 .category-tabs {
