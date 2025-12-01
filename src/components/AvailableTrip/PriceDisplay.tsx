@@ -1,22 +1,20 @@
 import { formatPrice } from "@/helper/formatPrice";
 import { getPriceRange } from "@/helper/getPriceRange";
 import { departureDateState } from "@/state";
-import { PriceDetail, SaleDetail } from "@/types/tripType";
+import { PriceByTime, SaleDetail } from "@/types/tripType";
 import dayjs from "dayjs";
 import { FC, useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Box, Text } from 'zmp-ui';
 
 interface Props {
-    price: PriceDetail[];
-    salePrice?: PriceDetail[] | null;
+    price: PriceByTime[];
     snapShotSale?: SaleDetail | null;
     onDetailClick?: () => void;
 }
 
 const PriceDisplay: FC<Props> = ({
     price,
-    salePrice,
     snapShotSale,
     onDetailClick
 }) => {
@@ -48,18 +46,18 @@ const PriceDisplay: FC<Props> = ({
 
     // Check sale có active không
     const isSaleActive = useMemo(() => {
-        if (!snapShotSale?.isActive || !salePrice) return false;
+        if (!snapShotSale?.isActive) return false;
         if (remainingTime <= 0) return false;
 
         const depart = dayjs(departDate);
         const saleEnd = dayjs(snapShotSale.endDate);
         return !depart.isAfter(saleEnd);
-    }, [snapShotSale, salePrice, departDate, remainingTime]);
+    }, [snapShotSale, departDate, remainingTime]);
 
-    // Quyết định hiển thị giá nào
-    const displayPrice = isSaleActive && salePrice ? salePrice : price;
+
+    // Decide Price
     const originPriceRange = getPriceRange(price);
-    const displayPriceRange = getPriceRange(displayPrice);
+    const displayPriceRange = getPriceRange(price, isSaleActive);
 
     // Render sale badge
     const renderSaleBadge = () => {

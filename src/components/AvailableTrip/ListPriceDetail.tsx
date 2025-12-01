@@ -1,24 +1,23 @@
 import { formatPrice } from "@/helper/formatPrice"
 import { priceOptionState } from "@/state"
-import { PriceDetail } from "@/types/tripType"
+import { PriceByTime } from "@/types/tripType"
 import { Clock } from "lucide-react"
 import { FC } from "react"
 import { useRecoilValue, useSetRecoilState } from "recoil"
 import { Text } from "zmp-ui"
 
 interface Props {
-    prices: PriceDetail[]
+    prices: PriceByTime[]
 }
 
 const ListPriceDetail: FC<Props> = ({ prices }) => {
     const setPriceOpt = useSetRecoilState(priceOptionState)
     const selectedPrice = useRecoilValue(priceOptionState)
 
-    const selectPriceOption = (price: PriceDetail) => {
+    const selectPriceOption = (price: PriceByTime) => {
         setPriceOpt(price)
     }
 
-    
 
     return (
         <div className="space-y-3 p-3 bg-white rounded-b-lg border">
@@ -65,7 +64,7 @@ const ListPriceDetail: FC<Props> = ({ prices }) => {
                                         className={`text-lg font-semibold ${isSelected ? "text-white" : "text-green-600"
                                             }`}
                                     >
-                                        {formatPrice(item.value)}đ
+                                        {formatPrice(item.finalPrice)}đ
                                     </Text>
                                 </div>
                             ))}

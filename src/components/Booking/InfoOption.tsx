@@ -1,16 +1,15 @@
 import { Box, Icon, Input, Text } from "zmp-ui"
-import { PriceDetail } from "@/types/tripType"
+import { PriceByTime } from "@/types/tripType"
 import { formatPrice } from "@/helper/formatPrice"
 import useBookingOption from "@/hooks/useBookingOption"
 import { FC, useEffect } from "react"
 import PickDrop from "../Booking/InfoOption/PickDrop"
-import { debounce } from "lodash"
 import PriceItem from "./InfoOption/PriceItems"
 import { useRecoilValue } from "recoil"
 import { bookingState } from "@/state"
 
 interface InfoOptionProps {
-    price: PriceDetail
+    price: PriceByTime
 }
 
 const InfoOption: FC<InfoOptionProps> = ({ price }) => {
@@ -27,15 +26,11 @@ const InfoOption: FC<InfoOptionProps> = ({ price }) => {
         dataBooking
     } = useBookingOption(price)
 
-    const saveInfoDebounced = debounce(() => {
-        saveInfoStep()
-    }, 200)
 
     const bookingData = useRecoilValue(bookingState)
 
     useEffect(() => {
-        saveInfoDebounced()
-        return () => saveInfoDebounced.cancel()
+        saveInfoStep()
     }, [name, phone, total, quantities])
 
     return (
@@ -80,15 +75,13 @@ const InfoOption: FC<InfoOptionProps> = ({ price }) => {
             </Box>
 
             {/* Pick & Drop */}
-            <Box className="mt-4">
-                {tripSelected && (
-                    <PickDrop
-                        hasTransfer={tripSelected.tripConfig.hasTransfer}
-                        pickUp={tripSelected.activePickDrop.pickUp}
-                        dropOff={tripSelected.activePickDrop.dropOff}
-                    />
-                )}
-            </Box>
+            {tripSelected && (
+                <PickDrop
+                    hasTransfer={tripSelected.transferType}
+                    pickUp={tripSelected.pickUp ? tripSelected.pickUp : []}
+                    dropOff={tripSelected.dropOff ? tripSelected.dropOff : []}
+                />
+            )}
 
             {/* Total */}
             <Box className="bg-white rounded-xl p-4 shadow-sm border-2 border-emerald-100 mt-4">

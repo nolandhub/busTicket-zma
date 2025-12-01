@@ -1,5 +1,5 @@
 import { departureDateState } from "@/state";
-import { PriceDetail, SaleDetail } from "@/types/tripType";
+import { PriceByTime, SaleDetail } from "@/types/tripType";
 import dayjs from "dayjs";
 import { FC, useMemo } from "react";
 import { useRecoilValue } from "recoil";
@@ -8,19 +8,18 @@ import ListPriceDetail from "../ListPriceDetail";
 
 interface Props {
     snapShotSale?: SaleDetail | null;
-    price: PriceDetail[];
-    salePrice?: PriceDetail[] | null;
+    price: PriceByTime[];
     priceType: string;
 }
 
-const DetailPriceTab: FC<Props> = ({ snapShotSale, price, salePrice, priceType }) => {
+const DetailPriceTab: FC<Props> = ({ snapShotSale, price, priceType }) => {
     const departDate = useRecoilValue(departureDateState);
 
     // Lấy text header dựa vào priceType
     const headerText = useMemo(() => {
         switch (priceType) {
-            case "byRoom":
-                return "Giá theo phòng";
+            case "byBed":
+                return "Giá theo giường";
             case "byRow":
                 return "Giá theo hàng";
             case "fixed":
@@ -32,14 +31,12 @@ const DetailPriceTab: FC<Props> = ({ snapShotSale, price, salePrice, priceType }
 
     // Kiểm tra sale có active và còn hạn không
     const isSaleActive = useMemo(() => {
-        if (!snapShotSale?.isActive || !salePrice) return false;
+        if (!snapShotSale?.isActive) return false;
         const depart = dayjs(departDate);
         const saleEnd = dayjs(snapShotSale.endDate);
         return !depart.isAfter(saleEnd);
-    }, [snapShotSale, departDate, salePrice]);
+    }, [snapShotSale, departDate]);
 
-    // Quyết định giá nào sẽ hiển thị
-    const displayPrice = isSaleActive && salePrice ? salePrice : price;
     const showSaleBadge = isSaleActive && snapShotSale;
 
     return (
@@ -56,7 +53,7 @@ const DetailPriceTab: FC<Props> = ({ snapShotSale, price, salePrice, priceType }
 
             {/* Price Content */}
             {
-                <ListPriceDetail prices={displayPrice} />
+                <ListPriceDetail prices={price} />
             }
         </Box>
     );

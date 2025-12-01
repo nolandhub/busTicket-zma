@@ -1,18 +1,20 @@
-import { atom, selector, useRecoilValue } from "recoil";
+import { atom, selector } from "recoil";
 import { UserCached } from "./types/userType";
 import { PopRoute } from "./types/routeType";
 import { getPopRoutes } from "./firebase/firestore/popRouteCrud";
-import { PriceDetail, Trip, TripFiltered } from "./types/tripType";
+import { PriceByTime, TripWithSale } from "./types/tripType";
 import { BusCompany } from "./types/busCompanyType";
 import { BookingData, Ticket } from "./types/bookingType";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { db } from "./firebase/fireConfig";
-import { nativeStorage } from "zmp-sdk";
 
 export const userState = atom<UserCached | null>({
     key: 'user',
     default: null
 });
+
+export const isRegisteredState = atom<boolean>({
+    key: "isRegistered",
+    default: false
+})
 
 export const departureState = atom<string>({
     key: 'departure',
@@ -46,15 +48,11 @@ export const busCompanyState = atom<BusCompany[]>(
     }
 )
 
-export const tripState = atom<Trip[]>({
+export const tripState = atom<TripWithSale[]>({
     key: "trip",
     default: []
 })
 
-// export const tripLoadingState = atom<boolean>({
-//     key: 'tripLoadingState',
-//     default: true  // Mặc định là đang loading
-// });
 
 
 export const controlReturnState = atom<boolean>({
@@ -62,7 +60,7 @@ export const controlReturnState = atom<boolean>({
     default: false
 })
 
-export const selectedTripState = atom<TripFiltered | null>({
+export const selectedTripState = atom<TripWithSale | null>({
     key: "selectedTrip",
     default: null
 })
@@ -80,7 +78,7 @@ export const hideHeaderState = atom<boolean>({
 })
 
 
-export const priceOptionState = atom<PriceDetail | null>({
+export const priceOptionState = atom<PriceByTime | null>({
     key: "priceOption",
     default: null
 })
@@ -93,7 +91,7 @@ export const bookingState = atom<BookingData>({
         compId: "",
         compName: "",
         busName: "",
-        tripId: "",
+        tripId: 0,
         routeName: "",
         bookingDate: "",
         bookingName: "",
@@ -103,8 +101,8 @@ export const bookingState = atom<BookingData>({
         totalPassCount: 0,
         pickUp: null,
         dropOff: null,
-        pickUpValue: "",
-        dropOffValue: "",
+        pickUpValue: null,
+        dropOffValue: null,
         pickUpNote: "",
         dropOffNote: "",
         isDelete: false
@@ -124,28 +122,5 @@ export const popRouteState = selector<PopRoute[]>({
     },
 });
 
-export const isRegisteredState = atom<boolean>({
-    key: "isRegistered",
-    default: false
-})
-
-export const availableTrip = selector<TripFiltered[]>({
-    key: "availableTrip",
-    get: ({ get }) => {
-        const departureKey = get(departureState)
-        const trips = get(tripState)
-
-        if (!trips) return [];
-
-        const tripsFiltered: TripFiltered[] = trips.map(trips => {
-            const isForward = trips.tripConfig.forward.key == departureKey //check forward/backward
-            return {
-                ...trips,
-                activePickDrop: isForward ? trips.tripConfig.forward : trips.tripConfig.backward
-            }
-        });
-        return tripsFiltered
-    }
-});
 
 

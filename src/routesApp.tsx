@@ -22,7 +22,6 @@ export default function AppRoutes() {
                 <Route path="/notify" element={<Notify />}></Route>
 
 
-
                 {/* Turn on navigate returnDate - p */}
                 {/* <Route path="/repickCore" element={<RepickCore />}></Route> */}
             </Route>

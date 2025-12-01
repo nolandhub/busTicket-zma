@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import { bookingState } from "@/state";
 
 interface PickDropProps {
-    hasTransfer?: string | null;
+    hasTransfer: number | null;
     pickUp: BasePickDrop[];
     dropOff: BasePickDrop[];
 }
@@ -18,26 +18,26 @@ const PickDrop: FC<PickDropProps> = ({
 }) => {
 
     const [dataBooking, setBooking] = useRecoilState(bookingState)
-    const pickupValue = dataBooking.pickUpValue ?? ""
-    const dropoffValue = dataBooking.dropOffValue ?? ""
-    const pickUpNote = dataBooking.pickUpNote ?? ""
-    const dropOffNote = dataBooking.dropOffNote ?? ""
+    const pickupValue = dataBooking.pickUpValue ?? null
+    const dropoffValue = dataBooking.dropOffValue ?? null
+    const pickUpNote = dataBooking.pickUpNote ?? null
+    const dropOffNote = dataBooking.dropOffNote ?? null
 
     useEffect(() => {
         if (!pickupValue && !dropoffValue) return; // Không làm gì nếu chưa chọn
 
         const pickup =
-            pickupValue && pickupValue !== "999"
+            pickupValue && pickupValue !== 999
                 ? pickUp[Number(pickupValue)] ?? null
-                : pickupValue === "999"
-                    ? { title: "Trung Chuyển Tận Nơi", subTitle: pickUpNote }
+                : pickupValue === 999
+                    ? { title: "Trung Chuyển Tận Nơi", subtitle: pickUpNote }
                     : null;
 
         const dropoff =
-            dropoffValue && dropoffValue !== "1000"
+            dropoffValue && dropoffValue !== 1000
                 ? dropOff[Number(dropoffValue)] ?? null
-                : dropoffValue === "1000"
-                    ? { title: "Trung Chuyển Tận Nơi", subTitle: dropOffNote }
+                : dropoffValue === 1000
+                    ? { title: "Trung Chuyển Tận Nơi", subtitle: dropOffNote }
                     : null;
 
         setBooking((prev) => ({
@@ -56,12 +56,13 @@ const PickDrop: FC<PickDropProps> = ({
                 options={pickUp}
                 value={pickupValue}
                 onChange={(val) => setBooking(prev => ({ ...prev, pickUpValue: val }))}
-                transferEnabled={hasTransfer === "1" || hasTransfer === "3"}
-                transferValue="999"
+                transferEnabled={hasTransfer === 1 || hasTransfer === 3}
+                transferValue={999}
                 transferLabel="Trung Chuyển Tận Nơi"
+                titleFormat={(item) => `${item.title}  ${item.subtitle ? `- ${item.subtitle}` : ""}`}
             />
 
-            {pickupValue === "999" && (
+            {pickupValue === 999 && (
                 <NoteInput
                     isError={!pickUpNote}
                     label="Ghi chú điểm đón"
@@ -76,12 +77,12 @@ const PickDrop: FC<PickDropProps> = ({
                 options={dropOff}
                 value={dropoffValue}
                 onChange={(val) => setBooking(prev => ({ ...prev, dropOffValue: val }))}
-                transferEnabled={hasTransfer === "2" || hasTransfer === "3"}
-                transferValue="1000"
+                transferEnabled={hasTransfer === 2 || hasTransfer === 3}
+                transferValue={1000}
                 transferLabel="Trung Chuyển Tận Nơi"
-                titleFormat={(item) => `${item.subTitle} — ${item.title}`}
+                titleFormat={(item) => `${item.title}  ${item.subtitle ? `- ${item.subtitle}` : ""}`}
             />
-            {dropoffValue === "1000" && (
+            {dropoffValue === 1000 && (
                 <NoteInput
                     isError={!dropOffNote}
                     label="Ghi chú điểm trả"

@@ -16,7 +16,7 @@ export interface BookingData {
     compId: string
     compName: string
     busName: string
-    tripId: string
+    tripId: number
     routeName: string
 
     bookingDate: string
@@ -36,8 +36,9 @@ export interface BookingData {
     pickUp: BasePickDrop | null            //Time here - PickUp
     dropOff: BasePickDrop | null       //Time here - DropOff
 
-    pickUpValue: string
-    dropOffValue: string
+    pickUpValue: number | null
+    dropOffValue: number | null
+
     pickUpNote: string
     dropOffNote: string
 

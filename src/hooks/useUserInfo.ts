@@ -47,7 +47,6 @@ export default function useUserInfo() {
                     return;
                 }
 
-
                 setUser(JSON.parse(userCache))
                 setIsRegistered(true)
 
@@ -69,6 +68,7 @@ export default function useUserInfo() {
                 throw new Error("Missing token or accessToken");
             }
 
+
             const response = await fetch(
                 `https://graph.zalo.me/v2.0/me/info?access_token=${accessToken}&code=${res.token}&secret_key=${import.meta.env.VITE_SECRET_KEY}`,
                 { method: "GET" }
@@ -79,6 +79,7 @@ export default function useUserInfo() {
 
         } catch (error) {
             console.error("Error:", error);
+            return null
         }
     };
 
@@ -98,7 +99,8 @@ export default function useUserInfo() {
             }
 
             const res = await getMobilePhone()
-            const { newUser, coreData } = createUserObject(userInfo, String(res.data.number))
+            const phoneNumber = res?.data?.number ? String(res.data.number) : "";
+            const { newUser, coreData } = createUserObject(userInfo, phoneNumber)
 
             setUser(newUser)
             nativeStorage.setItem("user", JSON.stringify(newUser))

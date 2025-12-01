@@ -10,7 +10,7 @@ export default function UserHero() {
                 alt="banner"
                 className="w-full h-[20vh] object-center"
                 loading="eager"
-                fetchPriority="high"
+                
                 width={500}
                 height={300}
             />

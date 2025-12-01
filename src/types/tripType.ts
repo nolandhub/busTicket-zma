@@ -1,76 +1,49 @@
-export interface PriceDetail {
+export type PriceType = "fixed" | "byBed" | "byRow"
+
+export interface BasePickDrop {
+    title: string
+    subtitle: string | null
+}
+
+export interface PriceByTime {
     time: string
-    detail: {
-        label: string
-        value: number
-    }[]
+    detail: PriceDetail[]
+}
+
+export interface PriceDetail {
+    label: string
+    value: number
+    saleValue: number | null
+    finalPrice: number
 }
 
 export interface SaleDetail {
-    saleId: string
+    saleId: number
     label: string
-    type: "fixed" | "percent"
+    type: "amount" | "percent"
     value: number
+    scope: "system" | "route" | "trip"
     startDate: string
     endDate: string
     updateAt: string
     isActive: boolean
 }
 
-export interface BasePickDrop {
-    title?: string,
-    subTitle?: string
+export interface Trip {
+    tripId: number
+    routeId: number
+    routeCode: string
+    routeName: string
+    compCode: string
+    compName: string
+    busName: string
+    priceType: PriceType
+    transferType: number | null
+    pickUp: BasePickDrop[] | null
+    dropOff: BasePickDrop[] | null
 }
 
-export interface TripDetail {
-    // + Location
-    key: string             // saigon
-    startLocation: string   //default
-    endLocation: string     //default
-
-    //PickDrop
-    pickUp: BasePickDrop[]
-    dropOff: BasePickDrop[]
+export interface TripWithSale extends Trip {
+    price: PriceByTime[] | []
+    saleSnapShot: SaleDetail | null;
 }
-
-//1: startPoint , 2: endPoint ,3: 2Point , null:noPoint
-export type Transfer = "1" | "2" | "3" | null
-//1: trung chuyển ở điểm đi , 2: trung chuyển điểm đến  ,3: trung chuyển 2 chiều , null:noPoint
-
-export interface TripData {
-    routeId: string            //saigon-hanoi
-    routeName: string         //Sai Gon - Ha Noi
-    compId: string           //cuctung
-    compName: string        //Cuc Tung Limousine
-    busName: string        //Limousine 20 Phòng Đôi VIP
-
-    //Price
-    priceType: "fixed" | "byRoom" | "byRow"
-    price: PriceDetail[]
-
-    saleId?: string | null
-    snapShotSale?: SaleDetail | null
-    salePrice?: PriceDetail[] | null
-
-    tripConfig: {
-        hasTransfer?: Transfer   //1: startPoint , 2: endPoint ,3: 2Point , null:noPoint
-        forward: TripDetail
-        backward: TripDetail
-    }
-
-    createAt: Date  //to ISOString
-    updateAt: Date  //to ISOString
-    isDelete: boolean
-}
-
-export interface Trip extends TripData {
-    id: string
-}
-
-export interface TripFiltered extends Trip {
-    activePickDrop: TripDetail
-}
-
-
-
-

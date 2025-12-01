@@ -8,6 +8,7 @@ import RegisterPage from "../RegisterPage";
 import useUserInfo from "@/hooks/useUserInfo";
 
 export default function HomePage() {
+
     const { isRegistered, handleRegister } = useUserInfo()
     if (!isRegistered) {
         return (<RegisterPage onRegister={handleRegister} />)

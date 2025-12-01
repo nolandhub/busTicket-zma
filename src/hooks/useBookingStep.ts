@@ -56,7 +56,7 @@ export default function useBookingStep() {
                     icon: true,
                     text: "Vui lòng chọn số lượng vé!..",
                 });
-            } else if (dataBooking.pickUpValue == "999" && !dataBooking.pickUpNote || dataBooking.dropOffValue == "1000" && !dataBooking.dropOffNote) {
+            } else if (dataBooking.pickUpValue == 999 && !dataBooking.pickUpNote || dataBooking.dropOffValue == 1000 && !dataBooking.dropOffNote) {
                 openSnackbar({
                     icon: true,
                     text: "Vui lòng điền đầy đủ thông tin trung chuyển!...",

@@ -117,9 +117,9 @@ const TicketItem: FC<Props> = ({ dataTicket, onCick }) => {
                 <Box className="p-2 flex justify-between gap-2">
                     <RouteIndicator
                         startLocation={dataTicket?.pickUp?.title || "Chưa cập nhật"}
-                        subStartLocation={dataTicket?.pickUp?.subTitle || "Chưa cập nhật"}
+                        subStartLocation={dataTicket?.pickUp?.subtitle || "Chưa cập nhật"}
                         endLocation={dataTicket?.dropOff?.title || "Chưa cập nhật"}
-                        subEndLocation={dataTicket?.dropOff?.subTitle || "Chưa cập nhật"}
+                        subEndLocation={dataTicket?.dropOff?.subtitle || "Chưa cập nhật"}
                     />
                     <div
                         className={`w-40 h-30 rounded-lg ${busCompFilter?.id ? `bg-[url(${busCompFilter?.avatar})]` : "bg-[url(https://i.pinimg.com/736x/17/b7/6c/17b76c78de979b6cf2600a8e957403a7.jpg)]"} bg-cover bg-center`}

@@ -1,12 +1,11 @@
-import { availableTrip, tripState } from "@/state";
+import { tripState } from "@/state";
 import { useRecoilValue } from "recoil";
 import TripItem from "./tripItem";
 
 export default function TripList() {
-    const tripsFilter = useRecoilValue(availableTrip)
-    const tripGetAll = useRecoilValue(tripState)
+    const trips = useRecoilValue(tripState)
 
-    if (tripGetAll.length == 0) {
+    if (trips.length == 0) {
         return (
             <>
                 <div className="text-red-600">Hiện tại, chúng tôi chưa khai thác chuyến này.....</div>
@@ -18,8 +17,8 @@ export default function TripList() {
     return (
         <>
             {
-                tripsFilter.length > 0 && (
-                    tripsFilter.map((t, idx) => <TripItem key={idx} trip={t} />)
+                trips.length > 0 && (
+                    trips.map((t, idx) => <TripItem key={idx} trip={t} />)
                 )
             }
         </>

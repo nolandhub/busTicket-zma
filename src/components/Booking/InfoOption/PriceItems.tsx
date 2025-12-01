@@ -1,12 +1,12 @@
 import { formatPrice } from "@/helper/formatPrice";
-import { PriceDetail } from "@/types/tripType";
+import { PriceByTime } from "@/types/tripType";
 import { Box, Text } from "zmp-ui";
 import { FC } from "react";
 import { Clock } from "lucide-react";
 import QuantityControl from "./QuatityControl";
 
 interface PriceItemProps {
-    priceDetail: PriceDetail;
+    priceDetail: PriceByTime;
     quantity: number;
     onIncrease: () => void;
     onDecrease: () => void;
@@ -65,7 +65,7 @@ const PriceItem: FC<PriceItemProps> = ({
                 <Box className="flex bg-slate-100 items-center justify-between p-3 rounded-md border border-slate-200">
                     <PriceInfo
                         label={detail.label}
-                        value={detail.value}
+                        value={detail.finalPrice}
                     />
                     <QuantityControl
                         quantity={quantity}

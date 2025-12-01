@@ -4,21 +4,20 @@ import { getLabelFromValue } from "@/helper/getLabelFromValue";
 import { useNavigate, useSnackbar } from "zmp-ui";
 import useCoreInit from "./useCoreInit";
 import { useSetRecoilState } from "recoil";
-import { getTrip2WayAvailable } from "../firebase/firestore/tripCrud";
 import { startTransition, useState } from 'react';
 import { tripState } from "@/state";
-
-import { idbService } from "@/indexDB/idbServices";
-import { Trip } from "@/types/tripType";
 import dayjs from "dayjs";
-import busTrips from "@/mock/mockTrip";
+import TripMocks from "@/mock/mockTrip";
 import useBusCompany from "./useBusCompany";
+import { fetchAvailableTrips } from "@/services/tripService";
+import { TripWithSale } from "@/types/tripType";
 
 export default function useSearch() {
     const { openSnackbar } = useSnackbar()
     const navigate = useNavigate();
     const { departDate, destination, departure, setIsReturn, setDeparture, setDestination } = useCoreInit()
     const setTrips = useSetRecoilState(tripState)
+
     const [loading, setLoading] = useState<boolean>(false) //loading if wait data
 
 
@@ -35,52 +34,15 @@ export default function useSearch() {
         setDestination(departure)
     }
 
-    const syncTripIfNeeded = async (routeId: string, localTrip: Trip[]) => {
-        const snapShot = await getTrip2WayAvailable(routeId)
 
-        const isUpdated = snapShot.some(newData => {
-            const check = localTrip.find(t => t.id === newData.id)
 
-            return !check || dayjs(newData.updateAt).valueOf() > (dayjs(check.updateAt)).valueOf()
-            // !local -> new Record on fireStore || UpdateAt changed -> have new Update
-        })
-
-        if (isUpdated) {
-            for (const data of snapShot) {
-                await idbService.upSert("trips", data.id, data)
-            }
-            setTrips(snapShot)
-        }
-    }
-
-    const searchTrips = async (routeId: string) => {
+    const searchTrips = async (routeCode: string, departDate: string) => {
         try {
-            // setLoading(true)
-            // const db = await dbPromise
-            // const { directKey, reverseKey } = buildRouteKey(routeId)
-            // const tripCachedDirect = await db.getAllFromIndex("trips", "routeId", directKey)
+            console.log(routeCode, departDate)
 
-            // if (tripCachedDirect.length > 0) {
-            //     setTrips(tripCachedDirect)
-            //     await syncTripIfNeeded(directKey, tripCachedDirect)  //sync data
-            // } else {
-            //     const tripCachedReverse = await db.getAllFromIndex("trips", "routeId", reverseKey)
-            //     if (tripCachedReverse.length > 0) {
-            //         setTrips(tripCachedDirect)
-            //         await syncTripIfNeeded(directKey, tripCachedDirect)  //sync data
-            //     } else {
-            //         // no data cached => get new from fireStore
-            //         const trips = await getTrip2WayAvailable(directKey)
-            //         setTrips(trips || [])
+            const res = await fetchAvailableTrips(routeCode, departDate)
 
-            //         for (const data of trips) {
-            //             await idbService.upSert("trips", data.id, data)
-            //         }
-            //     }
-            // }
-            // setLoading(false)
-
-            setTrips(busTrips)
+            setTrips(res)
 
         } catch (error) {
             console.log(error)
@@ -117,7 +79,8 @@ export default function useSearch() {
             toLabel: getLabelFromValue(destination),
         })
 
-        searchTrips(`${departure}-${destination}`) //Get - Set Trips ATOM (2 way)
+
+        searchTrips(`${departure}-${destination}`, dayjs(departDate).format("YYYY-MM-DD"))
 
         startTransition(() => { /* hold old data when wait new data api */
             if (location.pathname === "/availableTrip") {

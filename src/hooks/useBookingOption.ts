@@ -1,11 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { bookingState, selectedTripState, userState } from "@/state";
-import { PriceDetail } from "@/types/tripType";
+import { PriceByTime, PriceDetail } from "@/types/tripType";
 import { Option } from "@/types/bookingType";
 import useCoreInit from "./useCoreInit";
 
-export default function useBookingOption(price: PriceDetail) {
+export default function useBookingOption(price: PriceByTime) {
     const tripSelected = useRecoilValue(selectedTripState);
     const userData = useRecoilValue(userState);
 
@@ -118,10 +118,10 @@ export default function useBookingOption(price: PriceDetail) {
             zaloId: prev?.zaloId || userData?.id || "",
 
             //trip
-            compId: tripSelected.compId,
+            compId: tripSelected.compCode,
             compName: tripSelected.compName,
             busName: tripSelected.busName,
-            tripId: tripSelected.id,
+            tripId: tripSelected.tripId,
             routeName: tripSelected.routeName,
 
             //date

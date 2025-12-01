@@ -5,9 +5,9 @@ import { Box, Text } from "zmp-ui";
 interface RouteIndicatorProps {
     size?: number
     startLocation?: string
-    subStartLocation?: string
+    subStartLocation?: string | null
     endLocation?: string
-    subEndLocation?: string
+    subEndLocation?: string | null
     startTime?: string
     duration?: string
     endTime?: string

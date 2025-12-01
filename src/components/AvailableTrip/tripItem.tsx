@@ -3,7 +3,7 @@ import RouteIndicator from "./RouteIndicatorIcon";
 import { Zap, WalletIcon, HandshakeIcon } from "lucide-react";
 import { Divider } from "../common/Divider";
 import LabelWithIcon from "./PoliciesWithIcon";
-import { TripFiltered } from "@/types/tripType";
+import { TripWithSale } from "@/types/tripType";
 import FlashSaleCard from "./FlashSaleCard";
 import TripContent from "./TripContent";
 import { FC } from "react";
@@ -14,7 +14,7 @@ import ImageViewerCustom from "./ImageViewer";
 import { useRecoilValue } from "recoil";
 import { busCompanyState } from "@/state";
 
-const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
+const TripItem: FC<{ trip: TripWithSale }> = ({ trip }) => {
     const {
         visibleSheet,
         activeTabKey,
@@ -28,31 +28,24 @@ const TripItem: FC<{ trip: TripFiltered }> = ({ trip }) => {
         handleSelectTrip
     } = useTrip()
 
-    if (trip.isDelete == true) {
-        return null
-    }
 
     const busCompData = useRecoilValue(busCompanyState)
 
-    const busCompFilter = busCompData.find(f => f.compId === trip.compId);
+    const busCompFilter = busCompData.find(f => f.compId === trip.compCode);
 
     return (
         <Box className="bg-white rounded-xl border border-slate-300 md:max-w-lg mx-auto shadow-lg">
-            <FlashSaleCard snapShotSale={trip.snapShotSale} />
+            <FlashSaleCard snapShotSale={trip.saleSnapShot} />
             <Box className="bg-white p-2 rounded-t-xl">
                 <Box className="flex-1 flex flex-row">
                     <RouteIndicator
-                        startLocation={trip.activePickDrop.startLocation}
-                        endLocation={trip.activePickDrop.endLocation}
-                        // startTime={trip.activePickDrop.startTime}
-                        // duration={trip.activePickDrop.duration}
-                        // endTime={trip.activePickDrop.endTime}
+                        startLocation={trip.pickUp ? trip.pickUp[0].title : ""}
+                        endLocation={trip.dropOff ? trip.dropOff[0].title : ""}
                         onClick={() => directTab("2")}
                     />
                     <PriceDisplay
                         price={trip.price}
-                        snapShotSale={trip.snapShotSale}
-                        salePrice={trip.salePrice}
+                        snapShotSale={trip.saleSnapShot}
                         onDetailClick={() => directTab("1")}  /* setVisible(true) */
                     />
                 </Box>

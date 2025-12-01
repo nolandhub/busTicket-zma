@@ -1,0 +1,18 @@
+import { TripWithSale } from "@/types/tripType";
+import axios from "axios";
+
+export async function fetchAvailableTrips(routeCode: string, date: string): Promise<TripWithSale[]> {
+    try {
+        const snapShot = await axios.get("http://localhost:3001/api/trips/search", {
+            params: {
+                routeCode: routeCode,
+                departDate: date
+            }
+        })
+        return snapShot.data
+
+    } catch (error) {
+        console.error('Lỗi khi fetch API:', error);
+        throw error
+    }
+}

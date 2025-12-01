@@ -1,7 +1,7 @@
 import { hideHeaderState, selectedTripState } from "@/state"
-import { TripFiltered } from "@/types/tripType"
+import { TripWithSale } from "@/types/tripType"
 import { useState } from "react"
-import {  useSetRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import { useNavigate } from "zmp-ui"
 
 export default function useTrip() {
@@ -28,7 +28,7 @@ export default function useTrip() {
         setVisibleImgView(true)
         setActiveImgKey(idx)
     }
-    function handleSelectTrip(trip: TripFiltered) {
+    function handleSelectTrip(trip: TripWithSale) {
         setSelectedTrip(trip)
         navigate("/booking")
     }

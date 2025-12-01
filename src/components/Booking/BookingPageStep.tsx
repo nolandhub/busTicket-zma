@@ -23,8 +23,6 @@ export default function BookingStep() {
             <Box className="flex-1 pt-4">
                 {step === "time" && (
                     <SelectTime
-                        snapShotSale={tripSelected?.snapShotSale}
-                        salePrice={tripSelected?.salePrice}
                         price={tripSelected?.price!}
                     />
                 )}

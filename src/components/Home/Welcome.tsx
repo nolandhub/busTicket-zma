@@ -13,7 +13,6 @@ export const Welcome: FC = () => {
           <Box flex alignItems="center" className="space-x-2">
             <img
               alt="logo"
-              fetchPriority="high"
               loading="eager"
               decoding="async"
               className="w-8 h-8 rounded-lg border-inset"

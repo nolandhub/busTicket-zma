@@ -56,10 +56,10 @@ const BookingReview: FC<BookingReviewProps> = ({ data }) => {
                     <RouteIndicator
                         size={16}
                         onClick={() => directTab("2")}
-                        startLocation={data.pickUp?.title}
-                        subStartLocation={data.pickUp?.subTitle}
+                        startLocation={data.pickUp ? data.pickUp.title : ""}
+                        subStartLocation={data.pickUp ? data.pickUp.subtitle : ""}
                         endLocation={data.dropOff?.title}
-                        subEndLocation={data.dropOff?.subTitle}
+                        subEndLocation={data.dropOff?.subtitle}
                     />
                     <img
                         onClick={() => directTab("3")}
@@ -78,7 +78,7 @@ const BookingReview: FC<BookingReviewProps> = ({ data }) => {
                             <span className="text-green-600 font-bold">Đón:</span>
                             <Box className="flex-1">
                                 <Box className="font-medium text-sm">{data.pickUp.title}</Box>
-                                <Box className="text-gray-600 text-sm">{data.pickUp.subTitle}</Box>
+                                <Box className="text-gray-600 text-sm">{data.pickUp.subtitle}</Box>
                             </Box>
                         </Box>
                     </Box>
@@ -89,7 +89,7 @@ const BookingReview: FC<BookingReviewProps> = ({ data }) => {
                             <span className="text-green-600 font-bold">Trả:</span>
                             <Box className="flex-1">
                                 <Box className="font-medium text-sm">{data.dropOff.title}</Box>
-                                <Box className="text-gray-600 text-sm">{data.dropOff.subTitle}</Box>
+                                <Box className="text-gray-600 text-sm">{data.dropOff.subtitle}</Box>
                             </Box>
                         </Box>
                     </Box>

@@ -1,14 +1,22 @@
-import { PriceDetail } from "@/types/tripType";
+import { PriceByTime, PriceDetail } from "@/types/tripType";
 
-export function getPriceRange(priceList: PriceDetail[]) {
+export function getPriceRange(priceList: PriceByTime[], saleActive?: boolean) {
     // Lấy tất cả các giá trị từ detail của mỗi time slot
     const allValues: number[] = [];
 
-    priceList.forEach(timeSlot => {
-        timeSlot.detail.forEach(priceItem => {
-            allValues.push(Number(priceItem.value));
+    if (saleActive) {
+        priceList.forEach(timeSlot => {
+            timeSlot.detail.forEach(priceItem => {
+                allValues.push(Number(priceItem.saleValue));
+            });
         });
-    });
+    } else {
+        priceList.forEach(timeSlot => {
+            timeSlot.detail.forEach(priceItem => {
+                allValues.push(Number(priceItem.value));
+            });
+        });
+    }
 
     if (allValues.length === 0) {
         return { isRange: false, value: 0 };
