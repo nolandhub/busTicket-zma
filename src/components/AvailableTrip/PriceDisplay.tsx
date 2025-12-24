@@ -65,7 +65,7 @@ const PriceDisplay: FC<Props> = ({
 
         const isPercent = snapShotSale.type === "percent";
         const badgeText = isPercent
-            ? `-${snapShotSale.value}%`
+            ? `${snapShotSale.value}%`
             : `GIẢM ${formatPrice(snapShotSale.value)}đ`;
 
         const bgColor = isPercent ? "bg-red-500" : "bg-green-500";

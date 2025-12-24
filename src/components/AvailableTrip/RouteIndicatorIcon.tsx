@@ -1,3 +1,70 @@
+// import { Locate, MapPinIcon } from "lucide-react";
+// import { FC } from "react";
+// import { Box, Text } from "zmp-ui";
+
+// interface RouteIndicatorProps {
+//     size?: number
+//     startLocation?: string
+//     subStartLocation?: string | null
+//     endLocation?: string
+//     subEndLocation?: string | null
+//     startTime?: string
+//     duration?: string
+//     endTime?: string
+//     onClick?: () => void
+// }
+
+// const RouteIndicator: FC<RouteIndicatorProps> = ({ size, startLocation, subStartLocation, endLocation, subEndLocation, startTime, duration, endTime, onClick }) => {
+
+//     return (
+//         <Box onClick={onClick} className="flex gap-1 cursor-pointer">
+//             {/* Cột giờ */}
+//             <Box className="flex flex-col justify-between">
+//                 <Text className="text-black font-bold text-md" >
+//                     {startTime}
+//                 </Text>
+//                 <Text className="text-end text-gray-500 text-[10px] font-extralight">
+//                     {duration}
+//                 </Text>
+//                 <Text className="text-center text-gray-500 text-md font-bold" >
+//                     {endTime}
+//                 </Text>
+//             </Box>
+
+//             {/* Cột icon + line */}
+//             <Box className="flex items-center">
+//                 <div className="flex flex-col items-center">
+//                     <MapPinIcon size={16} strokeWidth={3} className="text-blue-500" />
+//                     <div className={`${size ? `h-${size} w-px bg-slate-500` : "h-14 w-px bg-slate-500"}`} />
+//                     <Locate size={16} strokeWidth={4} className="text-red-400" />
+//                 </div>
+//             </Box>
+
+//             {/* Cột text */}
+//             <Box className="flex-1 ml-1 flex flex-col space-y-6">
+//                 <Box className="flex flex-1 flex-col">
+//                     <Text className="font-bold">{startLocation}</Text>
+//                     <Text className="text-xs text-indigo-600 underline underline-offset-2 ">
+//                         {subStartLocation}
+//                     </Text>
+//                 </Box>
+
+//                 <Box className="flex flex-1 flex-col ">
+//                     <Text className=" font-bold text-gray-500" >
+//                         {endLocation}
+//                     </Text>
+//                     <Text className="text-xs text-indigo-600 underline underline-offset-2" >
+//                         {subEndLocation}
+//                     </Text>
+//                 </Box>
+//             </Box>
+//         </Box>
+//     );
+// };
+
+// export default RouteIndicator;
+
+
 import { Locate, MapPinIcon } from "lucide-react";
 import { FC } from "react";
 import { Box, Text } from "zmp-ui";
@@ -14,12 +81,22 @@ interface RouteIndicatorProps {
     onClick?: () => void
 }
 
-const RouteIndicator: FC<RouteIndicatorProps> = ({ size, startLocation, subStartLocation, endLocation, subEndLocation, startTime, duration, endTime, onClick }) => {
+const RouteIndicator: FC<RouteIndicatorProps> = ({
+    size,
+    startLocation,
+    subStartLocation,
+    endLocation,
+    subEndLocation,
+    startTime,
+    duration,
+    endTime,
+    onClick
+}) => {
 
     return (
         <Box onClick={onClick} className="flex gap-1 cursor-pointer">
             {/* Cột giờ */}
-            <Box className="flex flex-col justify-between">
+            <Box className="flex flex-col justify-between flex-shrink-0">
                 <Text className="text-black font-bold text-md" >
                     {startTime}
                 </Text>
@@ -32,7 +109,7 @@ const RouteIndicator: FC<RouteIndicatorProps> = ({ size, startLocation, subStart
             </Box>
 
             {/* Cột icon + line */}
-            <Box className="flex items-center">
+            <Box className="flex items-center flex-shrink-0">
                 <div className="flex flex-col items-center">
                     <MapPinIcon size={16} strokeWidth={3} className="text-blue-500" />
                     <div className={`${size ? `h-${size} w-px bg-slate-500` : "h-14 w-px bg-slate-500"}`} />
@@ -41,17 +118,19 @@ const RouteIndicator: FC<RouteIndicatorProps> = ({ size, startLocation, subStart
             </Box>
 
             {/* Cột text */}
-            <Box className="flex-1 ml-1 flex flex-col space-y-6">
+            <Box className="flex-1 ml-1 flex flex-col space-y-6 min-w-0">
                 <Box className="flex flex-1 flex-col">
-                    <Text className="font-bold">{startLocation}</Text>
-                    <Text className="text-xs text-indigo-600 underline underline-offset-2 ">{subStartLocation}</Text>
+                    <Text className="font-bold break-words">{startLocation}</Text>
+                    <Text className="text-xs text-indigo-600 underline underline-offset-2 break-words">
+                        {subStartLocation}
+                    </Text>
                 </Box>
 
-                <Box className="flex flex-1 flex-col ">
-                    <Text className=" font-bold text-gray-500" >
+                <Box className="flex flex-1 flex-col">
+                    <Text className="font-bold text-gray-500 break-words" >
                         {endLocation}
                     </Text>
-                    <Text className="text-xs text-indigo-600 underline underline-offset-2" >
+                    <Text className="text-xs text-indigo-600 underline underline-offset-2 break-words" >
                         {subEndLocation}
                     </Text>
                 </Box>

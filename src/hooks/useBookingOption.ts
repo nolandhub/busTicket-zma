@@ -78,7 +78,6 @@ export default function useBookingOption(price: PriceByTime) {
                     value: detail.value,
                     quantity: qty,
                     subtotal: detail.value * qty,
-                    totalOptionPrice: detail.value * qty
                 });
             }
         });
@@ -103,8 +102,7 @@ export default function useBookingOption(price: PriceByTime) {
             bookingName: name,
             bookingPhone: phone,
             option: options,
-            total: total,
-            passCount: totalPassCount
+            total: total
         }));
     }, [name, phone, options, total, tripSelected]);
 

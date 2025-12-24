@@ -5,7 +5,6 @@ import BookingPage from "./pages/Booking";
 import Profile from "./pages/Profile";
 import Ticket from "./pages/Ticket/Index";
 import Notify from "./pages/Notify";
-import RegisterPage from "./pages/RegisterPage";
 
 // import RepickCore from "./pages/RepickCore";
 // HomePage
@@ -20,7 +19,6 @@ export default function AppRoutes() {
                 <Route path="/profile" element={<Profile />}></Route>
                 <Route path="/ticket" element={<Ticket />}></Route>
                 <Route path="/notify" element={<Notify />}></Route>
-
 
                 {/* Turn on navigate returnDate - p */}
                 {/* <Route path="/repickCore" element={<RepickCore />}></Route> */}

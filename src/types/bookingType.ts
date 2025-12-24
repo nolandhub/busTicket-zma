@@ -6,7 +6,7 @@ export interface Option {
     value: number;          // 600000
     quantity: number;       // 2
     subtotal: number;       // 1200000
-    totalOptionPrice?: number; // Tổng giá option (optional, có thể duplicate với subtotal)
+    // totalOptionPrice?: number; // Tổng giá option (optional, có thể duplicate với subtotal)
 }
 
 export interface BookingData {
@@ -42,6 +42,8 @@ export interface BookingData {
     pickUpNote: string
     dropOffNote: string
 
+    messageToken: string
+
     createAt?: string
     updateAt?: Date
 
@@ -56,7 +58,6 @@ export interface Ticket extends Omit<BookingData, "pickUpValue" | "dropOffValue"
     seatName: string
     status: TicketStatus
     cancelReason?: string
-    updateAt?: Date
     createUser?: string
     updateUser?: string
 }

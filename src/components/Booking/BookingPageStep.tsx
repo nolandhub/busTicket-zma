@@ -38,7 +38,7 @@ export default function BookingStep() {
                         </div>
                         <BookingReview data={dataBooking} />
 
-                        <ConfirmSection loading={loading} total={dataBooking.total || 0} onConfirm={() => { handleConfirm(dataBooking) }} />
+                        <ConfirmSection loading={loading} total={dataBooking.total || 0} onConfirm={(messageToken) => { handleConfirm(dataBooking, messageToken) }} />
                     </Box>
                 )}
             </Box>

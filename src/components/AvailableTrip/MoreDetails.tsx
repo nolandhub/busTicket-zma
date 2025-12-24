@@ -28,6 +28,7 @@ const MoreDetail: FC<MoreDetailsProps> = ({ busCompany, trip, sheet, tab, handle
 
     return (
         <Sheet
+            mask={true}
             title="Thông tin chi tiết"
             visible={sheet.visibleSheet}
             onClose={() => sheet.setVisibleSheet(false)}

@@ -1,4 +1,3 @@
-
 import { dbPromise } from "@/indexDB/index";
 
 export const idbService = {

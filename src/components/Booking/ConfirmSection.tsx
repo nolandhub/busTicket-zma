@@ -1,11 +1,12 @@
 import { formatPrice } from "@/helper/formatPrice";
 import { FC } from "react";
 import { Box, Button, Text } from "zmp-ui";
+import ButtonOrder from "../common/buttons/ButtonOrder";
 
 interface ConfirmSectionProps {
     loading?: boolean
     total: number;
-    onConfirm: () => void;
+    onConfirm: (messageToken) => void;
 }
 
 const ConfirmSection: FC<ConfirmSectionProps> = ({ total, onConfirm, loading }) => {
@@ -24,14 +25,16 @@ const ConfirmSection: FC<ConfirmSectionProps> = ({ total, onConfirm, loading }) 
                     </Box>
                 </Box>
 
-                <Button
+                <ButtonOrder onOrder={onConfirm} />
+
+                {/* <Button
                     loading={loading}
                     onClick={onConfirm}
                     className="relative animate-bounce overflow-hidden rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 active:scale-95 text-white font-bold px-8 py-3.5 shadow-lg shadow-green-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-green-500/40"
                 >
                     <span className="relative z-10">Xác nhận</span>
                     <Box className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />
-                </Button>
+                </Button> */}
             </Box>
         </Box>
     );

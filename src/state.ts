@@ -105,6 +105,7 @@ export const bookingState = atom<BookingData>({
         dropOffValue: null,
         pickUpNote: "",
         dropOffNote: "",
+        messageToken: "",
         isDelete: false
     },
 })

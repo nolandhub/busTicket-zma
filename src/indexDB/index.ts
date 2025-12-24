@@ -1,3 +1,4 @@
+
 import { openDB } from "idb";
 
 export const dbPromise = openDB("bus-ticket-zma", 1, {

@@ -5,6 +5,7 @@ import { idbService } from "@/indexDB/idbServices"
 import { bookingState, priceOptionState, selectedTripState } from "@/state"
 import { BookingData, Ticket } from "@/types/bookingType"
 import { BasePickDrop } from "@/types/tripType"
+import axios from "axios"
 import { useEffect, useState } from "react"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 import { useNavigate, useSnackbar } from "zmp-ui"
@@ -78,47 +79,54 @@ export default function useBookingStep() {
 
         }
     }
-
-    function handleConfirm(dataBooking) {
+    function handleConfirm(dataBooking, messageToken) {
         try {
             setLoading(true)
+
             const confirmData: BookingData = {
                 ...dataBooking,
                 bookingId: generateBookingId(),
+                messageToken,
                 createAt: new Date().toISOString()
             }
+
             const ticketData: Ticket = {
                 ...confirmData,
                 id: generateTicketId(),
                 status: "pending",
                 busNumber: "",
                 seatName: "",
-                createUser: dataBooking.zaloId,
+                createUser: dataBooking.zaloId
             }
 
             addTicket(ticketData)
             idbService.add("tickets", ticketData)
 
-            setTimeout(() => {
-                setLoading(false)
-                navigate("/ticket")
-                openSnackbar({
-                    text: "Đặt vé thành công! Hãy để ý điện thoại, nhân viên sẽ sớm gọi bạn . Cảm ơn !",
-                    type: "success"
-                })
-                resetBooking()
-            }, 1400)
+            axios.post("https://216tvbfb-3000.asse.devtunnels.ms/api/zalo-send-status", {
+                userId: ticketData.zaloId,
+                customerName: ticketData.bookingName,
+                route: ticketData.routeName,
+                status: "Đặt thành công"
+            })
 
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
+            navigate("/ticket")
             openSnackbar({
-                text: "Xảy ra lỗi trong quá trình tạo order, vui lòng thử lại",
+                text: "Đặt vé thành công! Hãy để ý điện thoại.",
+                type: "success"
+            })
+
+            resetBooking()
+        } catch (error) {
+            console.error(error)
+            openSnackbar({
+                text: "Đặt vé thất bại! Vui lòng thử lại.",
                 type: "error"
             })
+        } finally {
+            setLoading(false)
         }
-
     }
+
 
 
     function handleBack() {

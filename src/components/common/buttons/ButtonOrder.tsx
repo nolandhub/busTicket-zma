@@ -1,27 +1,26 @@
 import { FC, useEffect } from "react";
 import { showFunctionButtonWidget } from "zmp-sdk/apis";
-import { useSnackbar } from "zmp-ui";
+import { Button, useSnackbar } from "zmp-ui";
 
 interface props {
+    loading?: boolean
     onOrder: (messageToken) => void
 }
 
-const buttonOrder: FC<props> = ({ onOrder }) => {
+export const ButtonOrder: FC<props> = ({ onOrder }) => {
     const snackBar = useSnackbar()
     useEffect(() => {
         showFunctionButtonWidget({
             id: "orderButton",
             type: "ORDER",
             text: "Đặt xe",
-            color: "#0068FF",
-            textColor: "#FFFFFF",
-            borderRadius: "48px",
+            color: "#258344",
             onDataReceived: (messageToken) => {
                 onOrder(messageToken)
 
                 snackBar.openSnackbar({
                     type: "success",
-                    text: "Order của bạn đã được tiếp nhận, Cảm ơn bạn !",
+                    text: "Vé của bạn đã được tiếp nhận, Cảm ơn bạn !",
                 });
             },
             onError: (error) => {
@@ -32,13 +31,11 @@ const buttonOrder: FC<props> = ({ onOrder }) => {
 
     return (
         <>
-            ...
-            <div id="orderButton" />
-            ...
+            <Button className="animate-bounce w-[200px]" id="orderButton" />
         </>
     );
 }
 
 
 
-export default buttonOrder
+export default ButtonOrder
